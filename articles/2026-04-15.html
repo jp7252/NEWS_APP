@@ -9,11 +9,35 @@
 
     body {
       margin: 0;
-      padding: 24px 20px 80px;
+      padding: 0;
       font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
-      line-height: 1.8;
-      color: #333;
-      background: #fafafa;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead ── */
+    .masthead {
+      border-top: 3px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 14px 0;
+      text-align: center;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-date {
+      font-size: 12px;
+      color: #999;
+      letter-spacing: 1px;
+      margin: 4px 0 0;
     }
 
     /* ── Two-column grid ── */
@@ -23,21 +47,18 @@
       gap: 32px;
       max-width: 1100px;
       margin: 0 auto;
+      padding: 28px 24px 80px;
       align-items: start;
     }
 
-    /* ── Left column: article ── */
+    /* ── Left column ── */
     .column-main { min-width: 0; }
 
-    /* Lead image */
-    .lead-image {
-      margin: 0 0 20px;
-    }
+    .lead-image { margin: 0 0 20px; }
     .lead-image img {
       width: 100%;
       aspect-ratio: 16 / 9;
       object-fit: cover;
-      border-radius: 6px;
       display: block;
     }
 
@@ -45,33 +66,32 @@
     header {
       margin-bottom: 24px;
       padding-bottom: 16px;
-      border-bottom: 2px solid #eee;
-    }
-    .date {
-      font-size: 13px;
-      color: #888;
-      margin: 0 0 6px;
-      letter-spacing: 1px;
+      border-bottom: 1px solid #ddd;
     }
     h1 {
-      font-size: 24px;
-      line-height: 1.4;
-      color: #1a1a1a;
-      margin: 0 0 6px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
     }
     .source {
-      font-size: 13px;
+      font-size: 12px;
       color: #999;
       margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
-    .source a { color: #0066CC; text-decoration: none; }
+    .source a { color: #8b0000; text-decoration: none; }
     .source a:hover { text-decoration: underline; }
 
     /* ── Audio player ── */
     .audio-player {
-      background: #f0f4f8;
-      border-radius: 10px;
-      padding: 14px 16px;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
       margin-bottom: 28px;
     }
     .audio-player.hidden { display: none; }
@@ -82,17 +102,17 @@
       flex-wrap: wrap;
     }
     #play-btn {
-      background: #0066CC;
+      background: #8b0000;
       color: #fff;
       border: none;
-      border-radius: 6px;
-      padding: 8px 16px;
-      font-size: 14px;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
       cursor: pointer;
       white-space: nowrap;
       flex-shrink: 0;
     }
-    #play-btn:hover { background: #0055aa; }
+    #play-btn:hover { background: #a00000; }
     .time-display {
       font-size: 12px;
       color: #666;
@@ -102,36 +122,34 @@
     }
     #seek-bar {
       flex: 1;
-      min-width: 100px;
-      height: 6px;
+      min-width: 80px;
+      height: 5px;
       -webkit-appearance: none;
       appearance: none;
-      background: #d0d8e0;
-      border-radius: 3px;
+      background: #ddd;
+      border-radius: 2px;
       outline: none;
       cursor: pointer;
     }
     #seek-bar::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 14px;
-      height: 14px;
+      width: 13px; height: 13px;
       border-radius: 50%;
-      background: #0066CC;
+      background: #8b0000;
       cursor: pointer;
     }
     #seek-bar::-moz-range-thumb {
-      width: 14px;
-      height: 14px;
+      width: 13px; height: 13px;
       border-radius: 50%;
-      background: #0066CC;
+      background: #8b0000;
       border: none;
       cursor: pointer;
     }
     #rate-select {
-      padding: 4px 6px;
-      font-size: 12px;
+      padding: 3px 5px;
+      font-size: 11px;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 3px;
       background: #fff;
       cursor: pointer;
       flex-shrink: 0;
@@ -139,42 +157,41 @@
 
     /* ── Paragraphs ── */
     .paragraph-pair {
-      margin-bottom: 24px;
-      border-left: 3px solid #e0e0e0;
-      padding-left: 16px;
-      transition: border-color 0.3s;
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
     }
-    .paragraph-pair:hover { border-color: #0066CC; }
+    .paragraph-pair:last-child { border-bottom: none; }
     .paragraph-pair .en {
       font-size: 16px;
       color: #1a1a1a;
       margin: 0 0 6px;
+      line-height: 1.8;
     }
     .paragraph-pair .cn {
       font-size: 14px;
-      color: #666;
+      color: #888;
       margin: 0;
+      line-height: 1.7;
     }
 
-    /* Sentence highlighting + click-to-seek cursor */
+    /* Sentence highlighting + click-to-seek */
     .sentence {
       transition: background-color 0.3s ease;
-      border-radius: 3px;
+      border-radius: 2px;
       padding: 1px 0;
       cursor: pointer;
     }
-    .sentence:hover { background-color: #f0f4f8; }
-    .sentence.highlight {
-      background-color: #FFF3CD;
-    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
 
     /* Keywords inline */
     .keyword {
-      color: #0066CC;
-      border-bottom: 1px dashed #0066CC;
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
       cursor: pointer;
     }
-    .keyword:hover { background-color: #e8f0fe; border-radius: 2px; }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
 
     /* ── Right column: sticky keyword sidebar ── */
     .column-kw {
@@ -184,26 +201,92 @@
       overflow-y: auto;
     }
     .kw-sidebar-title {
-      font-size: 17px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
       font-weight: 700;
-      color: #1a1a1a;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
       margin: 0 0 14px;
       padding-bottom: 10px;
-      border-bottom: 2px solid #eee;
+      border-bottom: 2px solid #8b0000;
     }
     .kw-card {
       background: #fff;
-      border: 1px solid #eee;
-      border-radius: 8px;
-      padding: 12px 14px;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
       margin-bottom: 10px;
     }
-    .kw-word { font-size: 15px; font-weight: 700; color: #0066CC; }
-    .kw-meta { font-size: 12px; color: #888; margin-left: 6px; }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
     .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
-    .kw-def-en { font-size: 12px; color: #666; margin: 2px 0 0; }
-    .kw-ctx { font-size: 12px; color: #888; margin: 4px 0 0; font-style: italic; }
-    .kw-ctx-cn { font-size: 12px; color: #999; margin: 2px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; }
+    .word-tooltip {
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 6px 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+      font-size: 13px;
+      color: #333;
+      white-space: nowrap;
+      max-width: 220px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      z-index: 90;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
 
     /* ── Popup (for inline keyword clicks) ── */
     .popup {
@@ -213,7 +296,7 @@
       transform: translateX(-50%);
       background: #fff;
       border: 1px solid #ddd;
-      border-radius: 12px;
+      border-radius: 8px;
       padding: 16px 20px;
       box-shadow: 0 4px 24px rgba(0,0,0,0.15);
       max-width: 360px;
@@ -221,41 +304,43 @@
       z-index: 100;
     }
     .popup.hidden { display: none; }
-    .popup-word { font-size: 20px; font-weight: 700; color: #0066CC; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
     .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
     .popup-pos { font-size: 13px; color: #aaa; }
     .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
     .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
     .popup-close {
-      position: absolute;
-      top: 10px;
-      right: 14px;
-      background: none;
-      border: none;
-      font-size: 18px;
-      color: #aaa;
-      cursor: pointer;
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
     }
     .popup-close:hover { color: #333; }
 
-    /* ── Mobile: stack columns ── */
+    /* ── Mobile ── */
     @media (max-width: 768px) {
-      body { padding: 12px 12px 80px; }
       .layout {
         grid-template-columns: 1fr;
         gap: 24px;
+        padding: 16px 12px 80px;
       }
       .column-kw {
         position: static;
         max-height: none;
         overflow-y: visible;
       }
-      h1 { font-size: 20px; }
+      h1 { font-size: 24px; }
       .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 22px; letter-spacing: 4px; }
     }
   </style>
 </head>
 <body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-title">DailyBBC</p>
+  <p class="masthead-date">2026-04-15</p>
+</div>
 
 <div class="layout">
 
@@ -269,7 +354,6 @@
     
 
     <header>
-      <p class="date">2026-04-15</p>
       <h1>Mahmood promises action against 'sham lawyers' abusing asylum system after BBC investigation</h1>
       <p class="source">Source: <a href="https://www.bbc.com/news/articles/cj944dgwvm8o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
     </header>
@@ -505,11 +589,14 @@
 
   <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
   <aside class="column-kw">
-    <p class="kw-sidebar-title">&#128214; Keywords</p>
+    <p class="kw-sidebar-title">Today's Keywords</p>
     
     <div class="kw-card">
-      <span class="kw-word">asylum</span>
-      <span class="kw-meta">/əˈsaɪləm/ n.</span>
+      <div class="kw-card-header">
+        <span class="kw-word">asylum</span>
+        <button class="kw-speak-btn" data-word="asylum" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈsaɪləm/ n.</span>
+      </div>
       <p class="kw-def">庇护，避难</p>
       <p class="kw-def-en">Protection given by a government to someone who has left their own country because they are in danger.</p>
       <p class="kw-ctx">&ldquo;The UK's asylum process offers protection to people who cannot return to their home countries because they would be in danger.&rdquo;</p>
@@ -517,8 +604,11 @@
     </div>
     
     <div class="kw-card">
-      <span class="kw-word">exploit</span>
-      <span class="kw-meta">/ɪkˈsplɔɪt/ v.</span>
+      <div class="kw-card-header">
+        <span class="kw-word">exploit</span>
+        <button class="kw-speak-btn" data-word="exploit" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪkˈsplɔɪt/ v.</span>
+      </div>
       <p class="kw-def">利用，剥削</p>
       <p class="kw-def-en">To use something or someone unfairly for your own advantage.</p>
       <p class="kw-ctx">&ldquo;The BBC News investigation reveals the process is being systematically exploited by legal advisers extracting fees from migrants who want to stay in the country.&rdquo;</p>
@@ -526,8 +616,11 @@
     </div>
     
     <div class="kw-card">
-      <span class="kw-word">fabricated</span>
-      <span class="kw-meta">/ˈfæbrɪkeɪtɪd/ adj.</span>
+      <div class="kw-card-header">
+        <span class="kw-word">fabricated</span>
+        <button class="kw-speak-btn" data-word="fabricated" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈfæbrɪkeɪtɪd/ adj.</span>
+      </div>
       <p class="kw-def">伪造的，捏造的</p>
       <p class="kw-def-en">Invented or made up, typically with the intent to deceive.</p>
       <p class="kw-ctx">&ldquo;Migrants are being given fake cover stories and instructed in how to obtain fabricated evidence, including supporting letters, photographs and medical reports.&rdquo;</p>
@@ -535,8 +628,11 @@
     </div>
     
     <div class="kw-card">
-      <span class="kw-word">persecution</span>
-      <span class="kw-meta">/ˌpɜːsɪˈkjuːʃn/ n.</span>
+      <div class="kw-card-header">
+        <span class="kw-word">persecution</span>
+        <button class="kw-speak-btn" data-word="persecution" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌpɜːsɪˈkjuːʃn/ n.</span>
+      </div>
       <p class="kw-def">迫害，虐待</p>
       <p class="kw-def-en">The act of treating someone unfairly or cruelly over a long period of time because of their race, religion, or political beliefs.</p>
       <p class="kw-ctx">&ldquo;The Conservatives said the system 'must be totally overhauled' so only those facing real personal persecution are granted asylum.&rdquo;</p>
@@ -544,8 +640,11 @@
     </div>
     
     <div class="kw-card">
-      <span class="kw-word">unscrupulous</span>
-      <span class="kw-meta">/ʌnˈskruːpjələs/ adj.</span>
+      <div class="kw-card-header">
+        <span class="kw-word">unscrupulous</span>
+        <button class="kw-speak-btn" data-word="unscrupulous" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ʌnˈskruːpjələs/ adj.</span>
+      </div>
       <p class="kw-def">不道德的，无耻的</p>
       <p class="kw-def-en">Behaving in a way that is dishonest or unfair in order to get what you want.</p>
       <p class="kw-ctx">&ldquo;It's disgusting to see these unscrupulous law firms taking advantage of people like this or taking advantage of a system like this.&rdquo;</p>
@@ -553,8 +652,11 @@
     </div>
     
     <div class="kw-card">
-      <span class="kw-word">prosecuted</span>
-      <span class="kw-meta">/ˈprɒsɪkjuːtɪd/ v.</span>
+      <div class="kw-card-header">
+        <span class="kw-word">prosecuted</span>
+        <button class="kw-speak-btn" data-word="prosecuted" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈprɒsɪkjuːtɪd/ v.</span>
+      </div>
       <p class="kw-def">起诉，检控</p>
       <p class="kw-def-en">To officially accuse someone of a crime in a court of law and try to prove that they are guilty.</p>
       <p class="kw-ctx">&ldquo;Conservative shadow home secretary Chris Philp said the legal advisers identified 'should be prosecuted for immigration fraud'.&rdquo;</p>
@@ -562,8 +664,11 @@
     </div>
     
     <div class="kw-card">
-      <span class="kw-word">rigorous</span>
-      <span class="kw-meta">/ˈrɪɡərəs/ adj.</span>
+      <div class="kw-card-header">
+        <span class="kw-word">rigorous</span>
+        <button class="kw-speak-btn" data-word="rigorous" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈrɪɡərəs/ adj.</span>
+      </div>
       <p class="kw-def">严格的，严密的</p>
       <p class="kw-def-en">Very thorough and careful, especially in a way that is demanding or strict.</p>
       <p class="kw-ctx">&ldquo;Human rights campaigner Peter Tatchell said the vast majority of claims were genuine and had gone through 'a rigorous criterion'.&rdquo;</p>
@@ -571,8 +676,11 @@
     </div>
     
     <div class="kw-card">
-      <span class="kw-word">disproportionate</span>
-      <span class="kw-meta">/ˌdɪsprəˈpɔːʃənət/ adj.</span>
+      <div class="kw-card-header">
+        <span class="kw-word">disproportionate</span>
+        <button class="kw-speak-btn" data-word="disproportionate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌdɪsprəˈpɔːʃənət/ adj.</span>
+      </div>
       <p class="kw-def">不成比例的，不相称的</p>
       <p class="kw-def-en">Too large or too small in comparison with something else.</p>
       <p class="kw-ctx">&ldquo;Home Office statistics show that Pakistani nationals make up a disproportionate number of the claims made on the grounds of sexuality.&rdquo;</p>
@@ -583,7 +691,7 @@
 
 </div>
 
-<!-- Keyword popup (for inline keyword clicks in article text) -->
+<!-- Keyword popup -->
 <div id="keyword-popup" class="popup hidden">
   <div class="popup-word"></div>
   <div class="popup-phonetic"></div>
@@ -593,8 +701,94 @@
   <button class="popup-close">&#10005;</button>
 </div>
 
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
 <script>
   const TIMELINE = {"sentences": [{"index": 0, "text": "Home Secretary Shabana Mahmood has promised that \"sham lawyers\" who facilitate abuse of the asylum system \"will face the full force of the law\".", "start_ms": 0, "end_ms": 9528, "paragraph_index": 0}, {"index": 1, "text": "It comes after a BBC investigation revealed how law firms and advisers are charging thousands of pounds to help migrants pretend to be gay in order to stay in the UK.", "start_ms": 9528, "end_ms": 21000, "paragraph_index": 1}, {"index": 2, "text": "The Home Office is investigating the individuals highlighted in the BBC's reporting as part of a wider investigation prompted by officials noticing a growing trend of fake claims from people pretending to be gay.", "start_ms": 21000, "end_ms": 34584, "paragraph_index": 2}, {"index": 3, "text": "However, the Conservatives said the system \"must be totally overhauled\" so only those facing real personal persecution are granted asylum.", "start_ms": 34584, "end_ms": 44472, "paragraph_index": 3}, {"index": 4, "text": "The BBC has uncovered how migrants whose visas are due to run out are being given fake cover stories and instructed in how to obtain fabricated evidence, including supporting letters, photographs and medical reports.", "start_ms": 44472, "end_ms": 59760, "paragraph_index": 4}, {"index": 5, "text": "They then apply for asylum claiming to be gay and in fear for their lives if they return to Pakistan or Bangladesh.", "start_ms": 59760, "end_ms": 67848, "paragraph_index": 5}, {"index": 6, "text": "The UK's asylum process offers protection to people who cannot return to their home countries because they would be in danger, for example in countries like Pakistan and Bangladesh where gay sex is illegal.", "start_ms": 67848, "end_ms": 81432, "paragraph_index": 6}, {"index": 7, "text": "But the BBC News investigation reveals the process is being systematically exploited by legal advisers extracting fees from migrants who want to stay in the country.", "start_ms": 81432, "end_ms": 92640, "paragraph_index": 7}, {"index": 8, "text": "These are often people whose student, work or tourist visas have expired, rather than those who have just arrived in the country on small boats or through other illegal routes.", "start_ms": 92640, "end_ms": 104088, "paragraph_index": 8}, {"index": 9, "text": "This group now makes up 35% of all asylum claims,which topped 100,000 in 2025.", "start_ms": 104088, "end_ms": 112656, "paragraph_index": 9}, {"index": 10, "text": "Mahmood said: \"Anyone abusing protections for people fleeing persecution over gender or sexual orientation is beyond contempt.", "start_ms": 112656, "end_ms": 122112, "paragraph_index": 10}, {"index": 11, "text": "\"Let me be clear: try to defraud the British people to enter or remain in the UK and your asylum claim will be refused, your support cut off, and you will find yourself on a one-way flight out of Britain.", "start_ms": 122112, "end_ms": 135456, "paragraph_index": 11}, {"index": 12, "text": "\"Sham lawyers facilitating this abuse will face the full force of the law.\"", "start_ms": 135456, "end_ms": 140976, "paragraph_index": 12}, {"index": 13, "text": "The Solicitors Regulation Authority (SRA) said it was urgently following up with all the firms it regulated which were identified in the BBC's reporting.", "start_ms": 140976, "end_ms": 151728, "paragraph_index": 13}, {"index": 14, "text": "Jonathan Peddie, executive director\u202fof investigations, enforcement and litigation at the SRA, said: \"If we find evidence that anyone we regulate has acted in ways that contravene their duty to act legally and uphold the law, we will\u202ftake action.\"", "start_ms": 151728, "end_ms": 169272, "paragraph_index": 14}, {"index": 15, "text": "The Immigration Advice Authority, which regulates the sector, said it was assessing the evidence in the BBC's investigation and would pursue action against anyone found to be providing immigration advice illegally.", "start_ms": 169272, "end_ms": 183432, "paragraph_index": 15}, {"index": 16, "text": "Labour MP Jo White, a member of the Commons home affairs select committee, called for the Home Office to stop issuing study visas to people from Pakistan,as it did last month for people from Afghanistan, Cameroon, Myanmar and Sudan over what it said was widespread visa abuse.", "start_ms": 183432, "end_ms": 203376, "paragraph_index": 16}, {"index": 17, "text": "Conservative shadow home secretary Chris Philp said the BBC's investigation \"exposes the scam at the heart of many asylum claims\" and the legal advisers identified \"should be prosecuted for immigration fraud\".", "start_ms": 203376, "end_ms": 217512, "paragraph_index": 17}, {"index": 18, "text": "Liberal Democrat immigration and asylum spokesman Will Forster said the BBC's findings were \"abhorrent\", adding: \"We need an asylum system that is fair, controlled and efficient.", "start_ms": 217512, "end_ms": 229584, "paragraph_index": 18}, {"index": 19, "text": "Not the shambles the Conservatives left us with.\"", "start_ms": 229584, "end_ms": 233472, "paragraph_index": 18}, {"index": 20, "text": "He called on the government to urgently investigate how widespread the issue was.", "start_ms": 233472, "end_ms": 239136, "paragraph_index": 19}, {"index": 21, "text": "Reform UK said it would \"put a stop to the legal-industrial complex exploiting the generosity of the British taxpayer\".", "start_ms": 239136, "end_ms": 247584, "paragraph_index": 20}, {"index": 22, "text": "If the party wins power, home affairs spokesman Zia Yusuf pledged to make facilitating a false asylum claim a \"strict liability\" criminal offence, meaning there would be no requirement to prove intent in prosecutions, which would be punishable by up to two years in jail.", "start_ms": 247584, "end_ms": 266016, "paragraph_index": 21}, {"index": 23, "text": "He said a Reform government would also immediately abolish legal aid for asylum applications from those who enter the UK illegally or overstay their visa.", "start_ms": 266016, "end_ms": 276672, "paragraph_index": 22}, {"index": 24, "text": "Green Party leader Zack Polanski said: \"It's disgusting to see these unscrupulous law firms taking advantage of people like this or taking advantage of a system like this.\"", "start_ms": 276672, "end_ms": 288048, "paragraph_index": 23}, {"index": 25, "text": "He added that there was a wider issue of the government having \"inconsistent policies\", which create \"perverse incentives for these kind of unscrupulous businesses and industries to pop up\".", "start_ms": 288048, "end_ms": 300000, "paragraph_index": 24}, {"index": 26, "text": "Aderonke Apata, who founded the African Rainbow Family charity, was granted asylum in the UK because she is a lesbian and could have faced the death penalty in Nigeria.", "start_ms": 300000, "end_ms": 311976, "paragraph_index": 25}, {"index": 27, "text": "She said she was \"appalled\" by the BBC's findings, adding: \"It dismisses the real struggle that we face as a community.", "start_ms": 311976, "end_ms": 320208, "paragraph_index": 26}, {"index": 28, "text": "\"And for genuine people who are seeking asylum and LGBTIQ people, this makes it extremely difficult for them to be able to be successful in their asylum claims.\"", "start_ms": 320208, "end_ms": 330600, "paragraph_index": 27}, {"index": 29, "text": "The BBC has been contacted by several LGBT groups who said they had noticed an increasing number of people turning up to meetings who they suspect are making fake gay asylum claims.", "start_ms": 330600, "end_ms": 342792, "paragraph_index": 28}, {"index": 30, "text": "Tom Guy, the founder of National Student Pride, said: \"We've had people turning up...", "start_ms": 342792, "end_ms": 349320, "paragraph_index": 29}, {"index": 31, "text": "they take photos and they would leave.", "start_ms": 349320, "end_ms": 352464, "paragraph_index": 29}, {"index": 32, "text": "They weren't even staying for the event.\"", "start_ms": 352464, "end_ms": 355656, "paragraph_index": 29}, {"index": 33, "text": "Human rights campaigner Peter Tatchell, whose foundation helps people secure asylum on LGBT grounds, said the vast majority of claims were genuine and had gone through \"a rigorous criterion\".", "start_ms": 355656, "end_ms": 368928, "paragraph_index": 30}, {"index": 34, "text": "However, he told BBC Radio 4's World at One programme his foundation had been \"swamped\" by people from Pakistan claiming to be LGBT and seeking letters of recommendation.", "start_ms": 368928, "end_ms": 381384, "paragraph_index": 31}, {"index": 35, "text": "Imran Hussain, from the Refugee Council charity, said it was \"deplorable that unscrupulous advisers are exploiting desperate and vulnerable people for profit and those responsible must be held to account\".", "start_ms": 381384, "end_ms": 395064, "paragraph_index": 32}, {"index": 36, "text": "He added: \"Every day in our frontline services we work with LGBTQ+ refugees from countries like Uganda and Pakistan who have faced imprisonment, violence and abuse simply for who they are, and who have come to Britain so they can live safely and openly.", "start_ms": 395064, "end_ms": 412416, "paragraph_index": 33}, {"index": 37, "text": "\"These kinds of abuses must not be used to undermine the credibility of people with genuine need for asylum.\"", "start_ms": 412416, "end_ms": 419928, "paragraph_index": 34}, {"index": 38, "text": "It is difficult to know precisely how many asylum applications might be fabricated.", "start_ms": 419928, "end_ms": 426216, "paragraph_index": 35}, {"index": 39, "text": "But Home Office statistics show that Pakistani nationals make up a disproportionate number of the claims made on the grounds of sexuality.", "start_ms": 426216, "end_ms": 435408, "paragraph_index": 36}, {"index": 40, "text": "In 2023, the most recent year for which data is available, some 42% of asylum claims with an LGBT element were made by Pakistani nationals and they accounted for the largest number of such claims in each of the five previous years.", "start_ms": 435408, "end_ms": 452688, "paragraph_index": 37}, {"index": 41, "text": "In the same year, Pakistani nationals were only the fourth most common nationality for all asylum applications and accounted for just 6% of overall asylum applications.", "start_ms": 452688, "end_ms": 465624, "paragraph_index": 38}, {"index": 42, "text": "Nearly two-thirds of asylum seekers claiming persecution on the basis of sexual orientation had their claims granted at the initial stage in 2023.", "start_ms": 465624, "end_ms": 476568, "paragraph_index": 39}, {"index": 43, "text": "Sign up for our Politics Essential newsletterto read top political analysis, gain insight from across the UK and stay up to speed with the big moments.", "start_ms": 476568, "end_ms": 487608, "paragraph_index": 40}, {"index": 44, "text": "It'll be delivered straight to your inbox every weekday.", "start_ms": 487608, "end_ms": 491904, "paragraph_index": 40}], "total_duration_ms": 491904};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => {
+    const nodes = [];
+    pEl.childNodes.forEach(node => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        const frag = document.createDocumentFragment();
+        const parts = node.textContent.split(/(\s+)/);
+        parts.forEach(part => {
+          if (/^\s+$/.test(part) || part === '') {
+            frag.appendChild(document.createTextNode(part));
+          } else {
+            const span = document.createElement('span');
+            span.className = 'word-hoverable';
+            span.textContent = part;
+            frag.appendChild(span);
+          }
+        });
+        nodes.push({ old: node, replacement: frag });
+      }
+    });
+    nodes.forEach(n => pEl.replaceChild(n.replacement, n.old));
+  });
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 2) return;
+
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      let content;
+      if (KW_DICT[raw]) {
+        content = KW_DICT[raw];
+      } else {
+        content = '<a href="https://dict.youdao.com/w/eng/' + encodeURIComponent(raw) + '/" target="_blank">' + raw + ' &#8594; dict</a>';
+      }
+      tooltip.innerHTML = content;
+      tooltip.style.display = 'block';
+
+      const rect = el.getBoundingClientRect();
+      tooltip.style.position = 'fixed';
+      tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+      tooltip.style.top = (rect.top - 8) + 'px';
+      tooltip.style.transform = 'translateX(-50%) translateY(-100%)';
+    }, 300);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { tooltip.style.display = 'none'; }, 200);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
 
   // ── Audio player ──
   const audio = document.getElementById('article-audio');
@@ -630,12 +824,8 @@
       const cur = audio.currentTime;
       const dur = audio.duration || 1;
       timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
 
-      if (!isDragging) {
-        seekBar.value = Math.round((cur / dur) * 1000);
-      }
-
-      // Sentence-level highlighting
       const currentMs = cur * 1000;
       TIMELINE.sentences.forEach((entry) => {
         const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
@@ -657,26 +847,22 @@
       document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
     });
 
-    // Seek bar drag
     seekBar.addEventListener('mousedown', () => { isDragging = true; });
     seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
     seekBar.addEventListener('input', () => {
-      const ratio = seekBar.value / 1000;
-      timeCurrent.textContent = fmtTime(ratio * (audio.duration || 0));
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
     });
     seekBar.addEventListener('change', () => {
-      const ratio = seekBar.value / 1000;
-      audio.currentTime = ratio * (audio.duration || 0);
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
       isDragging = false;
     });
 
-    // Playback speed
     rateSelect.addEventListener('change', () => {
       audio.playbackRate = parseFloat(rateSelect.value);
     });
   }
 
-  // ── Click sentence to seek audio ──
+  // ── Click sentence to seek ──
   const articleMain = document.getElementById('article-main');
   if (articleMain && audio) {
     articleMain.addEventListener('click', (e) => {
