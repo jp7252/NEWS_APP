@@ -100,4 +100,5 @@ def build_article_page(
         timeline_json=json.dumps(timeline or {"sentences": [], "total_duration_ms": 0}),
         audio_url=audio_url or "",
         has_audio=audio_url is not None,
+        lead_image_url=article.lead_image_url or "",
     )

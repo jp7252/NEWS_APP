@@ -8,8 +8,7 @@
     *, *::before, *::after { box-sizing: border-box; }
 
     body {
-      max-width: 720px;
-      margin: 0 auto;
+      margin: 0;
       padding: 24px 20px 80px;
       font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
       line-height: 1.8;
@@ -17,22 +16,48 @@
       background: #fafafa;
     }
 
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      align-items: start;
+    }
+
+    /* ── Left column: article ── */
+    .column-main { min-width: 0; }
+
+    /* Lead image */
+    .lead-image {
+      margin: 0 0 20px;
+    }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-radius: 6px;
+      display: block;
+    }
+
+    /* Header */
     header {
-      margin-bottom: 32px;
-      padding-bottom: 20px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
       border-bottom: 2px solid #eee;
     }
     .date {
       font-size: 13px;
       color: #888;
-      margin: 0 0 8px;
+      margin: 0 0 6px;
       letter-spacing: 1px;
     }
     h1 {
       font-size: 24px;
       line-height: 1.4;
       color: #1a1a1a;
-      margin: 0 0 8px;
+      margin: 0 0 6px;
     }
     .source {
       font-size: 13px;
@@ -42,38 +67,79 @@
     .source a { color: #0066CC; text-decoration: none; }
     .source a:hover { text-decoration: underline; }
 
-    /* Audio player */
+    /* ── Audio player ── */
     .audio-player {
       background: #f0f4f8;
       border-radius: 10px;
-      padding: 16px 20px;
-      margin-bottom: 32px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
+      padding: 14px 16px;
+      margin-bottom: 28px;
     }
     .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
     #play-btn {
       background: #0066CC;
       color: #fff;
       border: none;
       border-radius: 6px;
-      padding: 10px 20px;
+      padding: 8px 16px;
       font-size: 14px;
       cursor: pointer;
       white-space: nowrap;
+      flex-shrink: 0;
     }
     #play-btn:hover { background: #0055aa; }
-    #progress {
-      font-size: 13px;
+    .time-display {
+      font-size: 12px;
       color: #666;
       font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 100px;
+      height: 6px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #d0d8e0;
+      border-radius: 3px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #0066CC;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #0066CC;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 4px 6px;
+      font-size: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
     }
 
-    /* Paragraphs */
+    /* ── Paragraphs ── */
     .paragraph-pair {
-      margin-bottom: 28px;
+      margin-bottom: 24px;
       border-left: 3px solid #e0e0e0;
       padding-left: 16px;
       transition: border-color 0.3s;
@@ -82,7 +148,7 @@
     .paragraph-pair .en {
       font-size: 16px;
       color: #1a1a1a;
-      margin: 0 0 8px;
+      margin: 0 0 6px;
     }
     .paragraph-pair .cn {
       font-size: 14px;
@@ -90,17 +156,19 @@
       margin: 0;
     }
 
-    /* Sentence highlighting */
+    /* Sentence highlighting + click-to-seek cursor */
     .sentence {
       transition: background-color 0.3s ease;
       border-radius: 3px;
       padding: 1px 0;
+      cursor: pointer;
     }
+    .sentence:hover { background-color: #f0f4f8; }
     .sentence.highlight {
       background-color: #FFF3CD;
     }
 
-    /* Keywords */
+    /* Keywords inline */
     .keyword {
       color: #0066CC;
       border-bottom: 1px dashed #0066CC;
@@ -108,30 +176,36 @@
     }
     .keyword:hover { background-color: #e8f0fe; border-radius: 2px; }
 
-    /* Keyword list section */
-    .keyword-section {
-      margin-top: 40px;
-      padding-top: 24px;
-      border-top: 2px solid #eee;
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
     }
-    .keyword-section h2 {
-      font-size: 18px;
+    .kw-sidebar-title {
+      font-size: 17px;
+      font-weight: 700;
       color: #1a1a1a;
-      margin: 0 0 16px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #eee;
     }
     .kw-card {
       background: #fff;
       border: 1px solid #eee;
       border-radius: 8px;
-      padding: 14px 18px;
-      margin-bottom: 12px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
     }
-    .kw-word { font-size: 16px; font-weight: 700; color: #0066CC; }
-    .kw-meta { font-size: 13px; color: #888; margin-left: 8px; }
-    .kw-def { font-size: 14px; color: #333; margin: 6px 0 0; }
-    .kw-ctx { font-size: 13px; color: #888; margin: 6px 0 0; font-style: italic; }
+    .kw-word { font-size: 15px; font-weight: 700; color: #0066CC; }
+    .kw-meta { font-size: 12px; color: #888; margin-left: 6px; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #666; margin: 2px 0 0; }
+    .kw-ctx { font-size: 12px; color: #888; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 12px; color: #999; margin: 2px 0 0; }
 
-    /* Popup */
+    /* ── Popup (for inline keyword clicks) ── */
     .popup {
       position: fixed;
       bottom: 20px;
@@ -145,7 +219,6 @@
       max-width: 360px;
       width: 90%;
       z-index: 100;
-      transition: opacity 0.2s, transform 0.2s;
     }
     .popup.hidden { display: none; }
     .popup-word { font-size: 20px; font-weight: 700; color: #0066CC; }
@@ -165,8 +238,18 @@
     }
     .popup-close:hover { color: #333; }
 
-    @media (max-width: 480px) {
+    /* ── Mobile: stack columns ── */
+    @media (max-width: 768px) {
       body { padding: 12px 12px 80px; }
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
       h1 { font-size: 20px; }
       .paragraph-pair .en { font-size: 15px; }
     }
@@ -174,133 +257,204 @@
 </head>
 <body>
 
-  <header>
-    <p class="date">{{ date }}</p>
-    <h1>{{ title }}</h1>
-    <p class="source">Source: <a href="{{ url }}">BBC Technology</a></p>
-  </header>
+<div class="layout">
 
-  <div class="audio-player {{ '' if has_audio else 'hidden' }}">
-    <audio id="article-audio" src="{{ audio_url }}" preload="metadata"></audio>
-    <button id="play-btn">▶ 播放文章音频</button>
-    <span id="progress">00:00 / --:--</span>
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    {% if lead_image_url %}
+    <figure class="lead-image">
+      <img src="{{ lead_image_url }}" alt="{{ title }}" loading="lazy">
+    </figure>
+    {% endif %}
+
+    <header>
+      <p class="date">{{ date }}</p>
+      <h1>{{ title }}</h1>
+      <p class="source">Source: <a href="{{ url }}">BBC News</a></p>
+    </header>
+
+    <div class="audio-player {{ '' if has_audio else 'hidden' }}">
+      <audio id="article-audio" src="{{ audio_url }}" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      {% for en_html, cn in paragraphs %}
+      <div class="paragraph-pair" data-para-index="{{ loop.index0 }}">
+        <p class="en">{{ en_html }}</p>
+        <p class="cn">{{ cn }}</p>
+      </div>
+      {% endfor %}
+    </main>
+
   </div>
 
-  <main>
-    {% for en_html, cn in paragraphs %}
-    <div class="paragraph-pair" data-para-index="{{ loop.index0 }}">
-      <p class="en">{{ en_html }}</p>
-      <p class="cn">{{ cn }}</p>
-    </div>
-    {% endfor %}
-  </main>
-
-  <div class="keyword-section">
-    <h2>📖 今日关键词</h2>
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">&#128214; Keywords</p>
     {% for kw in keywords %}
     <div class="kw-card">
       <span class="kw-word">{{ kw.word }}</span>
       <span class="kw-meta">{{ kw.phonetic }} {{ kw.pos }}</span>
       <p class="kw-def">{{ kw.definition_cn }}</p>
-      <p class="kw-def" style="font-size:13px;color:#666;">{{ kw.definition_en }}</p>
-      <p class="kw-ctx">"{{ kw.context_sentence }}"</p>
-      <p class="kw-ctx" style="font-style:normal;color:#999;">{{ kw.context_translation }}</p>
+      <p class="kw-def-en">{{ kw.definition_en }}</p>
+      <p class="kw-ctx">&ldquo;{{ kw.context_sentence }}&rdquo;</p>
+      <p class="kw-ctx-cn">{{ kw.context_translation }}</p>
     </div>
     {% endfor %}
-  </div>
+  </aside>
 
-  <div id="keyword-popup" class="popup hidden">
-    <div class="popup-word"></div>
-    <div class="popup-phonetic"></div>
-    <div class="popup-pos"></div>
-    <div class="popup-def"></div>
-    <div class="popup-def-en"></div>
-    <button class="popup-close">✕</button>
-  </div>
+</div>
 
-  <script>
-    const TIMELINE = {{ timeline_json }};
+<!-- Keyword popup (for inline keyword clicks in article text) -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
 
-    // --- Audio player ---
-    const audio = document.getElementById('article-audio');
-    const playBtn = document.getElementById('play-btn');
-    const progressEl = document.getElementById('progress');
+<script>
+  const TIMELINE = {{ timeline_json }};
 
-    function fmtTime(sec) {
-      const m = Math.floor(sec / 60);
-      const s = Math.floor(sec % 60);
-      return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
-    }
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
 
-    if (playBtn && audio) {
-      playBtn.addEventListener('click', () => {
-        if (audio.paused) {
-          audio.play();
-          playBtn.textContent = '⏸ 暂停';
-        } else {
-          audio.pause();
-          playBtn.textContent = '▶ 播放文章音频';
-        }
-      });
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
 
-      audio.addEventListener('loadedmetadata', () => {
-        progressEl.textContent = '00:00 / ' + fmtTime(audio.duration);
-      });
-
-      audio.addEventListener('timeupdate', () => {
-        const cur = audio.currentTime;
-        const dur = audio.duration || 0;
-        progressEl.textContent = fmtTime(cur) + ' / ' + fmtTime(dur);
-
-        // Sentence-level highlighting
-        const currentMs = cur * 1000;
-        TIMELINE.sentences.forEach((entry) => {
-          const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
-          if (!el) return;
-          if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
-            if (!el.classList.contains('highlight')) {
-              el.classList.add('highlight');
-              el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-          } else {
-            el.classList.remove('highlight');
-          }
-        });
-      });
-
-      audio.addEventListener('ended', () => {
-        playBtn.textContent = '▶ 播放文章音频';
-        document.querySelectorAll('.sentence.highlight').forEach(el => {
-          el.classList.remove('highlight');
-        });
-      });
-    }
-
-    // --- Keyword popup ---
-    const popup = document.getElementById('keyword-popup');
-
-    document.querySelectorAll('.keyword').forEach(el => {
-      el.addEventListener('click', (e) => {
-        e.stopPropagation();
-        popup.querySelector('.popup-word').textContent = el.dataset.word;
-        popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
-        popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
-        popup.querySelector('.popup-def').textContent = el.dataset.def || '';
-        popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
-        popup.classList.remove('hidden');
-      });
-    });
-
-    popup.querySelector('.popup-close').addEventListener('click', () => {
-      popup.classList.add('hidden');
-    });
-
-    document.addEventListener('click', (e) => {
-      if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
-        popup.classList.add('hidden');
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
       }
     });
-  </script>
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+
+      if (!isDragging) {
+        seekBar.value = Math.round((cur / dur) * 1000);
+      }
+
+      // Sentence-level highlighting
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    // Seek bar drag
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      const ratio = seekBar.value / 1000;
+      timeCurrent.textContent = fmtTime(ratio * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      const ratio = seekBar.value / 1000;
+      audio.currentTime = ratio * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    // Playback speed
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek audio ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
 
 </body>
 </html>

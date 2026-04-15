@@ -36,6 +36,7 @@ class ProcessedArticle:
     paragraphs_en: list[str]
     paragraphs_cn: list[str]
     keywords: list[Keyword] = field(default_factory=list)
+    lead_image_url: str | None = None
 
 
 def _debug_log(run_id: str, hypothesis_id: str, location: str, message: str, data: dict) -> None:
@@ -209,4 +210,5 @@ def process_article(
         paragraphs_en=raw.paragraphs,
         paragraphs_cn=paragraphs_cn,
         keywords=keywords,
+        lead_image_url=raw.lead_image_url,
     )

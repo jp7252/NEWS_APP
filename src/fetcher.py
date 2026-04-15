@@ -2,6 +2,7 @@
 
 import time
 import logging
+from urllib.parse import urljoin
 from dataclasses import dataclass, field
 
 import feedparser
@@ -30,6 +31,7 @@ class RawArticle:
     description: str
     pub_date: str
     paragraphs: list[str] = field(default_factory=list)
+    lead_image_url: str | None = None
     is_summary_only: bool = False
 
 
@@ -44,6 +46,27 @@ def _fetch_with_retry(url: str, retries: int = MAX_RETRIES) -> requests.Response
             if attempt < retries:
                 time.sleep(RETRY_DELAY_SECONDS)
     raise RuntimeError(f"Failed to fetch {url} after {retries} attempts")
+
+
+def _extract_lead_image(soup: BeautifulSoup, page_url: str) -> str | None:
+    """Best-effort extraction of the article's lead image URL."""
+    og = soup.find("meta", property="og:image")
+    if og and og.get("content"):
+        return urljoin(page_url, og["content"])
+
+    article = soup.find("article")
+    container = article or soup
+    fig_img = container.find("figure")
+    if fig_img:
+        img = fig_img.find("img")
+        if img and img.get("src"):
+            return urljoin(page_url, img["src"])
+
+    img = container.find("img", src=True)
+    if img:
+        return urljoin(page_url, img["src"])
+
+    return None
 
 
 def _extract_paragraphs(html: str) -> list[str]:
@@ -83,9 +106,12 @@ def fetch_top_article(rss_url: str = BBC_TOP_NEWS_RSS) -> RawArticle:
 
     logger.info("Top article: %s", title)
 
+    lead_image_url = None
     try:
         resp = _fetch_with_retry(link)
         paragraphs = _extract_paragraphs(resp.text)
+        soup = BeautifulSoup(resp.text, "html.parser")
+        lead_image_url = _extract_lead_image(soup, link)
     except Exception as e:
         logger.error("Failed to extract article body: %s", e)
         paragraphs = []
@@ -99,6 +125,7 @@ def fetch_top_article(rss_url: str = BBC_TOP_NEWS_RSS) -> RawArticle:
             description=description,
             pub_date=pub_date,
             paragraphs=paragraphs,
+            lead_image_url=lead_image_url,
             is_summary_only=True,
         )
 
@@ -108,4 +135,5 @@ def fetch_top_article(rss_url: str = BBC_TOP_NEWS_RSS) -> RawArticle:
         description=description,
         pub_date=pub_date,
         paragraphs=paragraphs,
+        lead_image_url=lead_image_url,
     )
