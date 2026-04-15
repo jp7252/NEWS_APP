@@ -2,7 +2,6 @@
 
 import json
 import logging
-import time
 from dataclasses import dataclass, field
 
 from openai import OpenAI
@@ -10,8 +9,6 @@ from openai import OpenAI
 from src.fetcher import RawArticle
 
 logger = logging.getLogger(__name__)
-DEBUG_LOG_PATH = "/Users/jp/NEWS_APP/.cursor/debug-c5512b.log"
-DEBUG_SESSION_ID = "c5512b"
 
 MAX_RETRIES = 3
 
@@ -39,35 +36,10 @@ class ProcessedArticle:
     lead_image_url: str | None = None
 
 
-def _debug_log(run_id: str, hypothesis_id: str, location: str, message: str, data: dict) -> None:
-    # #region agent log
-    payload = {
-        "sessionId": DEBUG_SESSION_ID,
-        "runId": run_id,
-        "hypothesisId": hypothesis_id,
-        "location": location,
-        "message": message,
-        "data": data,
-        "timestamp": int(time.time() * 1000),
-    }
-    with open(DEBUG_LOG_PATH, "a", encoding="utf-8") as f:
-        f.write(json.dumps(payload, ensure_ascii=False) + "\n")
-    # #endregion
-
-
-def _call_llm(client: OpenAI, system: str, user: str, model: str, run_id: str) -> dict:
+def _call_llm(client: OpenAI, system: str, user: str, model: str) -> dict:
     """Call the LLM with retries and JSON parsing."""
     for attempt in range(1, MAX_RETRIES + 1):
         try:
-            # #region agent log
-            _debug_log(
-                run_id,
-                "H3",
-                "processor.py:62",
-                "LLM request attempt",
-                {"attempt": attempt, "model": model, "user_chars": len(user)},
-            )
-            # #endregion
             resp = client.chat.completions.create(
                 model=model,
                 response_format={"type": "json_object"},
@@ -80,25 +52,12 @@ def _call_llm(client: OpenAI, system: str, user: str, model: str, run_id: str) -
             text = resp.choices[0].message.content
             return json.loads(text)
         except (json.JSONDecodeError, Exception) as e:
-            # #region agent log
-            _debug_log(
-                run_id,
-                "H4",
-                "processor.py:77",
-                "LLM request failed",
-                {
-                    "attempt": attempt,
-                    "error_type": type(e).__name__,
-                    "error_text_snippet": str(e)[:180],
-                },
-            )
-            # #endregion
             logger.warning("LLM call attempt %d/%d failed: %s", attempt, MAX_RETRIES, e)
             if attempt == MAX_RETRIES:
                 raise
 
 
-def _translate(client: OpenAI, model: str, paragraphs: list[str], run_id: str) -> list[str]:
+def _translate(client: OpenAI, model: str, paragraphs: list[str]) -> list[str]:
     system = (
         "你是一个英中翻译专家。请将以下英文新闻文章逐段翻译为中文。\n"
         "要求：\n"
@@ -108,7 +67,7 @@ def _translate(client: OpenAI, model: str, paragraphs: list[str], run_id: str) -
         '- 输出为 JSON：{"translated_paragraphs": ["段落1", "段落2", ...]}'
     )
     user = json.dumps(paragraphs, ensure_ascii=False)
-    data = _call_llm(client, system, user, model, run_id)
+    data = _call_llm(client, system, user, model)
     translated = data.get("translated_paragraphs", [])
 
     if len(translated) != len(paragraphs):
@@ -124,7 +83,7 @@ def _translate(client: OpenAI, model: str, paragraphs: list[str], run_id: str) -
     return translated
 
 
-def _extract_keywords(client: OpenAI, model: str, full_text: str, run_id: str) -> list[Keyword]:
+def _extract_keywords(client: OpenAI, model: str, full_text: str) -> list[Keyword]:
     system = (
         "你是一个英语教学专家。从以下英文新闻文章中提取 5-8 个值得学习的关键词。\n"
         "选词标准：\n"
@@ -142,7 +101,7 @@ def _extract_keywords(client: OpenAI, model: str, full_text: str, run_id: str) -
         "- context_translation: 该句子的中文翻译\n\n"
         '输出格式为 JSON：{"keywords": [...]}'
     )
-    data = _call_llm(client, system, full_text, model, run_id)
+    data = _call_llm(client, system, full_text, model)
     raw_keywords = data.get("keywords", [])
 
     keywords = []
@@ -163,13 +122,13 @@ def _extract_keywords(client: OpenAI, model: str, full_text: str, run_id: str) -
     return keywords
 
 
-def _summarise(client: OpenAI, model: str, full_text: str, run_id: str) -> str:
+def _summarise(client: OpenAI, model: str, full_text: str) -> str:
     system = (
         "用中文写一段 2-3 句话的新闻摘要，让读者快速了解这篇文章在讲什么。\n"
         "语气：简洁客观的新闻语气。\n"
         '输出为 JSON：{"summary_cn": "..."}'
     )
-    data = _call_llm(client, system, full_text, model, run_id)
+    data = _call_llm(client, system, full_text, model)
     return data.get("summary_cn", "")
 
 
@@ -178,29 +137,19 @@ def process_article(
     api_key: str,
     base_url: str = "https://api.deepseek.com",
     model: str = "deepseek-chat",
-    run_id: str = "run-unknown",
 ) -> ProcessedArticle:
     """Run all three LLM calls and return a ProcessedArticle."""
     client = OpenAI(api_key=api_key, base_url=base_url)
-    # #region agent log
-    _debug_log(
-        run_id,
-        "H2",
-        "processor.py:182",
-        "LLM client constructed",
-        {"base_url": base_url, "model": model, "api_key_prefix": api_key[:3], "api_key_len": len(api_key)},
-    )
-    # #endregion
     full_text = "\n\n".join(raw.paragraphs)
 
     logger.info("LLM call 1/3: translating %d paragraphs…", len(raw.paragraphs))
-    paragraphs_cn = _translate(client, model, raw.paragraphs, run_id)
+    paragraphs_cn = _translate(client, model, raw.paragraphs)
 
     logger.info("LLM call 2/3: extracting keywords…")
-    keywords = _extract_keywords(client, model, full_text, run_id)
+    keywords = _extract_keywords(client, model, full_text)
 
     logger.info("LLM call 3/3: generating Chinese summary…")
-    summary_cn = _summarise(client, model, full_text, run_id)
+    summary_cn = _summarise(client, model, full_text)
 
     return ProcessedArticle(
         title=raw.title,
