@@ -9,6 +9,12 @@ logger = logging.getLogger(__name__)
 
 DEFAULT_VOICE = "en-US-AriaNeural"
 DEFAULT_RATE = "-10%"
+EDGE_TTS_BITRATE_KBPS = 48
+
+
+def _mp3_chunk_duration_ms(chunk: bytes) -> float:
+    """Estimate MP3 chunk duration from byte length (edge-tts outputs 48kbps)."""
+    return (len(chunk) * 8) / EDGE_TTS_BITRATE_KBPS
 
 
 def split_into_sentences(paragraphs: list[str]) -> list[dict]:
@@ -44,28 +50,27 @@ async def generate_audio(
         communicate = edge_tts.Communicate(text, voice=voice, rate=rate)
 
         chunk_audio = b""
-        sentence_end_ms = 0.0
+        word_end_ms = 0.0
 
         async for event in communicate.stream():
             if event["type"] == "audio":
                 chunk_audio += event["data"]
             elif event["type"] == "WordBoundary":
-                word_end = (event["offset"] + event["duration"]) / 10_000
-                sentence_end_ms = max(sentence_end_ms, word_end)
+                end = (event["offset"] + event["duration"]) / 10_000
+                word_end_ms = max(word_end_ms, end)
 
-        if sentence_end_ms == 0.0:
-            sentence_end_ms = len(text) * 60
+        chunk_duration = _mp3_chunk_duration_ms(chunk_audio)
 
         timeline_entries.append({
             "index": i,
             "text": text,
             "start_ms": round(cumulative_ms),
-            "end_ms": round(cumulative_ms + sentence_end_ms),
+            "end_ms": round(cumulative_ms + chunk_duration),
             "paragraph_index": sentence_info["paragraph_index"],
         })
 
         audio_chunks.append(chunk_audio)
-        cumulative_ms += sentence_end_ms
+        cumulative_ms += chunk_duration
 
     full_audio = b"".join(audio_chunks)
     timeline = {
