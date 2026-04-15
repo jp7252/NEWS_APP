@@ -9,11 +9,35 @@
 
     body {
       margin: 0;
-      padding: 24px 20px 80px;
+      padding: 0;
       font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
-      line-height: 1.8;
-      color: #333;
-      background: #fafafa;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead ── */
+    .masthead {
+      border-top: 3px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 14px 0;
+      text-align: center;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-date {
+      font-size: 12px;
+      color: #999;
+      letter-spacing: 1px;
+      margin: 4px 0 0;
     }
 
     /* ── Two-column grid ── */
@@ -23,21 +47,18 @@
       gap: 32px;
       max-width: 1100px;
       margin: 0 auto;
+      padding: 28px 24px 80px;
       align-items: start;
     }
 
-    /* ── Left column: article ── */
+    /* ── Left column ── */
     .column-main { min-width: 0; }
 
-    /* Lead image */
-    .lead-image {
-      margin: 0 0 20px;
-    }
+    .lead-image { margin: 0 0 20px; }
     .lead-image img {
       width: 100%;
       aspect-ratio: 16 / 9;
       object-fit: cover;
-      border-radius: 6px;
       display: block;
     }
 
@@ -45,33 +66,32 @@
     header {
       margin-bottom: 24px;
       padding-bottom: 16px;
-      border-bottom: 2px solid #eee;
-    }
-    .date {
-      font-size: 13px;
-      color: #888;
-      margin: 0 0 6px;
-      letter-spacing: 1px;
+      border-bottom: 1px solid #ddd;
     }
     h1 {
-      font-size: 24px;
-      line-height: 1.4;
-      color: #1a1a1a;
-      margin: 0 0 6px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
     }
     .source {
-      font-size: 13px;
+      font-size: 12px;
       color: #999;
       margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
-    .source a { color: #0066CC; text-decoration: none; }
+    .source a { color: #8b0000; text-decoration: none; }
     .source a:hover { text-decoration: underline; }
 
     /* ── Audio player ── */
     .audio-player {
-      background: #f0f4f8;
-      border-radius: 10px;
-      padding: 14px 16px;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
       margin-bottom: 28px;
     }
     .audio-player.hidden { display: none; }
@@ -82,17 +102,17 @@
       flex-wrap: wrap;
     }
     #play-btn {
-      background: #0066CC;
+      background: #8b0000;
       color: #fff;
       border: none;
-      border-radius: 6px;
-      padding: 8px 16px;
-      font-size: 14px;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
       cursor: pointer;
       white-space: nowrap;
       flex-shrink: 0;
     }
-    #play-btn:hover { background: #0055aa; }
+    #play-btn:hover { background: #a00000; }
     .time-display {
       font-size: 12px;
       color: #666;
@@ -102,36 +122,34 @@
     }
     #seek-bar {
       flex: 1;
-      min-width: 100px;
-      height: 6px;
+      min-width: 80px;
+      height: 5px;
       -webkit-appearance: none;
       appearance: none;
-      background: #d0d8e0;
-      border-radius: 3px;
+      background: #ddd;
+      border-radius: 2px;
       outline: none;
       cursor: pointer;
     }
     #seek-bar::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 14px;
-      height: 14px;
+      width: 13px; height: 13px;
       border-radius: 50%;
-      background: #0066CC;
+      background: #8b0000;
       cursor: pointer;
     }
     #seek-bar::-moz-range-thumb {
-      width: 14px;
-      height: 14px;
+      width: 13px; height: 13px;
       border-radius: 50%;
-      background: #0066CC;
+      background: #8b0000;
       border: none;
       cursor: pointer;
     }
     #rate-select {
-      padding: 4px 6px;
-      font-size: 12px;
+      padding: 3px 5px;
+      font-size: 11px;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 3px;
       background: #fff;
       cursor: pointer;
       flex-shrink: 0;
@@ -139,42 +157,41 @@
 
     /* ── Paragraphs ── */
     .paragraph-pair {
-      margin-bottom: 24px;
-      border-left: 3px solid #e0e0e0;
-      padding-left: 16px;
-      transition: border-color 0.3s;
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
     }
-    .paragraph-pair:hover { border-color: #0066CC; }
+    .paragraph-pair:last-child { border-bottom: none; }
     .paragraph-pair .en {
       font-size: 16px;
       color: #1a1a1a;
       margin: 0 0 6px;
+      line-height: 1.8;
     }
     .paragraph-pair .cn {
       font-size: 14px;
-      color: #666;
+      color: #888;
       margin: 0;
+      line-height: 1.7;
     }
 
-    /* Sentence highlighting + click-to-seek cursor */
+    /* Sentence highlighting + click-to-seek */
     .sentence {
       transition: background-color 0.3s ease;
-      border-radius: 3px;
+      border-radius: 2px;
       padding: 1px 0;
       cursor: pointer;
     }
-    .sentence:hover { background-color: #f0f4f8; }
-    .sentence.highlight {
-      background-color: #FFF3CD;
-    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
 
     /* Keywords inline */
     .keyword {
-      color: #0066CC;
-      border-bottom: 1px dashed #0066CC;
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
       cursor: pointer;
     }
-    .keyword:hover { background-color: #e8f0fe; border-radius: 2px; }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
 
     /* ── Right column: sticky keyword sidebar ── */
     .column-kw {
@@ -184,26 +201,92 @@
       overflow-y: auto;
     }
     .kw-sidebar-title {
-      font-size: 17px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
       font-weight: 700;
-      color: #1a1a1a;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
       margin: 0 0 14px;
       padding-bottom: 10px;
-      border-bottom: 2px solid #eee;
+      border-bottom: 2px solid #8b0000;
     }
     .kw-card {
       background: #fff;
-      border: 1px solid #eee;
-      border-radius: 8px;
-      padding: 12px 14px;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
       margin-bottom: 10px;
     }
-    .kw-word { font-size: 15px; font-weight: 700; color: #0066CC; }
-    .kw-meta { font-size: 12px; color: #888; margin-left: 6px; }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
     .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
-    .kw-def-en { font-size: 12px; color: #666; margin: 2px 0 0; }
-    .kw-ctx { font-size: 12px; color: #888; margin: 4px 0 0; font-style: italic; }
-    .kw-ctx-cn { font-size: 12px; color: #999; margin: 2px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; }
+    .word-tooltip {
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 6px 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+      font-size: 13px;
+      color: #333;
+      white-space: nowrap;
+      max-width: 220px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      z-index: 90;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
 
     /* ── Popup (for inline keyword clicks) ── */
     .popup {
@@ -213,7 +296,7 @@
       transform: translateX(-50%);
       background: #fff;
       border: 1px solid #ddd;
-      border-radius: 12px;
+      border-radius: 8px;
       padding: 16px 20px;
       box-shadow: 0 4px 24px rgba(0,0,0,0.15);
       max-width: 360px;
@@ -221,41 +304,43 @@
       z-index: 100;
     }
     .popup.hidden { display: none; }
-    .popup-word { font-size: 20px; font-weight: 700; color: #0066CC; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
     .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
     .popup-pos { font-size: 13px; color: #aaa; }
     .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
     .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
     .popup-close {
-      position: absolute;
-      top: 10px;
-      right: 14px;
-      background: none;
-      border: none;
-      font-size: 18px;
-      color: #aaa;
-      cursor: pointer;
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
     }
     .popup-close:hover { color: #333; }
 
-    /* ── Mobile: stack columns ── */
+    /* ── Mobile ── */
     @media (max-width: 768px) {
-      body { padding: 12px 12px 80px; }
       .layout {
         grid-template-columns: 1fr;
         gap: 24px;
+        padding: 16px 12px 80px;
       }
       .column-kw {
         position: static;
         max-height: none;
         overflow-y: visible;
       }
-      h1 { font-size: 20px; }
+      h1 { font-size: 24px; }
       .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 22px; letter-spacing: 4px; }
     }
   </style>
 </head>
 <body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-title">DailyBBC</p>
+  <p class="masthead-date">{{ date }}</p>
+</div>
 
 <div class="layout">
 
@@ -269,7 +354,6 @@
     {% endif %}
 
     <header>
-      <p class="date">{{ date }}</p>
       <h1>{{ title }}</h1>
       <p class="source">Source: <a href="{{ url }}">BBC News</a></p>
     </header>
@@ -305,11 +389,14 @@
 
   <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
   <aside class="column-kw">
-    <p class="kw-sidebar-title">&#128214; Keywords</p>
+    <p class="kw-sidebar-title">Today's Keywords</p>
     {% for kw in keywords %}
     <div class="kw-card">
-      <span class="kw-word">{{ kw.word }}</span>
-      <span class="kw-meta">{{ kw.phonetic }} {{ kw.pos }}</span>
+      <div class="kw-card-header">
+        <span class="kw-word">{{ kw.word }}</span>
+        <button class="kw-speak-btn" data-word="{{ kw.word }}" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">{{ kw.phonetic }} {{ kw.pos }}</span>
+      </div>
       <p class="kw-def">{{ kw.definition_cn }}</p>
       <p class="kw-def-en">{{ kw.definition_en }}</p>
       <p class="kw-ctx">&ldquo;{{ kw.context_sentence }}&rdquo;</p>
@@ -320,7 +407,7 @@
 
 </div>
 
-<!-- Keyword popup (for inline keyword clicks in article text) -->
+<!-- Keyword popup -->
 <div id="keyword-popup" class="popup hidden">
   <div class="popup-word"></div>
   <div class="popup-phonetic"></div>
@@ -330,8 +417,94 @@
   <button class="popup-close">&#10005;</button>
 </div>
 
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
 <script>
   const TIMELINE = {{ timeline_json }};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => {
+    const nodes = [];
+    pEl.childNodes.forEach(node => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        const frag = document.createDocumentFragment();
+        const parts = node.textContent.split(/(\s+)/);
+        parts.forEach(part => {
+          if (/^\s+$/.test(part) || part === '') {
+            frag.appendChild(document.createTextNode(part));
+          } else {
+            const span = document.createElement('span');
+            span.className = 'word-hoverable';
+            span.textContent = part;
+            frag.appendChild(span);
+          }
+        });
+        nodes.push({ old: node, replacement: frag });
+      }
+    });
+    nodes.forEach(n => pEl.replaceChild(n.replacement, n.old));
+  });
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 2) return;
+
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      let content;
+      if (KW_DICT[raw]) {
+        content = KW_DICT[raw];
+      } else {
+        content = '<a href="https://dict.youdao.com/w/eng/' + encodeURIComponent(raw) + '/" target="_blank">' + raw + ' &#8594; dict</a>';
+      }
+      tooltip.innerHTML = content;
+      tooltip.style.display = 'block';
+
+      const rect = el.getBoundingClientRect();
+      tooltip.style.position = 'fixed';
+      tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+      tooltip.style.top = (rect.top - 8) + 'px';
+      tooltip.style.transform = 'translateX(-50%) translateY(-100%)';
+    }, 300);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { tooltip.style.display = 'none'; }, 200);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
 
   // ── Audio player ──
   const audio = document.getElementById('article-audio');
@@ -367,12 +540,8 @@
       const cur = audio.currentTime;
       const dur = audio.duration || 1;
       timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
 
-      if (!isDragging) {
-        seekBar.value = Math.round((cur / dur) * 1000);
-      }
-
-      // Sentence-level highlighting
       const currentMs = cur * 1000;
       TIMELINE.sentences.forEach((entry) => {
         const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
@@ -394,26 +563,22 @@
       document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
     });
 
-    // Seek bar drag
     seekBar.addEventListener('mousedown', () => { isDragging = true; });
     seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
     seekBar.addEventListener('input', () => {
-      const ratio = seekBar.value / 1000;
-      timeCurrent.textContent = fmtTime(ratio * (audio.duration || 0));
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
     });
     seekBar.addEventListener('change', () => {
-      const ratio = seekBar.value / 1000;
-      audio.currentTime = ratio * (audio.duration || 0);
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
       isDragging = false;
     });
 
-    // Playback speed
     rateSelect.addEventListener('change', () => {
       audio.playbackRate = parseFloat(rateSelect.value);
     });
   }
 
-  // ── Click sentence to seek audio ──
+  // ── Click sentence to seek ──
   const articleMain = document.getElementById('article-main');
   if (articleMain && audio) {
     articleMain.addEventListener('click', (e) => {
