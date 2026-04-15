@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DailyBBC - {{ date }}</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 24px 20px 80px;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.8;
+      color: #333;
+      background: #fafafa;
+    }
+
+    header {
+      margin-bottom: 32px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #eee;
+    }
+    .date {
+      font-size: 13px;
+      color: #888;
+      margin: 0 0 8px;
+      letter-spacing: 1px;
+    }
+    h1 {
+      font-size: 24px;
+      line-height: 1.4;
+      color: #1a1a1a;
+      margin: 0 0 8px;
+    }
+    .source {
+      font-size: 13px;
+      color: #999;
+      margin: 0;
+    }
+    .source a { color: #0066CC; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* Audio player */
+    .audio-player {
+      background: #f0f4f8;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .audio-player.hidden { display: none; }
+    #play-btn {
+      background: #0066CC;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 20px;
+      font-size: 14px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    #play-btn:hover { background: #0055aa; }
+    #progress {
+      font-size: 13px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Paragraphs */
+    .paragraph-pair {
+      margin-bottom: 28px;
+      border-left: 3px solid #e0e0e0;
+      padding-left: 16px;
+      transition: border-color 0.3s;
+    }
+    .paragraph-pair:hover { border-color: #0066CC; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 8px;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #666;
+      margin: 0;
+    }
+
+    /* Sentence highlighting */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 3px;
+      padding: 1px 0;
+    }
+    .sentence.highlight {
+      background-color: #FFF3CD;
+    }
+
+    /* Keywords */
+    .keyword {
+      color: #0066CC;
+      border-bottom: 1px dashed #0066CC;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #e8f0fe; border-radius: 2px; }
+
+    /* Keyword list section */
+    .keyword-section {
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 2px solid #eee;
+    }
+    .keyword-section h2 {
+      font-size: 18px;
+      color: #1a1a1a;
+      margin: 0 0 16px;
+    }
+    .kw-card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 12px;
+    }
+    .kw-word { font-size: 16px; font-weight: 700; color: #0066CC; }
+    .kw-meta { font-size: 13px; color: #888; margin-left: 8px; }
+    .kw-def { font-size: 14px; color: #333; margin: 6px 0 0; }
+    .kw-ctx { font-size: 13px; color: #888; margin: 6px 0 0; font-style: italic; }
+
+    /* Popup */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-size: 20px; font-weight: 700; color: #0066CC; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      background: none;
+      border: none;
+      font-size: 18px;
+      color: #aaa;
+      cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    @media (max-width: 480px) {
+      body { padding: 12px 12px 80px; }
+      h1 { font-size: 20px; }
+      .paragraph-pair .en { font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <p class="date">{{ date }}</p>
+    <h1>{{ title }}</h1>
+    <p class="source">Source: <a href="{{ url }}">BBC Technology</a></p>
+  </header>
+
+  <div class="audio-player {{ '' if has_audio else 'hidden' }}">
+    <audio id="article-audio" src="{{ audio_url }}" preload="metadata"></audio>
+    <button id="play-btn">▶ 播放文章音频</button>
+    <span id="progress">00:00 / --:--</span>
+  </div>
+
+  <main>
+    {% for en_html, cn in paragraphs %}
+    <div class="paragraph-pair" data-para-index="{{ loop.index0 }}">
+      <p class="en">{{ en_html }}</p>
+      <p class="cn">{{ cn }}</p>
+    </div>
+    {% endfor %}
+  </main>
+
+  <div class="keyword-section">
+    <h2>📖 今日关键词</h2>
+    {% for kw in keywords %}
+    <div class="kw-card">
+      <span class="kw-word">{{ kw.word }}</span>
+      <span class="kw-meta">{{ kw.phonetic }} {{ kw.pos }}</span>
+      <p class="kw-def">{{ kw.definition_cn }}</p>
+      <p class="kw-def" style="font-size:13px;color:#666;">{{ kw.definition_en }}</p>
+      <p class="kw-ctx">"{{ kw.context_sentence }}"</p>
+      <p class="kw-ctx" style="font-style:normal;color:#999;">{{ kw.context_translation }}</p>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div id="keyword-popup" class="popup hidden">
+    <div class="popup-word"></div>
+    <div class="popup-phonetic"></div>
+    <div class="popup-pos"></div>
+    <div class="popup-def"></div>
+    <div class="popup-def-en"></div>
+    <button class="popup-close">✕</button>
+  </div>
+
+  <script>
+    const TIMELINE = {{ timeline_json }};
+
+    // --- Audio player ---
+    const audio = document.getElementById('article-audio');
+    const playBtn = document.getElementById('play-btn');
+    const progressEl = document.getElementById('progress');
+
+    function fmtTime(sec) {
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+    }
+
+    if (playBtn && audio) {
+      playBtn.addEventListener('click', () => {
+        if (audio.paused) {
+          audio.play();
+          playBtn.textContent = '⏸ 暂停';
+        } else {
+          audio.pause();
+          playBtn.textContent = '▶ 播放文章音频';
+        }
+      });
+
+      audio.addEventListener('loadedmetadata', () => {
+        progressEl.textContent = '00:00 / ' + fmtTime(audio.duration);
+      });
+
+      audio.addEventListener('timeupdate', () => {
+        const cur = audio.currentTime;
+        const dur = audio.duration || 0;
+        progressEl.textContent = fmtTime(cur) + ' / ' + fmtTime(dur);
+
+        // Sentence-level highlighting
+        const currentMs = cur * 1000;
+        TIMELINE.sentences.forEach((entry) => {
+          const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+          if (!el) return;
+          if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+            if (!el.classList.contains('highlight')) {
+              el.classList.add('highlight');
+              el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          } else {
+            el.classList.remove('highlight');
+          }
+        });
+      });
+
+      audio.addEventListener('ended', () => {
+        playBtn.textContent = '▶ 播放文章音频';
+        document.querySelectorAll('.sentence.highlight').forEach(el => {
+          el.classList.remove('highlight');
+        });
+      });
+    }
+
+    // --- Keyword popup ---
+    const popup = document.getElementById('keyword-popup');
+
+    document.querySelectorAll('.keyword').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        popup.querySelector('.popup-word').textContent = el.dataset.word;
+        popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+        popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+        popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+        popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+        popup.classList.remove('hidden');
+      });
+    });
+
+    popup.querySelector('.popup-close').addEventListener('click', () => {
+      popup.classList.add('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+        popup.classList.add('hidden');
+      }
+    });
+  </script>
+
+</body>
+</html>

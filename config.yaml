@@ -1,0 +1,22 @@
+rss:
+  # BBC News 总站头条（编辑优先级排序），比 technology 分栏更接近“今日最重要新闻”
+  url: "http://feeds.bbci.co.uk/news/rss.xml"
+
+llm:
+  model: "deepseek-chat"
+  base_url: "https://api.deepseek.com"
+
+tts:
+  voice: "en-US-AriaNeural"
+  rate: "-10%"
+
+email:
+  sender: "${GMAIL_ADDRESS}"
+  recipients:
+    - "jialin0122@gmail.com"
+  subject_template: "📰 DailyBBC · {title_short} · {date}"
+
+pages:
+  # GitHub Pages 公网地址（不是仓库地址）
+  # 项目页格式: https://<username>.github.io/<repo>
+  base_url: "https://jp7252.github.io/NEWS_APP"

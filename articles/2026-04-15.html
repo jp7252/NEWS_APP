@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DailyBBC - 2026-04-15</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 24px 20px 80px;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.8;
+      color: #333;
+      background: #fafafa;
+    }
+
+    header {
+      margin-bottom: 32px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #eee;
+    }
+    .date {
+      font-size: 13px;
+      color: #888;
+      margin: 0 0 8px;
+      letter-spacing: 1px;
+    }
+    h1 {
+      font-size: 24px;
+      line-height: 1.4;
+      color: #1a1a1a;
+      margin: 0 0 8px;
+    }
+    .source {
+      font-size: 13px;
+      color: #999;
+      margin: 0;
+    }
+    .source a { color: #0066CC; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* Audio player */
+    .audio-player {
+      background: #f0f4f8;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .audio-player.hidden { display: none; }
+    #play-btn {
+      background: #0066CC;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 20px;
+      font-size: 14px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    #play-btn:hover { background: #0055aa; }
+    #progress {
+      font-size: 13px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Paragraphs */
+    .paragraph-pair {
+      margin-bottom: 28px;
+      border-left: 3px solid #e0e0e0;
+      padding-left: 16px;
+      transition: border-color 0.3s;
+    }
+    .paragraph-pair:hover { border-color: #0066CC; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 8px;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #666;
+      margin: 0;
+    }
+
+    /* Sentence highlighting */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 3px;
+      padding: 1px 0;
+    }
+    .sentence.highlight {
+      background-color: #FFF3CD;
+    }
+
+    /* Keywords */
+    .keyword {
+      color: #0066CC;
+      border-bottom: 1px dashed #0066CC;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #e8f0fe; border-radius: 2px; }
+
+    /* Keyword list section */
+    .keyword-section {
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 2px solid #eee;
+    }
+    .keyword-section h2 {
+      font-size: 18px;
+      color: #1a1a1a;
+      margin: 0 0 16px;
+    }
+    .kw-card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 12px;
+    }
+    .kw-word { font-size: 16px; font-weight: 700; color: #0066CC; }
+    .kw-meta { font-size: 13px; color: #888; margin-left: 8px; }
+    .kw-def { font-size: 14px; color: #333; margin: 6px 0 0; }
+    .kw-ctx { font-size: 13px; color: #888; margin: 6px 0 0; font-style: italic; }
+
+    /* Popup */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-size: 20px; font-weight: 700; color: #0066CC; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      background: none;
+      border: none;
+      font-size: 18px;
+      color: #aaa;
+      cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    @media (max-width: 480px) {
+      body { padding: 12px 12px 80px; }
+      h1 { font-size: 20px; }
+      .paragraph-pair .en { font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <p class="date">2026-04-15</p>
+    <h1>Mahmood promises action against 'sham lawyers' abusing asylum system after BBC investigation</h1>
+    <p class="source">Source: <a href="https://www.bbc.com/news/articles/cj944dgwvm8o?at_medium=RSS&at_campaign=rss">BBC Technology</a></p>
+  </header>
+
+  <div class="audio-player ">
+    <audio id="article-audio" src="https://jp7252.github.io/NEWS_APP/audio/2026-04-15.mp3" preload="metadata"></audio>
+    <button id="play-btn">▶ 播放文章音频</button>
+    <span id="progress">00:00 / --:--</span>
+  </div>
+
+  <main>
+    
+    <div class="paragraph-pair" data-para-index="0">
+      <p class="en"><span class="sentence" data-sentence-index="0">Home Secretary Shabana Mahmood has promised that "sham lawyers" who facilitate abuse of the <span class="keyword" data-word="asylum" data-phonetic="/əˈsaɪləm/" data-pos="n." data-def="庇护；避难" data-def-en="Protection given by a country to someone who has left their own country because they are in danger.">asylum</span> system "will face the full force of the law".</span></p>
+      <p class="cn">内政大臣沙巴娜·马哈茂德（Shabana Mahmood）承诺，那些助长滥用庇护制度的“假律师”“将面临法律的全面制裁”。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="1">
+      <p class="en"><span class="sentence" data-sentence-index="1">It comes after a BBC investigation revealed how law firms and advisers are charging thousands of pounds to help migrants pretend to be gay in order to stay in the UK.</span></p>
+      <p class="cn">此前，英国广播公司（BBC）的一项调查揭露了律师事务所和顾问如何收取数千英镑，帮助移民假装是同性恋以留在英国。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="2">
+      <p class="en"><span class="sentence" data-sentence-index="2">The Home Office is investigating the individuals highlighted in the BBC's reporting as part of a wider investigation prompted by officials noticing a growing trend of fake claims from people pretending to be gay.</span></p>
+      <p class="cn">内政部正在调查BBC报道中提及的个人，这是由官员注意到假装同性恋的虚假申请日益增多趋势所引发的一项更广泛调查的一部分。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="3">
+      <p class="en"><span class="sentence" data-sentence-index="3">However, the Conservatives said the system "must be totally overhauled" so only those facing real personal <span class="keyword" data-word="persecution" data-phonetic="/ˌpɜːsɪˈkjuːʃn/" data-pos="n." data-def="迫害；虐待" data-def-en="The act of treating someone cruelly or unfairly over a long period of time, especially because of their race, religion, or political beliefs.">persecution</span> are granted <span class="keyword" data-word="asylum" data-phonetic="/əˈsaɪləm/" data-pos="n." data-def="庇护；避难" data-def-en="Protection given by a country to someone who has left their own country because they are in danger.">asylum</span>.</span></p>
+      <p class="cn">然而，保守党表示，该系统“必须彻底改革”，以确保只有那些面临真正个人迫害的人才能获得庇护。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="4">
+      <p class="en"><span class="sentence" data-sentence-index="4">The BBC has uncovered how migrants whose visas are due to run out are being given fake cover stories and instructed in how to obtain <span class="keyword" data-word="fabricated" data-phonetic="/ˈfæbrɪkeɪtɪd/" data-pos="adj." data-def="伪造的；捏造的" data-def-en="Invented or made up, typically with the intent to deceive.">fabricated</span> evidence, including supporting letters, photographs and medical reports.</span></p>
+      <p class="cn">BBC揭露了签证即将到期的移民如何被提供虚假的掩护故事，并被指导如何获取伪造证据，包括支持信、照片和医疗报告。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="5">
+      <p class="en"><span class="sentence" data-sentence-index="5">They then apply for <span class="keyword" data-word="asylum" data-phonetic="/əˈsaɪləm/" data-pos="n." data-def="庇护；避难" data-def-en="Protection given by a country to someone who has left their own country because they are in danger.">asylum</span> claiming to be gay and in fear for their lives if they return to Pakistan or Bangladesh.</span></p>
+      <p class="cn">然后，他们申请庇护，声称自己是同性恋，如果返回巴基斯坦或孟加拉国，将面临生命危险。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="6">
+      <p class="en"><span class="sentence" data-sentence-index="6">The UK's <span class="keyword" data-word="asylum" data-phonetic="/əˈsaɪləm/" data-pos="n." data-def="庇护；避难" data-def-en="Protection given by a country to someone who has left their own country because they are in danger.">asylum</span> process offers protection to people who cannot return to their home countries because they would be in danger, for example in countries like Pakistan and Bangladesh where gay sex is illegal.</span></p>
+      <p class="cn">英国的庇护程序为那些因返回原籍国（如巴基斯坦和孟加拉国等国家，同性性行为是非法的）而可能面临危险的人提供保护。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="7">
+      <p class="en"><span class="sentence" data-sentence-index="7">But the BBC News investigation reveals the process is being systematically exploited by legal advisers extracting fees from migrants who want to stay in the country.</span></p>
+      <p class="cn">但BBC新闻调查显示，这一程序正被法律顾问系统性地利用，他们向希望留在英国的移民收取费用。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="8">
+      <p class="en"><span class="sentence" data-sentence-index="8">These are often people whose student, work or tourist visas have expired, rather than those who have just arrived in the country on small boats or through other illegal routes.</span></p>
+      <p class="cn">这些人通常是学生、工作或旅游签证已过期的人，而不是那些刚通过小船或其他非法途径抵达英国的人。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="9">
+      <p class="en"><span class="sentence" data-sentence-index="9">This group now makes up 35% of all <span class="keyword" data-word="asylum" data-phonetic="/əˈsaɪləm/" data-pos="n." data-def="庇护；避难" data-def-en="Protection given by a country to someone who has left their own country because they are in danger.">asylum</span> claims,which topped 100,000 in 2025.</span></p>
+      <p class="cn">这一群体现在占所有庇护申请的35%，2025年庇护申请总数超过10万份。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="10">
+      <p class="en"><span class="sentence" data-sentence-index="10">Mahmood said: "Anyone abusing protections for people fleeing <span class="keyword" data-word="persecution" data-phonetic="/ˌpɜːsɪˈkjuːʃn/" data-pos="n." data-def="迫害；虐待" data-def-en="The act of treating someone cruelly or unfairly over a long period of time, especially because of their race, religion, or political beliefs.">persecution</span> over gender or sexual orientation is beyond contempt.</span></p>
+      <p class="cn">马哈茂德说：“任何滥用为因性别或性取向而逃离迫害者提供的保护的人，都令人不齿。”</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="11">
+      <p class="en"><span class="sentence" data-sentence-index="11">"Let me be clear: try to defraud the British people to enter or remain in the UK and your <span class="keyword" data-word="asylum" data-phonetic="/əˈsaɪləm/" data-pos="n." data-def="庇护；避难" data-def-en="Protection given by a country to someone who has left their own country because they are in danger.">asylum</span> claim will be refused, your support cut off, and you will find yourself on a one-way flight out of Britain.</span></p>
+      <p class="cn">“让我明确一点：试图欺骗英国人民以进入或留在英国，你的庇护申请将被拒绝，你的支持将被切断，你将发现自己被送上离开英国的单程航班。”</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="12">
+      <p class="en"><span class="sentence" data-sentence-index="12">"Sham lawyers facilitating this abuse will face the full force of the law."</span></p>
+      <p class="cn">“助长这种滥用的假律师将面临法律的全面制裁。”</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="13">
+      <p class="en"><span class="sentence" data-sentence-index="13">The Solicitors Regulation Authority (SRA) said it was urgently following up with all the firms it regulated which were identified in the BBC's reporting.</span></p>
+      <p class="cn">律师监管局（Solicitors Regulation Authority，SRA）表示，它正在紧急跟进BBC报道中提及的所有受其监管的律师事务所。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="14">
+      <p class="en"><span class="sentence" data-sentence-index="14">Jonathan Peddie, executive director of investigations, enforcement and litigation at the SRA, said: "If we find evidence that anyone we regulate has acted in ways that contravene their duty to act legally and uphold the law, we will take action."</span></p>
+      <p class="cn">SRA的调查、执法和诉讼执行董事乔纳森·佩迪（Jonathan Peddie）说：“如果我们发现任何受我们监管的人的行为违反了其依法行事和维护法律的职责，我们将采取行动。”</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="15">
+      <p class="en"><span class="sentence" data-sentence-index="15">The Immigration Advice Authority, which regulates the sector, said it was assessing the evidence in the BBC's investigation and would pursue action against anyone found to be providing immigration advice illegally.</span></p>
+      <p class="cn">监管该行业的移民建议局（Immigration Advice Authority）表示，它正在评估BBC调查中的证据，并将对任何被发现非法提供移民建议的人采取行动。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="16">
+      <p class="en"><span class="sentence" data-sentence-index="16">Labour MP Jo White, a member of the Commons home affairs select committee, called for the Home Office to stop issuing study visas to people from Pakistan,as it did last month for people from Afghanistan, Cameroon, Myanmar and Sudan over what it said was widespread visa abuse.</span></p>
+      <p class="cn">工党议员、下议院内政事务特别委员会成员乔·怀特（Jo White）呼吁内政部停止向巴基斯坦人发放学习签证，就像上个月因所谓的广泛签证滥用而对阿富汗、喀麦隆、缅甸和苏丹人所做的那样。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="17">
+      <p class="en"><span class="sentence" data-sentence-index="17">Conservative shadow home secretary Chris Philp said the BBC's investigation "exposes the scam at the heart of many <span class="keyword" data-word="asylum" data-phonetic="/əˈsaɪləm/" data-pos="n." data-def="庇护；避难" data-def-en="Protection given by a country to someone who has left their own country because they are in danger.">asylum</span> claims" and the legal advisers identified "should be <span class="keyword" data-word="prosecuted" data-phonetic="/ˈprɒsɪkjuːtɪd/" data-pos="v." data-def="起诉；检举" data-def-en="To officially accuse someone of a crime in a court of law and try to prove that they are guilty.">prosecuted</span> for immigration fraud".</span></p>
+      <p class="cn">保守党影子内政大臣克里斯·菲尔普（Chris Philp）表示，BBC的调查“揭露了许多庇护申请核心的骗局”，并指出被确认的法律顾问“应因移民欺诈被起诉”。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="18">
+      <p class="en"><span class="sentence" data-sentence-index="18">Liberal Democrat immigration and <span class="keyword" data-word="asylum" data-phonetic="/əˈsaɪləm/" data-pos="n." data-def="庇护；避难" data-def-en="Protection given by a country to someone who has left their own country because they are in danger.">asylum</span> spokesman Will Forster said the BBC's findings were "abhorrent", adding: "We need an asylum system that is fair, controlled and efficient.</span> <span class="sentence" data-sentence-index="19">Not the shambles the Conservatives left us with."</span></p>
+      <p class="cn">自由民主党移民和庇护发言人威尔·福斯特（Will Forster）说，BBC的调查结果“令人憎恶”，并补充道：“我们需要一个公平、受控且高效的庇护系统，而不是保守党留下的混乱局面。”</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="19">
+      <p class="en"><span class="sentence" data-sentence-index="20">He called on the government to urgently investigate how widespread the issue was.</span></p>
+      <p class="cn">他呼吁政府紧急调查这一问题的普遍程度。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="20">
+      <p class="en"><span class="sentence" data-sentence-index="21">Reform UK said it would "put a stop to the legal-industrial complex exploiting the generosity of the British taxpayer".</span></p>
+      <p class="cn">改革英国党（Reform UK）表示，它将“制止利用英国纳税人慷慨的法律产业复合体”。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="21">
+      <p class="en"><span class="sentence" data-sentence-index="22">If the party wins power, home affairs spokesman Zia Yusuf pledged to make facilitating a false <span class="keyword" data-word="asylum" data-phonetic="/əˈsaɪləm/" data-pos="n." data-def="庇护；避难" data-def-en="Protection given by a country to someone who has left their own country because they are in danger.">asylum</span> claim a "strict liability" criminal offence, meaning there would be no requirement to prove intent in prosecutions, which would be punishable by up to two years in jail.</span></p>
+      <p class="cn">如果该党赢得权力，内政事务发言人齐亚·优素福（Zia Yusuf）承诺将助长虚假庇护申请定为“严格责任”刑事犯罪，这意味着在起诉中无需证明意图，最高可判处两年监禁。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="22">
+      <p class="en"><span class="sentence" data-sentence-index="23">He said a Reform government would also immediately abolish legal aid for <span class="keyword" data-word="asylum" data-phonetic="/əˈsaɪləm/" data-pos="n." data-def="庇护；避难" data-def-en="Protection given by a country to someone who has left their own country because they are in danger.">asylum</span> applications from those who enter the UK illegally or overstay their visa.</span></p>
+      <p class="cn">他说，改革政府还将立即取消为非法进入英国或逾期居留者提供的庇护申请法律援助。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="23">
+      <p class="en"><span class="sentence" data-sentence-index="24">Green Party leader Zack Polanski said: "It's disgusting to see these <span class="keyword" data-word="unscrupulous" data-phonetic="/ʌnˈskruːpjələs/" data-pos="adj." data-def="不道德的；无耻的" data-def-en="Having or showing no moral principles; not honest or fair.">unscrupulous</span> law firms taking advantage of people like this or taking advantage of a system like this."</span></p>
+      <p class="cn">绿党领袖扎克·波兰斯基（Zack Polanski）说：“看到这些无良律师事务所这样利用人们或利用这样的系统，真是令人作呕。”</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="24">
+      <p class="en"><span class="sentence" data-sentence-index="25">He added that there was a wider issue of the government having "inconsistent policies", which create "perverse incentives for these kind of <span class="keyword" data-word="unscrupulous" data-phonetic="/ʌnˈskruːpjələs/" data-pos="adj." data-def="不道德的；无耻的" data-def-en="Having or showing no moral principles; not honest or fair.">unscrupulous</span> businesses and industries to pop up".</span></p>
+      <p class="cn">他补充说，政府存在“政策不一致”的更广泛问题，这为“这类无良企业和行业的出现创造了反常的激励”。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="25">
+      <p class="en"><span class="sentence" data-sentence-index="26">Aderonke Apata, who founded the African Rainbow Family charity, was granted <span class="keyword" data-word="asylum" data-phonetic="/əˈsaɪləm/" data-pos="n." data-def="庇护；避难" data-def-en="Protection given by a country to someone who has left their own country because they are in danger.">asylum</span> in the UK because she is a lesbian and could have faced the death penalty in Nigeria.</span></p>
+      <p class="cn">阿德龙克·阿帕塔（Aderonke Apata）创立了非洲彩虹家庭（African Rainbow Family）慈善机构，她因为是女同性恋并在尼日利亚可能面临死刑而在英国获得庇护。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="26">
+      <p class="en"><span class="sentence" data-sentence-index="27">She said she was "appalled" by the BBC's findings, adding: "It dismisses the real struggle that we face as a community.</span></p>
+      <p class="cn">她说她对BBC的调查结果“感到震惊”，并补充道：“这忽视了我们作为一个社区所面临的真实斗争。”</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="27">
+      <p class="en"><span class="sentence" data-sentence-index="28">"And for genuine people who are seeking <span class="keyword" data-word="asylum" data-phonetic="/əˈsaɪləm/" data-pos="n." data-def="庇护；避难" data-def-en="Protection given by a country to someone who has left their own country because they are in danger.">asylum</span> and LGBTIQ people, this makes it extremely difficult for them to be able to be successful in their asylum claims."</span></p>
+      <p class="cn">“对于真正的寻求庇护者和LGBTIQ人群来说，这使他们成功获得庇护申请变得极其困难。”</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="28">
+      <p class="en"><span class="sentence" data-sentence-index="29">The BBC has been contacted by several LGBT groups who said they had noticed an increasing number of people turning up to meetings who they suspect are making fake gay <span class="keyword" data-word="asylum" data-phonetic="/əˈsaɪləm/" data-pos="n." data-def="庇护；避难" data-def-en="Protection given by a country to someone who has left their own country because they are in danger.">asylum</span> claims.</span></p>
+      <p class="cn">BBC已联系了几个LGBT团体，他们表示注意到越来越多的人参加集会，他们怀疑这些人是在提出虚假的同性恋庇护申请。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="29">
+      <p class="en"><span class="sentence" data-sentence-index="30">Tom Guy, the founder of National Student Pride, said: "We've had people turning up...</span> <span class="sentence" data-sentence-index="31">they take photos and they would leave.</span> <span class="sentence" data-sentence-index="32">They weren't even staying for the event."</span></p>
+      <p class="cn">全国学生骄傲（National Student Pride）创始人汤姆·盖伊（Tom Guy）说：“我们有人来参加……他们拍照后就离开，甚至不参加活动。”</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="30">
+      <p class="en"><span class="sentence" data-sentence-index="33">Human rights campaigner Peter Tatchell, whose foundation helps people secure <span class="keyword" data-word="asylum" data-phonetic="/əˈsaɪləm/" data-pos="n." data-def="庇护；避难" data-def-en="Protection given by a country to someone who has left their own country because they are in danger.">asylum</span> on LGBT grounds, said the vast majority of claims were genuine and had gone through "a <span class="keyword" data-word="rigorous" data-phonetic="/ˈrɪɡərəs/" data-pos="adj." data-def="严格的；严密的" data-def-en="Extremely thorough and careful.">rigorous</span> criterion".</span></p>
+      <p class="cn">人权活动家彼得·塔切尔（Peter Tatchell）的基金会帮助人们基于LGBT理由获得庇护，他说绝大多数申请是真实的，并经过了“严格的标准”。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="31">
+      <p class="en"><span class="sentence" data-sentence-index="34">However, he told BBC Radio 4's World at One programme his foundation had been "swamped" by people from Pakistan claiming to be LGBT and seeking letters of recommendation.</span></p>
+      <p class="cn">然而，他告诉BBC广播4台的《世界在一点》（World at One）节目，他的基金会已被声称是LGBT并寻求推荐信的巴基斯坦人“淹没”。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="32">
+      <p class="en"><span class="sentence" data-sentence-index="35">Imran Hussain, from the Refugee Council charity, said it was "deplorable that <span class="keyword" data-word="unscrupulous" data-phonetic="/ʌnˈskruːpjələs/" data-pos="adj." data-def="不道德的；无耻的" data-def-en="Having or showing no moral principles; not honest or fair.">unscrupulous</span> advisers are exploiting desperate and vulnerable people for profit and those responsible must be held to account".</span></p>
+      <p class="cn">难民委员会（Refugee Council）慈善机构的伊姆兰·侯赛因（Imran Hussain）说：“无良顾问利用绝望和脆弱的人牟利是可悲的，必须追究责任人的责任。”</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="33">
+      <p class="en"><span class="sentence" data-sentence-index="36">He added: "Every day in our frontline services we work with LGBTQ+ refugees from countries like Uganda and Pakistan who have faced imprisonment, violence and abuse simply for who they are, and who have come to Britain so they can live safely and openly.</span></p>
+      <p class="cn">他补充说：“每天在我们的前线服务中，我们与来自乌干达和巴基斯坦等国家的LGBTQ+难民合作，他们仅仅因为自己的身份而面临监禁、暴力和虐待，并来到英国以安全、公开地生活。”</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="34">
+      <p class="en"><span class="sentence" data-sentence-index="37">"These kinds of abuses must not be used to undermine the credibility of people with genuine need for <span class="keyword" data-word="asylum" data-phonetic="/əˈsaɪləm/" data-pos="n." data-def="庇护；避难" data-def-en="Protection given by a country to someone who has left their own country because they are in danger.">asylum</span>."</span></p>
+      <p class="cn">“这些滥用行为绝不能用来削弱真正需要庇护者的可信度。”</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="35">
+      <p class="en"><span class="sentence" data-sentence-index="38">It is difficult to know precisely how many <span class="keyword" data-word="asylum" data-phonetic="/əˈsaɪləm/" data-pos="n." data-def="庇护；避难" data-def-en="Protection given by a country to someone who has left their own country because they are in danger.">asylum</span> applications might be <span class="keyword" data-word="fabricated" data-phonetic="/ˈfæbrɪkeɪtɪd/" data-pos="adj." data-def="伪造的；捏造的" data-def-en="Invented or made up, typically with the intent to deceive.">fabricated</span>.</span></p>
+      <p class="cn">很难确切知道有多少庇护申请可能是伪造的。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="36">
+      <p class="en"><span class="sentence" data-sentence-index="39">But Home Office statistics show that Pakistani nationals make up a disproportionate number of the claims made on the grounds of sexuality.</span></p>
+      <p class="cn">但内政部统计数据显示，巴基斯坦国民在基于性取向的申请中占比例过高。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="37">
+      <p class="en"><span class="sentence" data-sentence-index="40">In 2023, the most recent year for which data is available, some 42% of <span class="keyword" data-word="asylum" data-phonetic="/əˈsaɪləm/" data-pos="n." data-def="庇护；避难" data-def-en="Protection given by a country to someone who has left their own country because they are in danger.">asylum</span> claims with an LGBT element were made by Pakistani nationals and they accounted for the largest number of such claims in each of the five previous years.</span></p>
+      <p class="cn">在2023年（这是有数据可查的最新年份），约42%的包含LGBT元素的庇护申请由巴基斯坦国民提出，他们在前五年中每年都是此类申请数量最多的群体。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="38">
+      <p class="en"><span class="sentence" data-sentence-index="41">In the same year, Pakistani nationals were only the fourth most common nationality for all <span class="keyword" data-word="asylum" data-phonetic="/əˈsaɪləm/" data-pos="n." data-def="庇护；避难" data-def-en="Protection given by a country to someone who has left their own country because they are in danger.">asylum</span> applications and accounted for just 6% of overall asylum applications.</span></p>
+      <p class="cn">同年，巴基斯坦国民在所有庇护申请中仅排名第四常见国籍，仅占整体庇护申请的6%。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="39">
+      <p class="en"><span class="sentence" data-sentence-index="42">Nearly two-thirds of <span class="keyword" data-word="asylum" data-phonetic="/əˈsaɪləm/" data-pos="n." data-def="庇护；避难" data-def-en="Protection given by a country to someone who has left their own country because they are in danger.">asylum</span> seekers claiming <span class="keyword" data-word="persecution" data-phonetic="/ˌpɜːsɪˈkjuːʃn/" data-pos="n." data-def="迫害；虐待" data-def-en="The act of treating someone cruelly or unfairly over a long period of time, especially because of their race, religion, or political beliefs.">persecution</span> on the basis of sexual orientation had their claims granted at the initial stage in 2023.</span></p>
+      <p class="cn">2023年，近三分之二基于性取向声称迫害的寻求庇护者在初始阶段获得了申请批准。</p>
+    </div>
+    
+    <div class="paragraph-pair" data-para-index="40">
+      <p class="en"><span class="sentence" data-sentence-index="43">Sign up for our Politics Essential newsletterto read top political analysis, gain insight from across the UK and stay up to speed with the big moments.</span> <span class="sentence" data-sentence-index="44">It'll be delivered straight to your inbox every weekday.</span></p>
+      <p class="cn">订阅我们的《政治要闻》（Politics Essential）通讯，阅读顶级政治分析，获取全英见解，并紧跟重大时刻。每个工作日直接发送到您的收件箱。</p>
+    </div>
+    
+  </main>
+
+  <div class="keyword-section">
+    <h2>📖 今日关键词</h2>
+    
+    <div class="kw-card">
+      <span class="kw-word">asylum</span>
+      <span class="kw-meta">/əˈsaɪləm/ n.</span>
+      <p class="kw-def">庇护；避难</p>
+      <p class="kw-def" style="font-size:13px;color:#666;">Protection given by a country to someone who has left their own country because they are in danger.</p>
+      <p class="kw-ctx">"The UK's asylum process offers protection to people who cannot return to their home countries because they would be in danger."</p>
+      <p class="kw-ctx" style="font-style:normal;color:#999;">英国的庇护程序为那些因回国会面临危险而无法返回家园的人提供保护。</p>
+    </div>
+    
+    <div class="kw-card">
+      <span class="kw-word">exploit</span>
+      <span class="kw-meta">/ɪkˈsplɔɪt/ v.</span>
+      <p class="kw-def">利用；剥削</p>
+      <p class="kw-def" style="font-size:13px;color:#666;">To use a situation or person in an unfair or selfish way for one's own advantage.</p>
+      <p class="kw-ctx">"The BBC News investigation reveals the process is being systematically exploited by legal advisers extracting fees from migrants who want to stay in the country."</p>
+      <p class="kw-ctx" style="font-style:normal;color:#999;">BBC新闻调查揭示，法律顾问正在系统性地利用这一程序，向想留在该国的移民收取费用。</p>
+    </div>
+    
+    <div class="kw-card">
+      <span class="kw-word">fabricated</span>
+      <span class="kw-meta">/ˈfæbrɪkeɪtɪd/ adj.</span>
+      <p class="kw-def">伪造的；捏造的</p>
+      <p class="kw-def" style="font-size:13px;color:#666;">Invented or made up, typically with the intent to deceive.</p>
+      <p class="kw-ctx">"Migrants are being given fake cover stories and instructed in how to obtain fabricated evidence, including supporting letters, photographs and medical reports."</p>
+      <p class="kw-ctx" style="font-style:normal;color:#999;">移民被提供虚假的掩护故事，并被指导如何获取伪造的证据，包括支持信、照片和医疗报告。</p>
+    </div>
+    
+    <div class="kw-card">
+      <span class="kw-word">persecution</span>
+      <span class="kw-meta">/ˌpɜːsɪˈkjuːʃn/ n.</span>
+      <p class="kw-def">迫害；虐待</p>
+      <p class="kw-def" style="font-size:13px;color:#666;">The act of treating someone cruelly or unfairly over a long period of time, especially because of their race, religion, or political beliefs.</p>
+      <p class="kw-ctx">"The Conservatives said the system 'must be totally overhauled' so only those facing real personal persecution are granted asylum."</p>
+      <p class="kw-ctx" style="font-style:normal;color:#999;">保守党表示，该系统'必须彻底改革'，以便只有那些面临真正个人迫害的人才能获得庇护。</p>
+    </div>
+    
+    <div class="kw-card">
+      <span class="kw-word">unscrupulous</span>
+      <span class="kw-meta">/ʌnˈskruːpjələs/ adj.</span>
+      <p class="kw-def">不道德的；无耻的</p>
+      <p class="kw-def" style="font-size:13px;color:#666;">Having or showing no moral principles; not honest or fair.</p>
+      <p class="kw-ctx">"It's disgusting to see these unscrupulous law firms taking advantage of people like this or taking advantage of a system like this."</p>
+      <p class="kw-ctx" style="font-style:normal;color:#999;">看到这些不道德的律师事务所这样利用人们或利用这样的系统，真是令人作呕。</p>
+    </div>
+    
+    <div class="kw-card">
+      <span class="kw-word">overhaul</span>
+      <span class="kw-meta">/ˌəʊvəˈhɔːl/ v.</span>
+      <p class="kw-def">彻底检查；全面改革</p>
+      <p class="kw-def" style="font-size:13px;color:#666;">To examine thoroughly and make any necessary changes or repairs.</p>
+      <p class="kw-ctx">"The Conservatives said the system 'must be totally overhauled' so only those facing real personal persecution are granted asylum."</p>
+      <p class="kw-ctx" style="font-style:normal;color:#999;">保守党表示，该系统'必须彻底改革'，以便只有那些面临真正个人迫害的人才能获得庇护。</p>
+    </div>
+    
+    <div class="kw-card">
+      <span class="kw-word">prosecuted</span>
+      <span class="kw-meta">/ˈprɒsɪkjuːtɪd/ v.</span>
+      <p class="kw-def">起诉；检举</p>
+      <p class="kw-def" style="font-size:13px;color:#666;">To officially accuse someone of a crime in a court of law and try to prove that they are guilty.</p>
+      <p class="kw-ctx">"Conservative shadow home secretary Chris Philp said the legal advisers identified 'should be prosecuted for immigration fraud'."</p>
+      <p class="kw-ctx" style="font-style:normal;color:#999;">保守党影子内政大臣克里斯·菲尔普表示，被指认的法律顾问'应因移民欺诈被起诉'。</p>
+    </div>
+    
+    <div class="kw-card">
+      <span class="kw-word">rigorous</span>
+      <span class="kw-meta">/ˈrɪɡərəs/ adj.</span>
+      <p class="kw-def">严格的；严密的</p>
+      <p class="kw-def" style="font-size:13px;color:#666;">Extremely thorough and careful.</p>
+      <p class="kw-ctx">"Human rights campaigner Peter Tatchell said the vast majority of claims were genuine and had gone through 'a rigorous criterion'."</p>
+      <p class="kw-ctx" style="font-style:normal;color:#999;">人权活动家彼得·塔切尔表示，绝大多数申请是真实的，并且经过了'严格的标准'。</p>
+    </div>
+    
+  </div>
+
+  <div id="keyword-popup" class="popup hidden">
+    <div class="popup-word"></div>
+    <div class="popup-phonetic"></div>
+    <div class="popup-pos"></div>
+    <div class="popup-def"></div>
+    <div class="popup-def-en"></div>
+    <button class="popup-close">✕</button>
+  </div>
+
+  <script>
+    const TIMELINE = {"sentences": [{"index": 0, "text": "Home Secretary Shabana Mahmood has promised that \"sham lawyers\" who facilitate abuse of the asylum system \"will face the full force of the law\".", "start_ms": 0, "end_ms": 8640, "paragraph_index": 0}, {"index": 1, "text": "It comes after a BBC investigation revealed how law firms and advisers are charging thousands of pounds to help migrants pretend to be gay in order to stay in the UK.", "start_ms": 8640, "end_ms": 18600, "paragraph_index": 1}, {"index": 2, "text": "The Home Office is investigating the individuals highlighted in the BBC's reporting as part of a wider investigation prompted by officials noticing a growing trend of fake claims from people pretending to be gay.", "start_ms": 18600, "end_ms": 31320, "paragraph_index": 2}, {"index": 3, "text": "However, the Conservatives said the system \"must be totally overhauled\" so only those facing real personal persecution are granted asylum.", "start_ms": 31320, "end_ms": 39600, "paragraph_index": 3}, {"index": 4, "text": "The BBC has uncovered how migrants whose visas are due to run out are being given fake cover stories and instructed in how to obtain fabricated evidence, including supporting letters, photographs and medical reports.", "start_ms": 39600, "end_ms": 52560, "paragraph_index": 4}, {"index": 5, "text": "They then apply for asylum claiming to be gay and in fear for their lives if they return to Pakistan or Bangladesh.", "start_ms": 52560, "end_ms": 59460, "paragraph_index": 5}, {"index": 6, "text": "The UK's asylum process offers protection to people who cannot return to their home countries because they would be in danger, for example in countries like Pakistan and Bangladesh where gay sex is illegal.", "start_ms": 59460, "end_ms": 71820, "paragraph_index": 6}, {"index": 7, "text": "But the BBC News investigation reveals the process is being systematically exploited by legal advisers extracting fees from migrants who want to stay in the country.", "start_ms": 71820, "end_ms": 81720, "paragraph_index": 7}, {"index": 8, "text": "These are often people whose student, work or tourist visas have expired, rather than those who have just arrived in the country on small boats or through other illegal routes.", "start_ms": 81720, "end_ms": 92280, "paragraph_index": 8}, {"index": 9, "text": "This group now makes up 35% of all asylum claims,which topped 100,000 in 2025.", "start_ms": 92280, "end_ms": 96960, "paragraph_index": 9}, {"index": 10, "text": "Mahmood said: \"Anyone abusing protections for people fleeing persecution over gender or sexual orientation is beyond contempt.", "start_ms": 96960, "end_ms": 104520, "paragraph_index": 10}, {"index": 11, "text": "\"Let me be clear: try to defraud the British people to enter or remain in the UK and your asylum claim will be refused, your support cut off, and you will find yourself on a one-way flight out of Britain.", "start_ms": 104520, "end_ms": 116760, "paragraph_index": 11}, {"index": 12, "text": "\"Sham lawyers facilitating this abuse will face the full force of the law.\"", "start_ms": 116760, "end_ms": 121260, "paragraph_index": 12}, {"index": 13, "text": "The Solicitors Regulation Authority (SRA) said it was urgently following up with all the firms it regulated which were identified in the BBC's reporting.", "start_ms": 121260, "end_ms": 130440, "paragraph_index": 13}, {"index": 14, "text": "Jonathan Peddie, executive director\u202fof investigations, enforcement and litigation at the SRA, said: \"If we find evidence that anyone we regulate has acted in ways that contravene their duty to act legally and uphold the law, we will\u202ftake action.\"", "start_ms": 130440, "end_ms": 145200, "paragraph_index": 14}, {"index": 15, "text": "The Immigration Advice Authority, which regulates the sector, said it was assessing the evidence in the BBC's investigation and would pursue action against anyone found to be providing immigration advice illegally.", "start_ms": 145200, "end_ms": 158040, "paragraph_index": 15}, {"index": 16, "text": "Labour MP Jo White, a member of the Commons home affairs select committee, called for the Home Office to stop issuing study visas to people from Pakistan,as it did last month for people from Afghanistan, Cameroon, Myanmar and Sudan over what it said was widespread visa abuse.", "start_ms": 158040, "end_ms": 174600, "paragraph_index": 16}, {"index": 17, "text": "Conservative shadow home secretary Chris Philp said the BBC's investigation \"exposes the scam at the heart of many asylum claims\" and the legal advisers identified \"should be prosecuted for immigration fraud\".", "start_ms": 174600, "end_ms": 187140, "paragraph_index": 17}, {"index": 18, "text": "Liberal Democrat immigration and asylum spokesman Will Forster said the BBC's findings were \"abhorrent\", adding: \"We need an asylum system that is fair, controlled and efficient.", "start_ms": 187140, "end_ms": 197820, "paragraph_index": 18}, {"index": 19, "text": "Not the shambles the Conservatives left us with.\"", "start_ms": 197820, "end_ms": 200760, "paragraph_index": 18}, {"index": 20, "text": "He called on the government to urgently investigate how widespread the issue was.", "start_ms": 200760, "end_ms": 205620, "paragraph_index": 19}, {"index": 21, "text": "Reform UK said it would \"put a stop to the legal-industrial complex exploiting the generosity of the British taxpayer\".", "start_ms": 205620, "end_ms": 212760, "paragraph_index": 20}, {"index": 22, "text": "If the party wins power, home affairs spokesman Zia Yusuf pledged to make facilitating a false asylum claim a \"strict liability\" criminal offence, meaning there would be no requirement to prove intent in prosecutions, which would be punishable by up to two years in jail.", "start_ms": 212760, "end_ms": 229020, "paragraph_index": 21}, {"index": 23, "text": "He said a Reform government would also immediately abolish legal aid for asylum applications from those who enter the UK illegally or overstay their visa.", "start_ms": 229020, "end_ms": 238260, "paragraph_index": 22}, {"index": 24, "text": "Green Party leader Zack Polanski said: \"It's disgusting to see these unscrupulous law firms taking advantage of people like this or taking advantage of a system like this.\"", "start_ms": 238260, "end_ms": 248580, "paragraph_index": 23}, {"index": 25, "text": "He added that there was a wider issue of the government having \"inconsistent policies\", which create \"perverse incentives for these kind of unscrupulous businesses and industries to pop up\".", "start_ms": 248580, "end_ms": 259980, "paragraph_index": 24}, {"index": 26, "text": "Aderonke Apata, who founded the African Rainbow Family charity, was granted asylum in the UK because she is a lesbian and could have faced the death penalty in Nigeria.", "start_ms": 259980, "end_ms": 270060, "paragraph_index": 25}, {"index": 27, "text": "She said she was \"appalled\" by the BBC's findings, adding: \"It dismisses the real struggle that we face as a community.", "start_ms": 270060, "end_ms": 277200, "paragraph_index": 26}, {"index": 28, "text": "\"And for genuine people who are seeking asylum and LGBTIQ people, this makes it extremely difficult for them to be able to be successful in their asylum claims.\"", "start_ms": 277200, "end_ms": 286860, "paragraph_index": 27}, {"index": 29, "text": "The BBC has been contacted by several LGBT groups who said they had noticed an increasing number of people turning up to meetings who they suspect are making fake gay asylum claims.", "start_ms": 286860, "end_ms": 297720, "paragraph_index": 28}, {"index": 30, "text": "Tom Guy, the founder of National Student Pride, said: \"We've had people turning up...", "start_ms": 297720, "end_ms": 302820, "paragraph_index": 29}, {"index": 31, "text": "they take photos and they would leave.", "start_ms": 302820, "end_ms": 305100, "paragraph_index": 29}, {"index": 32, "text": "They weren't even staying for the event.\"", "start_ms": 305100, "end_ms": 307560, "paragraph_index": 29}, {"index": 33, "text": "Human rights campaigner Peter Tatchell, whose foundation helps people secure asylum on LGBT grounds, said the vast majority of claims were genuine and had gone through \"a rigorous criterion\".", "start_ms": 307560, "end_ms": 319020, "paragraph_index": 30}, {"index": 34, "text": "However, he told BBC Radio 4's World at One programme his foundation had been \"swamped\" by people from Pakistan claiming to be LGBT and seeking letters of recommendation.", "start_ms": 319020, "end_ms": 329220, "paragraph_index": 31}, {"index": 35, "text": "Imran Hussain, from the Refugee Council charity, said it was \"deplorable that unscrupulous advisers are exploiting desperate and vulnerable people for profit and those responsible must be held to account\".", "start_ms": 329220, "end_ms": 341520, "paragraph_index": 32}, {"index": 36, "text": "He added: \"Every day in our frontline services we work with LGBTQ+ refugees from countries like Uganda and Pakistan who have faced imprisonment, violence and abuse simply for who they are, and who have come to Britain so they can live safely and openly.", "start_ms": 341520, "end_ms": 356700, "paragraph_index": 33}, {"index": 37, "text": "\"These kinds of abuses must not be used to undermine the credibility of people with genuine need for asylum.\"", "start_ms": 356700, "end_ms": 363240, "paragraph_index": 34}, {"index": 38, "text": "It is difficult to know precisely how many asylum applications might be fabricated.", "start_ms": 363240, "end_ms": 368220, "paragraph_index": 35}, {"index": 39, "text": "But Home Office statistics show that Pakistani nationals make up a disproportionate number of the claims made on the grounds of sexuality.", "start_ms": 368220, "end_ms": 376500, "paragraph_index": 36}, {"index": 40, "text": "In 2023, the most recent year for which data is available, some 42% of asylum claims with an LGBT element were made by Pakistani nationals and they accounted for the largest number of such claims in each of the five previous years.", "start_ms": 376500, "end_ms": 390360, "paragraph_index": 37}, {"index": 41, "text": "In the same year, Pakistani nationals were only the fourth most common nationality for all asylum applications and accounted for just 6% of overall asylum applications.", "start_ms": 390360, "end_ms": 400440, "paragraph_index": 38}, {"index": 42, "text": "Nearly two-thirds of asylum seekers claiming persecution on the basis of sexual orientation had their claims granted at the initial stage in 2023.", "start_ms": 400440, "end_ms": 409200, "paragraph_index": 39}, {"index": 43, "text": "Sign up for our Politics Essential newsletterto read top political analysis, gain insight from across the UK and stay up to speed with the big moments.", "start_ms": 409200, "end_ms": 418260, "paragraph_index": 40}, {"index": 44, "text": "It'll be delivered straight to your inbox every weekday.", "start_ms": 418260, "end_ms": 421620, "paragraph_index": 40}], "total_duration_ms": 421620};
+
+    // --- Audio player ---
+    const audio = document.getElementById('article-audio');
+    const playBtn = document.getElementById('play-btn');
+    const progressEl = document.getElementById('progress');
+
+    function fmtTime(sec) {
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+    }
+
+    if (playBtn && audio) {
+      playBtn.addEventListener('click', () => {
+        if (audio.paused) {
+          audio.play();
+          playBtn.textContent = '⏸ 暂停';
+        } else {
+          audio.pause();
+          playBtn.textContent = '▶ 播放文章音频';
+        }
+      });
+
+      audio.addEventListener('loadedmetadata', () => {
+        progressEl.textContent = '00:00 / ' + fmtTime(audio.duration);
+      });
+
+      audio.addEventListener('timeupdate', () => {
+        const cur = audio.currentTime;
+        const dur = audio.duration || 0;
+        progressEl.textContent = fmtTime(cur) + ' / ' + fmtTime(dur);
+
+        // Sentence-level highlighting
+        const currentMs = cur * 1000;
+        TIMELINE.sentences.forEach((entry) => {
+          const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+          if (!el) return;
+          if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+            if (!el.classList.contains('highlight')) {
+              el.classList.add('highlight');
+              el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          } else {
+            el.classList.remove('highlight');
+          }
+        });
+      });
+
+      audio.addEventListener('ended', () => {
+        playBtn.textContent = '▶ 播放文章音频';
+        document.querySelectorAll('.sentence.highlight').forEach(el => {
+          el.classList.remove('highlight');
+        });
+      });
+    }
+
+    // --- Keyword popup ---
+    const popup = document.getElementById('keyword-popup');
+
+    document.querySelectorAll('.keyword').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        popup.querySelector('.popup-word').textContent = el.dataset.word;
+        popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+        popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+        popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+        popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+        popup.classList.remove('hidden');
+      });
+    });
+
+    popup.querySelector('.popup-close').addEventListener('click', () => {
+      popup.classList.add('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+        popup.classList.add('hidden');
+      }
+    });
+  </script>
+
+</body>
+</html>

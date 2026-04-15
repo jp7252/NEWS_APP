@@ -1,0 +1,8 @@
+feedparser>=6.0
+beautifulsoup4>=4.12
+requests>=2.31
+edge-tts>=6.1
+openai>=1.30
+jinja2>=3.1
+python-dotenv>=1.0
+pyyaml>=6.0

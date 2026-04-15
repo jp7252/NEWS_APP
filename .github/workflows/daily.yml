@@ -1,0 +1,39 @@
+name: Daily BBC News Pipeline
+
+on:
+  schedule:
+    - cron: '0 22 * * *'  # UTC 22:00 = Beijing 06:00
+  workflow_dispatch:        # Manual trigger for testing
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run daily pipeline
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: python main.py
+
+      - name: Commit and push generated files
+        run: |
+          git config user.name "DailyBBC Bot"
+          git config user.email "bot@dailybbc.com"
+          git add articles/ audio/ data/
+          git diff --cached --quiet || git commit -m "📰 Daily update: $(date +%Y-%m-%d)"
+          git push
