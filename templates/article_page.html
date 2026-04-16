@@ -480,27 +480,35 @@
   let tooltipTimer = null;
   let activeHoverEl = null;
 
-  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => {
-    const nodes = [];
-    pEl.childNodes.forEach(node => {
-      if (node.nodeType === Node.TEXT_NODE) {
-        const frag = document.createDocumentFragment();
-        const parts = node.textContent.split(/(\s+)/);
-        parts.forEach(part => {
-          if (/^\s+$/.test(part) || part === '') {
-            frag.appendChild(document.createTextNode(part));
-          } else {
-            const span = document.createElement('span');
-            span.className = 'word-hoverable';
-            span.textContent = part;
-            frag.appendChild(span);
-          }
-        });
-        nodes.push({ old: node, replacement: frag });
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
       }
     });
-    nodes.forEach(n => pEl.replaceChild(n.replacement, n.old));
-  });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
 
   function positionTooltip(el) {
     const rect = el.getBoundingClientRect();
