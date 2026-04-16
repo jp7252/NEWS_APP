@@ -271,7 +271,8 @@
     .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
 
     /* ── Hover tooltip ── */
-    .word-hoverable { position: relative; }
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
     .word-tooltip {
       position: absolute;
       bottom: calc(100% + 6px);
@@ -452,9 +453,32 @@
     if (w) KW_DICT[w] = el.dataset.def || '';
   });
 
+  // ── Translation cache (word → Chinese string) ──
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+
+  async function fetchTranslation(word) {
+    const key = word.toLowerCase();
+    if (TRANS_CACHE[key] !== undefined) return TRANS_CACHE[key];
+    TRANS_CACHE[key] = null; // mark in-flight
+    try {
+      const resp = await fetch(
+        'https://api.mymemory.translated.net/get?q=' + encodeURIComponent(word) + '&langpair=en|zh-CN'
+      );
+      const data = await resp.json();
+      const text = (data.responseData && data.responseData.translatedText) || '';
+      TRANS_CACHE[key] = text || '';
+      return TRANS_CACHE[key];
+    } catch {
+      TRANS_CACHE[key] = '';
+      return '';
+    }
+  }
+
   // ── Hover-to-translate: wrap English words ──
   const tooltip = document.getElementById('hover-tooltip');
   let tooltipTimer = null;
+  let activeHoverEl = null;
 
   document.querySelectorAll('.paragraph-pair .en').forEach(pEl => {
     const nodes = [];
@@ -478,35 +502,49 @@
     nodes.forEach(n => pEl.replaceChild(n.replacement, n.old));
   });
 
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    tooltip.style.position = 'fixed';
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.top = (rect.top - 8) + 'px';
+    tooltip.style.transform = 'translateX(-50%) translateY(-100%)';
+  }
+
   document.addEventListener('mouseenter', (e) => {
     if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
     const el = e.target;
     const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
-    if (!raw || raw.length <= 2) return;
+    if (!raw || raw.length <= 1) return;
 
+    activeHoverEl = el;
     clearTimeout(tooltipTimer);
-    tooltipTimer = setTimeout(() => {
-      let content;
-      if (KW_DICT[raw]) {
-        content = KW_DICT[raw];
-      } else {
-        content = '<a href="https://dict.youdao.com/w/eng/' + encodeURIComponent(raw) + '/" target="_blank">' + raw + ' &#8594; dict</a>';
-      }
-      tooltip.innerHTML = content;
-      tooltip.style.display = 'block';
+    tooltipTimer = setTimeout(async () => {
+      if (activeHoverEl !== el) return;
 
-      const rect = el.getBoundingClientRect();
-      tooltip.style.position = 'fixed';
-      tooltip.style.left = (rect.left + rect.width / 2) + 'px';
-      tooltip.style.top = (rect.top - 8) + 'px';
-      tooltip.style.transform = 'translateX(-50%) translateY(-100%)';
-    }, 300);
+      const cached = TRANS_CACHE[raw];
+      if (cached !== undefined && cached !== null) {
+        tooltip.textContent = cached || raw;
+        tooltip.style.display = 'block';
+        positionTooltip(el);
+        return;
+      }
+
+      tooltip.textContent = '...';
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+
+      const result = await fetchTranslation(raw);
+      if (activeHoverEl !== el) { tooltip.style.display = 'none'; return; }
+      tooltip.textContent = result || raw;
+      positionTooltip(el);
+    }, 250);
   }, true);
 
   document.addEventListener('mouseleave', (e) => {
     if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
     clearTimeout(tooltipTimer);
-    setTimeout(() => { tooltip.style.display = 'none'; }, 200);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
   }, true);
 
   // ── Keyword speak buttons (SpeechSynthesis) ──
