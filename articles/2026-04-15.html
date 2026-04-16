@@ -273,23 +273,23 @@
     /* ── Hover tooltip ── */
     .word-hoverable { position: relative; cursor: default; }
     .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
     .word-tooltip {
-      position: absolute;
-      bottom: calc(100% + 6px);
-      left: 50%;
-      transform: translateX(-50%);
+      position: fixed;
       background: #fff;
-      border: 1px solid #ddd;
+      border: 1px solid #ccc;
       border-radius: 6px;
-      padding: 6px 10px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
-      font-size: 13px;
-      color: #333;
-      white-space: nowrap;
-      max-width: 220px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      z-index: 90;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: normal;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
       pointer-events: none;
     }
     .word-tooltip::after {
@@ -743,8 +743,9 @@
 
   async function fetchTranslation(word) {
     const key = word.toLowerCase();
-    if (TRANS_CACHE[key] !== undefined) return TRANS_CACHE[key];
-    TRANS_CACHE[key] = null; // mark in-flight
+    const existing = TRANS_CACHE[key];
+    if (existing !== undefined && existing !== null) return existing;
+    TRANS_CACHE[key] = null; // in-flight sentinel (must not short-circuit as a result)
     try {
       const resp = await fetch(
         'https://api.mymemory.translated.net/get?q=' + encodeURIComponent(word) + '&langpair=en|zh-CN'
@@ -796,10 +797,13 @@
 
   function positionTooltip(el) {
     const rect = el.getBoundingClientRect();
-    tooltip.style.position = 'fixed';
+    const margin = 8;
     tooltip.style.left = (rect.left + rect.width / 2) + 'px';
-    tooltip.style.top = (rect.top - 8) + 'px';
-    tooltip.style.transform = 'translateX(-50%) translateY(-100%)';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
   }
 
   document.addEventListener('mouseenter', (e) => {
