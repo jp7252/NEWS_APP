@@ -101,4 +101,5 @@ def build_article_page(
         audio_url=audio_url or "",
         has_audio=audio_url is not None,
         lead_image_url=article.lead_image_url or "",
+        word_glossary_json=json.dumps(article.word_glossary or {}, ensure_ascii=False),
     )

@@ -14,7 +14,7 @@ import yaml
 from dotenv import load_dotenv
 
 from src.fetcher import fetch_top_article
-from src.processor import ProcessedArticle, Keyword, process_article
+from src.processor import ProcessedArticle, Keyword, process_article, attach_word_glossary
 from src.audio import generate_audio
 from src.assembler import build_email_html, build_article_page
 from src.mailer import send_email
@@ -69,6 +69,7 @@ def _load_processed_from_json(date_str: str) -> ProcessedArticle:
         paragraphs_cn=data["paragraphs_cn"],
         keywords=keywords,
         lead_image_url=data.get("lead_image_url"),
+        word_glossary=data.get("word_glossary") or {},
     )
 
 
@@ -80,6 +81,19 @@ async def daily_pipeline(rebuild_only: bool = False):
         logger.info("=== Rebuild-only mode for %s ===", date_str)
         processed = _load_processed_from_json(date_str)
         logger.info("Loaded cached data: %s (%d paragraphs)", processed.title, len(processed.paragraphs_en))
+        if not processed.word_glossary:
+            ds = os.environ.get("DEEPSEEK_API_KEY", "")
+            if ds:
+                logger.info("No word_glossary in cache; running one LLM pass for hover translations…")
+                processed = attach_word_glossary(
+                    processed,
+                    api_key=ds,
+                    base_url=config["llm"]["base_url"],
+                    model=config["llm"]["model"],
+                )
+                save_data_json(json.dumps(asdict(processed), ensure_ascii=False, indent=2), date_str)
+            else:
+                logger.warning("No word_glossary and DEEPSEEK_API_KEY unset — hover will use English dictionary only.")
     else:
         logger.info("=== DailyBBC pipeline starting for %s ===", date_str)
 
@@ -159,7 +173,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "--rebuild-only",
         action="store_true",
-        help="Skip RSS fetch, LLM, and email; only regenerate audio + HTML from cached data",
+        help="Skip RSS fetch, full LLM article pass, and email; regenerate audio + HTML. "
+        "If cache lacks word_glossary, runs one LLM glossary pass when DEEPSEEK_API_KEY is set.",
     )
     args = parser.parse_args()
     asyncio.run(daily_pipeline(rebuild_only=args.rebuild_only))

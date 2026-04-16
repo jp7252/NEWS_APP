@@ -284,7 +284,7 @@
       font-size: 14px;
       line-height: 1.45;
       color: #222;
-      white-space: normal;
+      white-space: pre-line;
       max-width: min(280px, calc(100vw - 24px));
       min-width: 48px;
       min-height: 1.2em;
@@ -445,6 +445,7 @@
 
 <script>
   const TIMELINE = {{ timeline_json }};
+  const WORD_GLOSS = {{ word_glossary_json }};
 
   // ── Build keyword dictionary from data attributes ──
   const KW_DICT = {};
@@ -453,25 +454,37 @@
     if (w) KW_DICT[w] = el.dataset.def || '';
   });
 
-  // ── Translation cache (word → Chinese string) ──
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
   const TRANS_CACHE = {};
   Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
 
-  async function fetchTranslation(word) {
+  // Fallback: Free Dictionary API — accurate English sense (not machine-translated Chinese)
+  const FREE_DICT_CACHE = {};
+  async function fetchFreeDictionary(word) {
     const key = word.toLowerCase();
-    const existing = TRANS_CACHE[key];
+    const existing = FREE_DICT_CACHE[key];
     if (existing !== undefined && existing !== null) return existing;
-    TRANS_CACHE[key] = null; // in-flight sentinel (must not short-circuit as a result)
+    FREE_DICT_CACHE[key] = null;
     try {
       const resp = await fetch(
-        'https://api.mymemory.translated.net/get?q=' + encodeURIComponent(word) + '&langpair=en|zh-CN'
+        'https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(key)
       );
+      if (!resp.ok) {
+        FREE_DICT_CACHE[key] = '';
+        return '';
+      }
       const data = await resp.json();
-      const text = (data.responseData && data.responseData.translatedText) || '';
-      TRANS_CACHE[key] = text || '';
-      return TRANS_CACHE[key];
+      const entry = Array.isArray(data) ? data[0] : null;
+      let def = '';
+      if (entry && entry.meanings && entry.meanings[0] && entry.meanings[0].definitions) {
+        const d0 = entry.meanings[0].definitions[0];
+        def = (d0 && d0.definition) ? d0.definition : '';
+      }
+      FREE_DICT_CACHE[key] = def;
+      return def;
     } catch {
-      TRANS_CACHE[key] = '';
+      FREE_DICT_CACHE[key] = '';
       return '';
     }
   }
@@ -545,9 +558,13 @@
       tooltip.style.display = 'block';
       positionTooltip(el);
 
-      const result = await fetchTranslation(raw);
+      const defEn = await fetchFreeDictionary(raw);
       if (activeHoverEl !== el) { tooltip.style.display = 'none'; return; }
-      tooltip.textContent = result || raw;
+      if (defEn) {
+        tooltip.textContent = '【英文释义】\n' + defEn;
+      } else {
+        tooltip.textContent = raw + '\n（无词典条目，可查阅有道等词典）';
+      }
       positionTooltip(el);
     }, 250);
   }, true);
