@@ -459,32 +459,35 @@
   Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
   Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
 
-  // Fallback: Free Dictionary API — accurate English sense (not machine-translated Chinese)
-  const FREE_DICT_CACHE = {};
-  async function fetchFreeDictionary(word) {
+  // Fallback: Chinese only (words outside build-time glossary). Public LibreTranslate instance.
+  const ZH_FALLBACK_CACHE = {};
+  async function fetchChineseFallback(word) {
     const key = word.toLowerCase();
-    const existing = FREE_DICT_CACHE[key];
+    const existing = ZH_FALLBACK_CACHE[key];
     if (existing !== undefined && existing !== null) return existing;
-    FREE_DICT_CACHE[key] = null;
+    ZH_FALLBACK_CACHE[key] = null;
     try {
-      const resp = await fetch(
-        'https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(key)
-      );
+      const resp = await fetch('https://libretranslate.com/translate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          q: word,
+          source: 'en',
+          target: 'zh',
+          format: 'text',
+        }),
+      });
       if (!resp.ok) {
-        FREE_DICT_CACHE[key] = '';
+        ZH_FALLBACK_CACHE[key] = '';
         return '';
       }
       const data = await resp.json();
-      const entry = Array.isArray(data) ? data[0] : null;
-      let def = '';
-      if (entry && entry.meanings && entry.meanings[0] && entry.meanings[0].definitions) {
-        const d0 = entry.meanings[0].definitions[0];
-        def = (d0 && d0.definition) ? d0.definition : '';
-      }
-      FREE_DICT_CACHE[key] = def;
-      return def;
+      const zh = (data.translatedText || '').trim();
+      ZH_FALLBACK_CACHE[key] = zh;
+      if (zh) TRANS_CACHE[key] = zh;
+      return zh;
     } catch {
-      FREE_DICT_CACHE[key] = '';
+      ZH_FALLBACK_CACHE[key] = '';
       return '';
     }
   }
@@ -558,13 +561,9 @@
       tooltip.style.display = 'block';
       positionTooltip(el);
 
-      const defEn = await fetchFreeDictionary(raw);
+      const zh = await fetchChineseFallback(raw);
       if (activeHoverEl !== el) { tooltip.style.display = 'none'; return; }
-      if (defEn) {
-        tooltip.textContent = '【英文释义】\n' + defEn;
-      } else {
-        tooltip.textContent = raw + '\n（无词典条目，可查阅有道等词典）';
-      }
+      tooltip.textContent = zh || '（暂无中文释义）';
       positionTooltip(el);
     }, 250);
   }, true);

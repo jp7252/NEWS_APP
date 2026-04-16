@@ -93,7 +93,9 @@ async def daily_pipeline(rebuild_only: bool = False):
                 )
                 save_data_json(json.dumps(asdict(processed), ensure_ascii=False, indent=2), date_str)
             else:
-                logger.warning("No word_glossary and DEEPSEEK_API_KEY unset — hover will use English dictionary only.")
+                logger.warning(
+                    "No word_glossary and DEEPSEEK_API_KEY unset — hover uses live zh fallback only (no article-aware glossary)."
+                )
     else:
         logger.info("=== DailyBBC pipeline starting for %s ===", date_str)
 

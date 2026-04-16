@@ -32,7 +32,7 @@ _EN_STOPWORDS = frozenset({
 })
 
 _GLOSSARY_CHUNK = 100
-_MAX_GLOSSARY_WORDS = 400
+_MAX_GLOSSARY_WORDS = 650
 
 
 def _collect_glossary_candidates(paragraphs: list[str], keyword_words: set[str]) -> list[str]:
