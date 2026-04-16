@@ -85,7 +85,7 @@ def _translate(client: OpenAI, model: str, paragraphs: list[str]) -> list[str]:
 
 def _extract_keywords(client: OpenAI, model: str, full_text: str) -> list[Keyword]:
     system = (
-        "你是一个英语教学专家。从以下英文新闻文章中提取 5-8 个值得学习的关键词。\n"
+        "你是一个英语教学专家。从以下英文新闻文章中提取恰好 8 个值得学习的关键词。\n"
         "选词标准：\n"
         "- 优先选择科技领域常见但非初级的词汇（适合 CET-4 水平学习者）\n"
         "- 排除过于简单的词（如 the, is, have, make, good）\n"

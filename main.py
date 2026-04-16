@@ -1,4 +1,4 @@
-"""DailyBBC — daily pipeline entry point."""
+"""The Eight Words Daily — daily pipeline entry point."""
 
 import argparse
 import asyncio
@@ -155,7 +155,7 @@ async def daily_pipeline(rebuild_only: bool = False):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="DailyBBC daily pipeline")
+    parser = argparse.ArgumentParser(description="The Eight Words Daily pipeline")
     parser.add_argument(
         "--rebuild-only",
         action="store_true",

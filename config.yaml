@@ -14,7 +14,7 @@ email:
   sender: "${GMAIL_ADDRESS}"
   recipients:
     - "jialin0122@gmail.com"
-  subject_template: "📰 DailyBBC · {title_short} · {date}"
+  subject_template: "📰 The Eight Words Daily · {title_short} · {date}"
 
 pages:
   # GitHub Pages 公网地址（不是仓库地址）
