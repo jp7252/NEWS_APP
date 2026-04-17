@@ -381,8 +381,8 @@
       <p class="source">Source: <a href="https://www.bbc.com/news/articles/c747r3v90k3o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
     </header>
 
-    <div class="audio-player ">
-      <audio id="article-audio" src="https://jp7252.github.io/NEWS_APP/audio/2026-04-17.mp3" preload="metadata"></audio>
+    <div class="audio-player hidden">
+      <audio id="article-audio" src="" preload="metadata"></audio>
       <div class="audio-controls">
         <button id="play-btn">&#9654; Play</button>
         <span class="time-display" id="time-current">00:00</span>
@@ -678,7 +678,7 @@
 <div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
 
 <script>
-  const TIMELINE = {"sentences": [{"index": 0, "text": "The Foreign Office's top civil servant is leaving his post after his department did not inform the prime minister that Lord Mandelson had failed security vetting for the role of US ambassador.", "start_ms": 0, "end_ms": 12456, "paragraph_index": 0}, {"index": 1, "text": "The BBC understands Sir Keir Starmer and Foreign Secretary Yvette Cooper have lost confidence in Sir Olly Robbins, and he has effectively been sacked.", "start_ms": 12456, "end_ms": 23256, "paragraph_index": 1}, {"index": 2, "text": "It comesafter the government confirmed the Foreign Officewent against the recommendation of the vetting agency and allowed Lord Mandelson to take up the post.", "start_ms": 23256, "end_ms": 33480, "paragraph_index": 2}, {"index": 3, "text": "A spokesperson said neither Sir Keir nor any minister were aware Lord Mandelson had failed the vetting process until earlier this week.", "start_ms": 33480, "end_ms": 42864, "paragraph_index": 3}, {"index": 4, "text": "Lord Mandelson was announced as the UK's ambassador to the US in December 2024, before in-depth vetting had been carried out, and formally took up the role on 10 February 2025.", "start_ms": 42864, "end_ms": 57168, "paragraph_index": 4}, {"index": 5, "text": "Just seven months later he was sacked over his ties to the late convicted sex offender Jeffrey Epstein.", "start_ms": 57168, "end_ms": 64536, "paragraph_index": 5}, {"index": 6, "text": "Sir Keir has faced calls to resign over allegations he misled Parliament and MPs when he claimed \"full due process\" was followed during the appointment.", "start_ms": 64536, "end_ms": 74952, "paragraph_index": 6}, {"index": 7, "text": "During Prime Minister's Questions on 10 September 2025, Sir Keir said three times that \"full due process\" was followed for the appointment.", "start_ms": 74952, "end_ms": 85632, "paragraph_index": 7}, {"index": 8, "text": "The Ministerial Code states that ministers who knowingly mislead Parliament are expected to resign.", "start_ms": 85632, "end_ms": 92712, "paragraph_index": 8}, {"index": 9, "text": "Taking questions from journalists following a press conference on 5 February in Hastings, Sir Keir also said that there was \"security vetting carried out independently by the security services, which is an intensive exercise that gave [Lord Mandelson] clearance for the role, and you have to go through that before you take up the post\".", "start_ms": 92712, "end_ms": 114576, "paragraph_index": 9}, {"index": 10, "text": "The revelations about Lord Mandelson's vetting have reignited anger over his appointment and raise further questions over the prime minister's judgement.", "start_ms": 114576, "end_ms": 124440, "paragraph_index": 10}, {"index": 11, "text": "Sir Keir is expected to give a statement on the issue in the House of Commons on Monday.", "start_ms": 124440, "end_ms": 130440, "paragraph_index": 11}, {"index": 12, "text": "Calling for the PM to stand down earlier, Conservative leader Kemi Badenoch said: \"It is either, he knew that Mandelson failed the security vetting and lied to us in Parliament, on TV repeatedly, or he didn't know, didn't ask and said he had passed the security vetting - which means he is hopelessly incompetent.\"", "start_ms": 130440, "end_ms": 150864, "paragraph_index": 12}, {"index": 13, "text": "Liberal Democrat leader Sir Ed Davey said that if it was true the PM was not aware Lord Mandelson had failed security vetting, he should have \"told Parliament at the earliest opportunity, not waited for the media to force the truth out\".", "start_ms": 150864, "end_ms": 166272, "paragraph_index": 13}, {"index": 14, "text": "\"His failure to do that alone is surely a breach of the ministerial code,\" he added.", "start_ms": 166272, "end_ms": 172368, "paragraph_index": 14}, {"index": 15, "text": "Reform UK, the Green Party and Plaid Cymru have also called for the prime minister to go, accusing him of lying about Lord Mandelson's vetting.", "start_ms": 172368, "end_ms": 182712, "paragraph_index": 15}, {"index": 16, "text": "Meanwhile, the Scottish National Party have written to the independent adviser on ministerial standards, Sir Laurie Magnus, calling for an investigation into whether the PM deliberately misled the public.", "start_ms": 182712, "end_ms": 196728, "paragraph_index": 16}, {"index": 17, "text": "SNP Westminster leader Stephen Flynn said: \"The prime minister is either incompetent, gullible or a liar.", "start_ms": 196728, "end_ms": 205032, "paragraph_index": 17}, {"index": 18, "text": "Or all three.\"", "start_ms": 205032, "end_ms": 207168, "paragraph_index": 17}, {"index": 19, "text": "Sir Olly, who has held a number of senior Civil Service roles and served as Theresa May's chief Brexit negotiator, was appointed permanent under-secretary at the Foreign Office in January 2025.", "start_ms": 207168, "end_ms": 221208, "paragraph_index": 18}, {"index": 20, "text": "Earlier, Labour MP Emily Thornberry, who chairs the Commons Foreign Affairs Committee, said she felt she had been \"misled\" by Sir Olly when he gave evidence to her committee last November about Lord Mandelson's vetting.", "start_ms": 221208, "end_ms": 235656, "paragraph_index": 19}, {"index": 21, "text": "\"We gave them direct questions and they half answered it, but they missed out the bit that was important...", "start_ms": 235656, "end_ms": 242256, "paragraph_index": 20}, {"index": 22, "text": "he didn't pass the vetting,\" she told the BBC.", "start_ms": 242256, "end_ms": 246264, "paragraph_index": 20}, {"index": 23, "text": "Friends of Morgan McSweeney, the PM's chief adviser at the time who resigned in February over his role in Lord Mandelson's appointment, told the BBC he had not known about the conclusion of the vetting process.", "start_ms": 246264, "end_ms": 260112, "paragraph_index": 21}, {"index": 24, "text": "The developed vetting process is carried out by UK Security Vetting, a specialist agency within the Cabinet Office, and is designed to make sure individuals are unlikely to abuse their access to secret material, or be subject to blackmail or bribery.", "start_ms": 260112, "end_ms": 277824, "paragraph_index": 22}, {"index": 25, "text": "It includes checks on a candidate's credit history and criminal record.", "start_ms": 277824, "end_ms": 283200, "paragraph_index": 23}, {"index": 26, "text": "Those being vetted also have to undertake an interview with a specially trained vetting officer, which can cover areas including candidates' health, friendships, family and sexual history.", "start_ms": 283200, "end_ms": 296208, "paragraph_index": 24}, {"index": 27, "text": "The BBC understands Lord Mandelson had no knowledge about the judgements reached during his vetting process until it was reported in the media, and that no-one at any level raised anything about it with him following his vetting interview.", "start_ms": 296208, "end_ms": 311040, "paragraph_index": 25}, {"index": 28, "text": "In February, the government agreed to release documents relating to Lord Mandelson's appointment, following a vote by MPs for them to be published.", "start_ms": 311040, "end_ms": 321336, "paragraph_index": 26}, {"index": 29, "text": "However,the Guardian reportedthat senior government officials had been considering whether to withhold documents from Parliament revealing Lord Mandelson was not given vetting approval from security officials.", "start_ms": 321336, "end_ms": 334296, "paragraph_index": 27}, {"index": 30, "text": "A spokesperson said the government was committed to complying with a parliamentary motion demanding the release of documents related to the appointment \"in full as soon as possible\".", "start_ms": 334296, "end_ms": 345480, "paragraph_index": 28}, {"index": 31, "text": "Sir Keir was said to be \"furious\" after he found out on Tuesday evening that Lord Mandelson had failed vetting, as part of the process of going through documents to be published.", "start_ms": 345480, "end_ms": 356952, "paragraph_index": 29}, {"index": 32, "text": "The BBC understands David Lammy, the foreign secretary at the time of Lord Mandelson's appointment, did not find out the Foreign Office had overruled the vetting until Thursday afternoon.", "start_ms": 356952, "end_ms": 369624, "paragraph_index": 30}], "total_duration_ms": 369624};
+  const TIMELINE = {"sentences": [], "total_duration_ms": 0};
   const WORD_GLOSS = {"lord": "勋爵", "sir": "爵士", "mandelson": "曼德尔森", "said": "表示", "security": "安全", "foreign": "外交", "keir": "基尔", "process": "程序", "appointment": "任命", "mandelson's": "曼德尔森的", "prime": "首相", "failed": "失败", "bbc": "英国广播公司", "parliament": "议会", "minister": "大臣", "role": "角色", "government": "政府", "february": "二月", "questions": "质询", "documents": "文件", "post": "职位", "understands": "理解", "olly": "奥利", "until": "直到", "earlier": "较早", "carried": "进行", "misled": "误导", "full": "完整", "ministerial": "部长级", "following": "随后", "gave": "给予", "pm": "首相", "leader": "领袖", "didn't": "没有", "told": "告知", "office": "办公室", "civil": "文职", "ambassador": "大使", "secretary": "秘书", "sacked": "解雇", "agency": "机构", "take": "担任", "spokesperson": "发言人", "aware": "知晓", "resign": "辞职", "mps": "议员", "due": "由于", "followed": "跟随", "minister's": "大臣的", "three": "三", "code": "准则", "expected": "预期", "go": "去", "commons": "下议院", "calling": "呼吁", "media": "媒体", "uk": "英国", "party": "政党", "adviser": "顾问", "whether": "是否", "senior": "高级", "chief": "首席", "committee": "委员会", "time": "时间", "history": "历史", "interview": "采访", "release": "发布", "published": "公布", "officials": "官员", "office's": "办公室的", "top": "最高", "servant": "公务员", "leaving": "离开", "department": "部门", "inform": "通知", "starmer": "斯塔默", "yvette": "伊薇特", "cooper": "库珀", "lost": "失去", "robbins": "罗宾斯", "effectively": "实际上", "comesafter": "紧随其后", "confirmed": "确认", "officewent": "办公室前往", "against": "反对", "allowed": "允许", "week": "周", "announced": "宣布", "uk's": "英国的", "december": "十二月", "in-depth": "深入", "formally": "正式", "took": "采取", "seven": "七", "months": "月", "later": "后来", "ties": "关系", "late": "晚期", "convicted": "定罪", "sex": "性", "offender": "违法者", "jeffrey": "杰弗里", "epstein": "爱泼斯坦", "faced": "面临", "calls": "呼吁", "claimed": "声称", "september": "九月", "times": "时报", "states": "美国", "ministers": "部长们", "knowingly": "明知地", "mislead": "误导", "taking": "接受", "journalists": "记者们", "press": "新闻界", "conference": "会议", "hastings": "黑斯廷斯", "independently": "独立地", "services": "服务", "exercise": "行使", "clearance": "许可", "revelations": "揭露", "anger": "愤怒", "raise": "引发", "judgement": "判断", "give": "发表", "statement": "声明", "issue": "问题", "house": "议会", "monday": "周一", "stand": "立场", "conservative": "保守党", "kemi": "凯米", "badenoch": "巴德诺赫", "knew": "知道", "lied": "撒谎", "tv": "电视", "repeatedly": "反复地", "know": "知道", "ask": "询问", "passed": "通过", "means": "手段", "hopelessly": "无可救药地", "liberal": "自由民主党", "democrat": "民主党人", "ed": "埃德", "davey": "戴维", "true": "真实", "earliest": "最早", "opportunity": "机会", "waited": "等待", "force": "迫使", "truth": "真相", "failure": "失败", "alone": "独自", "surely": "无疑", "breach": "违反", "added": "补充", "reform": "改革", "green": "绿党", "plaid": "威尔士党", "cymru": "威尔士", "called": "称为", "accusing": "指责", "lying": "说谎", "meanwhile": "与此同时", "scottish": "苏格兰", "national": "民族党", "written": "书面", "independent": "独立", "standards": "标准", "laurie": "劳里", "magnus": "马格努斯", "investigation": "调查", "deliberately": "故意地", "public": "公众", "snp": "苏格兰民族党", "westminster": "威斯敏斯特", "stephen": "斯蒂芬", "flynn": "弗林", "gullible": "轻信的", "liar": "说谎者", "held": "担任", "number": "数量", "service": "服务", "roles": "角色", "served": "担任", "theresa": "特蕾莎", "may's": "梅的", "brexit": "脱欧", "negotiator": "谈判代表", "appointed": "任命", "permanent": "常任", "under-secretary": "副大臣", "january": "一月", "labour": "工党", "mp": "议员", "emily": "艾米丽", "thornberry": "索恩伯里", "chairs": "主持", "affairs": "事务", "felt": "感到", "evidence": "证据", "last": "最后", "november": "十一月", "direct": "直接", "half": "一半", "answered": "回答", "missed": "错过", "bit": "一点", "important": "重要", "pass": "通过", "friends": "朋友", "morgan": "摩根", "mcsweeney": "麦克史威尼", "pm's": "首相的", "resigned": "辞职", "known": "已知", "conclusion": "结论", "developed": "制定", "specialist": "专家", "within": "在...内", "cabinet": "内阁", "designed": "设计", "make": "使", "sure": "确保", "individuals": "个人", "unlikely": "不太可能", "abuse": "滥用", "access": "访问", "secret": "秘密", "material": "材料", "subject": "主题", "blackmail": "敲诈", "bribery": "贿赂", "includes": "包括", "checks": "检查", "candidate's": "候选人的", "credit": "信用", "criminal": "刑事", "record": "记录", "vetted": "审查", "undertake": "承担", "specially": "特别", "trained": "训练", "officer": "官员", "cover": "涵盖", "areas": "领域", "including": "包括", "candidates": "候选人", "health": "健康", "friendships": "友谊", "family": "家庭", "sexual": "性", "knowledge": "知识", "judgements": "判断", "reached": "达成", "reported": "报道", "no-one": "没有人", "level": "级别", "raised": "提出", "anything": "任何事", "agreed": "同意", "relating": "相关", "vote": "投票", "however": "然而", "guardian": "卫报", "reportedthat": "报道称", "considering": "考虑", "revealing": "透露", "given": "给予", "approval": "批准", "committed": "承诺", "complying": "遵守", "parliamentary": "议会", "motion": "动议", "demanding": "要求", "related": "相关", "soon": "很快", "possible": "可能", "furious": "愤怒", "found": "发现", "tuesday": "星期二", "evening": "晚上", "part": "部分", "going": "进行", "david": "大卫", "lammy": "拉米", "find": "发现", "overruled": "否决", "thursday": "星期四", "afternoon": "下午"};
 
   // ── Build keyword dictionary from data attributes ──
@@ -692,39 +692,6 @@
   const TRANS_CACHE = {};
   Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
   Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
-
-  // Fallback: Chinese only (words outside build-time glossary). Public LibreTranslate instance.
-  const ZH_FALLBACK_CACHE = {};
-  async function fetchChineseFallback(word) {
-    const key = word.toLowerCase();
-    const existing = ZH_FALLBACK_CACHE[key];
-    if (existing !== undefined && existing !== null) return existing;
-    ZH_FALLBACK_CACHE[key] = null;
-    try {
-      const resp = await fetch('https://libretranslate.com/translate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          q: word,
-          source: 'en',
-          target: 'zh',
-          format: 'text',
-        }),
-      });
-      if (!resp.ok) {
-        ZH_FALLBACK_CACHE[key] = '';
-        return '';
-      }
-      const data = await resp.json();
-      const zh = (data.translatedText || '').trim();
-      ZH_FALLBACK_CACHE[key] = zh;
-      if (zh) TRANS_CACHE[key] = zh;
-      return zh;
-    } catch {
-      ZH_FALLBACK_CACHE[key] = '';
-      return '';
-    }
-  }
 
   // ── Hover-to-translate: wrap English words ──
   const tooltip = document.getElementById('hover-tooltip');
@@ -772,6 +739,19 @@
     tooltip.style.top = top + 'px';
   }
 
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
   document.addEventListener('mouseenter', (e) => {
     if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
     const el = e.target;
@@ -780,26 +760,13 @@
 
     activeHoverEl = el;
     clearTimeout(tooltipTimer);
-    tooltipTimer = setTimeout(async () => {
+    tooltipTimer = setTimeout(() => {
       if (activeHoverEl !== el) return;
-
-      const cached = TRANS_CACHE[raw];
-      if (cached !== undefined && cached !== null) {
-        tooltip.textContent = cached || raw;
-        tooltip.style.display = 'block';
-        positionTooltip(el);
-        return;
-      }
-
-      tooltip.textContent = '...';
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
       tooltip.style.display = 'block';
       positionTooltip(el);
-
-      const zh = await fetchChineseFallback(raw);
-      if (activeHoverEl !== el) { tooltip.style.display = 'none'; return; }
-      tooltip.textContent = zh || '（暂无中文释义）';
-      positionTooltip(el);
-    }, 250);
+    }, 200);
   }, true);
 
   document.addEventListener('mouseleave', (e) => {
