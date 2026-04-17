@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-04-17</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-04-17</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/news/1024/branded_news/c594/live/58b02640-39e1-11f1-8606-05fe34b06e1b.jpg" alt="Top Foreign Office official to leave post after Mandelson vetting row" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Top Foreign Office official to leave post after Mandelson vetting row</h1>
+      <p class="source">Source: <a href="https://www.bbc.com/news/articles/c747r3v90k3o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://jp7252.github.io/NEWS_APP/audio/2026-04-17.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">The Foreign Office's top civil servant is leaving his post after his department did not inform the prime minister that Lord Mandelson had failed security <span class="keyword" data-word="vetting" data-phonetic="/ˈvetɪŋ/" data-pos="n." data-def="审查，背景调查" data-def-en="The process of investigating someone's background to ensure they are suitable for a job or role.">vetting</span> for the role of US ambassador.</span></p>
+        <p class="cn">外交部最高级公务员即将离职，原因是其部门未告知首相曼德尔森勋爵（Lord Mandelson）未能通过美国大使职位的安全审查。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">The BBC understands Sir Keir Starmer and Foreign Secretary Yvette Cooper have lost <span class="keyword" data-word="confidence" data-phonetic="/ˈkɒnfɪdəns/" data-pos="n." data-def="信任，信心" data-def-en="Trust or faith in someone or something.">confidence</span> in Sir Olly Robbins, and he has effectively been sacked.</span></p>
+        <p class="cn">BBC了解到，基尔·斯塔默爵士（Sir Keir Starmer）和外交大臣伊薇特·库珀（Yvette Cooper）已对奥利·罗宾斯爵士（Sir Olly Robbins）失去信任，他实际上已被解职。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">It comesafter the government confirmed the Foreign Officewent against the <span class="keyword" data-word="recommendation" data-phonetic="/ˌrekəmenˈdeɪʃn/" data-pos="n." data-def="推荐，建议" data-def-en="A suggestion or proposal about the best course of action.">recommendation</span> of the <span class="keyword" data-word="vetting" data-phonetic="/ˈvetɪŋ/" data-pos="n." data-def="审查，背景调查" data-def-en="The process of investigating someone's background to ensure they are suitable for a job or role.">vetting</span> agency and allowed Lord Mandelson to take up the post.</span></p>
+        <p class="cn">此前政府证实，外交部违背了审查机构的建议，允许曼德尔森勋爵担任该职位。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">A spokesperson said neither Sir Keir nor any minister were aware Lord Mandelson had failed the <span class="keyword" data-word="vetting" data-phonetic="/ˈvetɪŋ/" data-pos="n." data-def="审查，背景调查" data-def-en="The process of investigating someone's background to ensure they are suitable for a job or role.">vetting</span> process until earlier this week.</span></p>
+        <p class="cn">一位发言人表示，基尔爵士和任何部长直到本周早些时候才知道曼德尔森勋爵未能通过审查程序。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Lord Mandelson was announced as the UK's ambassador to the US in December 2024, before in-depth <span class="keyword" data-word="vetting" data-phonetic="/ˈvetɪŋ/" data-pos="n." data-def="审查，背景调查" data-def-en="The process of investigating someone's background to ensure they are suitable for a job or role.">vetting</span> had been carried out, and formally took up the role on 10 February 2025.</span></p>
+        <p class="cn">曼德尔森勋爵于2024年12月被宣布为英国驻美国大使，当时尚未进行深入审查，并于2025年2月10日正式就职。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">Just seven months later he was sacked over his ties to the late convicted sex offender Jeffrey Epstein.</span></p>
+        <p class="cn">仅仅七个月后，他因与已故定罪的性犯罪者杰弗里·爱泼斯坦（Jeffrey Epstein）的关系而被解雇。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">Sir Keir has faced calls to resign over <span class="keyword" data-word="allegations" data-phonetic="/ˌæləˈɡeɪʃnz/" data-pos="n." data-def="指控，断言" data-def-en="Claims or assertions that someone has done something wrong, often without proof.">allegations</span> he misled Parliament and MPs when he claimed "full due process" was followed during the appointment.</span></p>
+        <p class="cn">基尔爵士面临辞职呼声，他被指控在声称任命过程中遵循了“完整正当程序”时误导了议会和议员。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">During Prime Minister's Questions on 10 September 2025, Sir Keir said three times that "full due process" was followed for the appointment.</span></p>
+        <p class="cn">在2025年9月10日的首相问答中，基尔爵士三次表示任命遵循了“完整正当程序”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">The Ministerial Code states that ministers who knowingly mislead Parliament are expected to resign.</span></p>
+        <p class="cn">《部长守则》规定，故意误导议会的部长应辞职。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">Taking questions from journalists following a press conference on 5 February in Hastings, Sir Keir also said that there was "security <span class="keyword" data-word="vetting" data-phonetic="/ˈvetɪŋ/" data-pos="n." data-def="审查，背景调查" data-def-en="The process of investigating someone's background to ensure they are suitable for a job or role.">vetting</span> carried out independently by the security services, which is an <span class="keyword" data-word="intensive" data-phonetic="/ɪnˈtensɪv/" data-pos="adj." data-def="密集的，深入的" data-def-en="Involving a lot of effort or activity in a short time.">intensive</span> exercise that gave [Lord Mandelson] clearance for the role, and you have to go through that before you take up the post".</span></p>
+        <p class="cn">在2025年2月5日于黑斯廷斯举行的新闻发布会后回答记者提问时，基尔爵士还表示，“安全审查由安全部门独立进行，这是一项严格的程序，为[曼德尔森勋爵]提供了该职位的许可，必须在就职前完成”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">The revelations about Lord Mandelson's <span class="keyword" data-word="vetting" data-phonetic="/ˈvetɪŋ/" data-pos="n." data-def="审查，背景调查" data-def-en="The process of investigating someone's background to ensure they are suitable for a job or role.">vetting</span> have <span class="keyword" data-word="reignited" data-phonetic="/ˌriːɪɡˈnaɪtɪd/" data-pos="v." data-def="重新点燃，再次引发" data-def-en="To cause something to start again or become active once more.">reignited</span> anger over his appointment and raise further questions over the prime minister's judgement.</span></p>
+        <p class="cn">关于曼德尔森勋爵审查的揭露重新点燃了对他任命的愤怒，并进一步质疑首相的判断力。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">Sir Keir is expected to give a statement on the issue in the House of Commons on Monday.</span></p>
+        <p class="cn">基尔爵士预计将于周一在下议院就此事发表声明。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="12">Calling for the PM to stand down earlier, Conservative leader Kemi Badenoch said: "It is either, he knew that Mandelson failed the security <span class="keyword" data-word="vetting" data-phonetic="/ˈvetɪŋ/" data-pos="n." data-def="审查，背景调查" data-def-en="The process of investigating someone's background to ensure they are suitable for a job or role.">vetting</span> and lied to us in Parliament, on TV repeatedly, or he didn't know, didn't ask and said he had passed the security vetting - which means he is hopelessly <span class="keyword" data-word="incompetent" data-phonetic="/ɪnˈkɒmpɪtənt/" data-pos="adj." data-def="无能的，不胜任的" data-def-en="Not having the necessary skills or ability to do something successfully.">incompetent</span>."</span></p>
+        <p class="cn">保守党领袖凯米·巴德诺克（Kemi Badenoch）早些时候呼吁首相下台，她说：“要么他知道曼德尔森未能通过安全审查，并在议会和电视上多次对我们撒谎；要么他不知道、没询问，却说他通过了安全审查——这意味着他无能至极。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="13">Liberal Democrat leader Sir Ed Davey said that if it was true the PM was not aware Lord Mandelson had failed security <span class="keyword" data-word="vetting" data-phonetic="/ˈvetɪŋ/" data-pos="n." data-def="审查，背景调查" data-def-en="The process of investigating someone's background to ensure they are suitable for a job or role.">vetting</span>, he should have "told Parliament at the earliest opportunity, not waited for the media to force the truth out".</span></p>
+        <p class="cn">自由民主党领袖埃德·戴维爵士（Sir Ed Davey）表示，如果首相确实不知道曼德尔森勋爵未能通过安全审查，他应该“尽早告知议会，而不是等待媒体揭露真相”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="14">"His failure to do that alone is surely a breach of the ministerial code," he added.</span></p>
+        <p class="cn">他补充说：“仅这一点就肯定违反了《部长守则》。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="15">Reform UK, the Green Party and Plaid Cymru have also called for the prime minister to go, accusing him of lying about Lord Mandelson's <span class="keyword" data-word="vetting" data-phonetic="/ˈvetɪŋ/" data-pos="n." data-def="审查，背景调查" data-def-en="The process of investigating someone's background to ensure they are suitable for a job or role.">vetting</span>.</span></p>
+        <p class="cn">改革英国党（Reform UK）、绿党（Green Party）和威尔士党（Plaid Cymru）也呼吁首相下台，指控他在曼德尔森勋爵的审查问题上撒谎。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="16">Meanwhile, the Scottish National Party have written to the independent adviser on ministerial standards, Sir Laurie Magnus, calling for an investigation into whether the PM deliberately misled the public.</span></p>
+        <p class="cn">与此同时，苏格兰民族党（Scottish National Party）已致函部长标准独立顾问劳里·马格努斯爵士（Sir Laurie Magnus），要求调查首相是否故意误导公众。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="17">SNP Westminster leader Stephen Flynn said: "The prime minister is either <span class="keyword" data-word="incompetent" data-phonetic="/ɪnˈkɒmpɪtənt/" data-pos="adj." data-def="无能的，不胜任的" data-def-en="Not having the necessary skills or ability to do something successfully.">incompetent</span>, gullible or a liar.</span> <span class="sentence" data-sentence-index="18">Or all three."</span></p>
+        <p class="cn">苏格兰民族党威斯敏斯特领袖斯蒂芬·弗林（Stephen Flynn）说：“首相要么无能、轻信，要么是骗子。或者三者皆是。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="19">Sir Olly, who has held a number of senior Civil Service roles and served as Theresa May's chief Brexit negotiator, was appointed permanent under-secretary at the Foreign Office in January 2025.</span></p>
+        <p class="cn">奥利爵士曾担任多个高级公务员职位，并担任特蕾莎·梅（Theresa May）的首席脱欧谈判代表，于2025年1月被任命为外交部常务次官。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="20">Earlier, Labour MP Emily Thornberry, who chairs the Commons Foreign Affairs Committee, said she felt she had been "misled" by Sir Olly when he gave evidence to her committee last November about Lord Mandelson's <span class="keyword" data-word="vetting" data-phonetic="/ˈvetɪŋ/" data-pos="n." data-def="审查，背景调查" data-def-en="The process of investigating someone's background to ensure they are suitable for a job or role.">vetting</span>.</span></p>
+        <p class="cn">早些时候，下议院外交事务委员会主席、工党议员艾米丽·索恩伯里（Emily Thornberry）表示，她感觉去年11月奥利爵士向委员会提供关于曼德尔森勋爵审查的证据时“被误导了”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="21">"We gave them direct questions and they half answered it, but they missed out the bit that was important...</span> <span class="sentence" data-sentence-index="22">he didn't pass the <span class="keyword" data-word="vetting" data-phonetic="/ˈvetɪŋ/" data-pos="n." data-def="审查，背景调查" data-def-en="The process of investigating someone's background to ensure they are suitable for a job or role.">vetting</span>," she told the BBC.</span></p>
+        <p class="cn">她告诉BBC：“我们提出了直接问题，他们只回答了一半，但遗漏了重要部分……他未能通过审查。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="23">Friends of Morgan McSweeney, the PM's chief adviser at the time who resigned in February over his role in Lord Mandelson's appointment, told the BBC he had not known about the conclusion of the <span class="keyword" data-word="vetting" data-phonetic="/ˈvetɪŋ/" data-pos="n." data-def="审查，背景调查" data-def-en="The process of investigating someone's background to ensure they are suitable for a job or role.">vetting</span> process.</span></p>
+        <p class="cn">摩根·麦克斯威尼（Morgan McSweeney）的朋友告诉BBC，他不知道审查程序的结论。麦克斯威尼是首相当时的首席顾问，于2月因在曼德尔森勋爵任命中的角色而辞职。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="24">The developed <span class="keyword" data-word="vetting" data-phonetic="/ˈvetɪŋ/" data-pos="n." data-def="审查，背景调查" data-def-en="The process of investigating someone's background to ensure they are suitable for a job or role.">vetting</span> process is carried out by UK Security Vetting, a specialist agency within the Cabinet Office, and is designed to make sure individuals are unlikely to abuse their access to secret material, or be subject to blackmail or bribery.</span></p>
+        <p class="cn">深入审查程序由内阁办公室内的专门机构英国安全审查局（UK Security Vetting）进行，旨在确保个人不太可能滥用接触机密材料的权限，或受到勒索或贿赂。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="25">It includes checks on a candidate's credit history and criminal record.</span></p>
+        <p class="cn">这包括对候选人的信用历史和犯罪记录的检查。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="26">Those being vetted also have to undertake an interview with a specially trained <span class="keyword" data-word="vetting" data-phonetic="/ˈvetɪŋ/" data-pos="n." data-def="审查，背景调查" data-def-en="The process of investigating someone's background to ensure they are suitable for a job or role.">vetting</span> officer, which can cover areas including candidates' health, friendships, family and sexual history.</span></p>
+        <p class="cn">被审查者还必须接受经过专门培训的审查官员的面试，内容可能涵盖候选人的健康、友谊、家庭和性历史等领域。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="27">The BBC understands Lord Mandelson had no knowledge about the judgements reached during his <span class="keyword" data-word="vetting" data-phonetic="/ˈvetɪŋ/" data-pos="n." data-def="审查，背景调查" data-def-en="The process of investigating someone's background to ensure they are suitable for a job or role.">vetting</span> process until it was reported in the media, and that no-one at any level raised anything about it with him following his vetting interview.</span></p>
+        <p class="cn">BBC了解到，曼德尔森勋爵直到媒体报道才知道审查过程中的判断结果，且审查面试后，没有任何级别的人向他提及此事。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="28">In February, the government agreed to release documents relating to Lord Mandelson's appointment, following a vote by MPs for them to be published.</span></p>
+        <p class="cn">2月，政府同意发布与曼德尔森勋爵任命相关的文件，此前议员们投票要求公布这些文件。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="29">However,the Guardian reportedthat senior government officials had been considering whether to <span class="keyword" data-word="withhold" data-phonetic="/wɪðˈhəʊld/" data-pos="v." data-def="扣留，隐瞒" data-def-en="To refuse to give something or keep something back.">withhold</span> documents from Parliament revealing Lord Mandelson was not given <span class="keyword" data-word="vetting" data-phonetic="/ˈvetɪŋ/" data-pos="n." data-def="审查，背景调查" data-def-en="The process of investigating someone's background to ensure they are suitable for a job or role.">vetting</span> approval from security officials.</span></p>
+        <p class="cn">然而，《卫报》（The Guardian）报道称，高级政府官员一直在考虑是否向议会隐瞒文件，这些文件显示曼德尔森未获得安全官员的审查批准。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="30">A spokesperson said the government was committed to complying with a parliamentary motion demanding the release of documents related to the appointment "in full as soon as possible".</span></p>
+        <p class="cn">一位发言人表示，政府致力于遵守议会动议，要求“尽快完整”发布与任命相关的文件。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="31">Sir Keir was said to be "furious" after he found out on Tuesday evening that Lord Mandelson had failed <span class="keyword" data-word="vetting" data-phonetic="/ˈvetɪŋ/" data-pos="n." data-def="审查，背景调查" data-def-en="The process of investigating someone's background to ensure they are suitable for a job or role.">vetting</span>, as part of the process of going through documents to be published.</span></p>
+        <p class="cn">据说基尔爵士在周二晚上发现曼德尔森勋爵未能通过审查时“非常愤怒”，这是审查待发布文件过程的一部分。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="32">The BBC understands David Lammy, the foreign secretary at the time of Lord Mandelson's appointment, did not find out the Foreign Office had overruled the <span class="keyword" data-word="vetting" data-phonetic="/ˈvetɪŋ/" data-pos="n." data-def="审查，背景调查" data-def-en="The process of investigating someone's background to ensure they are suitable for a job or role.">vetting</span> until Thursday afternoon.</span></p>
+        <p class="cn">BBC了解到，曼德尔森勋爵任命时的外交大臣戴维·拉米（David Lammy）直到周四下午才发现外交部推翻了审查结果。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">vetting</span>
+        <button class="kw-speak-btn" data-word="vetting" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈvetɪŋ/ n.</span>
+      </div>
+      <p class="kw-def">审查，背景调查</p>
+      <p class="kw-def-en">The process of investigating someone's background to ensure they are suitable for a job or role.</p>
+      <p class="kw-ctx">&ldquo;The Foreign Office's top civil servant is leaving his post after his department did not inform the prime minister that Lord Mandelson had failed security vetting for the role of US ambassador.&rdquo;</p>
+      <p class="kw-ctx-cn">外交部最高级公务员即将离职，因为他的部门没有告知首相曼德尔森勋爵未能通过美国大使职位的安全审查。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">confidence</span>
+        <button class="kw-speak-btn" data-word="confidence" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈkɒnfɪdəns/ n.</span>
+      </div>
+      <p class="kw-def">信任，信心</p>
+      <p class="kw-def-en">Trust or faith in someone or something.</p>
+      <p class="kw-ctx">&ldquo;The BBC understands Sir Keir Starmer and Foreign Secretary Yvette Cooper have lost confidence in Sir Olly Robbins, and he has effectively been sacked.&rdquo;</p>
+      <p class="kw-ctx-cn">BBC了解到，基尔·斯塔默爵士和外交大臣伊薇特·库珀已对奥利·罗宾斯爵士失去信任，他实际上已被解雇。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">recommendation</span>
+        <button class="kw-speak-btn" data-word="recommendation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌrekəmenˈdeɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">推荐，建议</p>
+      <p class="kw-def-en">A suggestion or proposal about the best course of action.</p>
+      <p class="kw-ctx">&ldquo;It comes after the government confirmed the Foreign Office went against the recommendation of the vetting agency and allowed Lord Mandelson to take up the post.&rdquo;</p>
+      <p class="kw-ctx-cn">此前，政府确认外交部违背了审查机构的建议，允许曼德尔森勋爵担任该职位。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">allegations</span>
+        <button class="kw-speak-btn" data-word="allegations" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌæləˈɡeɪʃnz/ n.</span>
+      </div>
+      <p class="kw-def">指控，断言</p>
+      <p class="kw-def-en">Claims or assertions that someone has done something wrong, often without proof.</p>
+      <p class="kw-ctx">&ldquo;Sir Keir has faced calls to resign over allegations he misled Parliament and MPs when he claimed "full due process" was followed during the appointment.&rdquo;</p>
+      <p class="kw-ctx-cn">基尔爵士面临辞职呼声，因他被指控在声称任命过程中遵循了“完整正当程序”时误导了议会和议员。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">intensive</span>
+        <button class="kw-speak-btn" data-word="intensive" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪnˈtensɪv/ adj.</span>
+      </div>
+      <p class="kw-def">密集的，深入的</p>
+      <p class="kw-def-en">Involving a lot of effort or activity in a short time.</p>
+      <p class="kw-ctx">&ldquo;Sir Keir also said that there was "security vetting carried out independently by the security services, which is an intensive exercise that gave [Lord Mandelson] clearance for the role, and you have to go through that before you take up the post".&rdquo;</p>
+      <p class="kw-ctx-cn">基尔爵士还说，“安全审查由安全部门独立进行，这是一项深入的检查，使[曼德尔森勋爵]获得了该职位的许可，你必须在就职前通过这一审查”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">reignited</span>
+        <button class="kw-speak-btn" data-word="reignited" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌriːɪɡˈnaɪtɪd/ v.</span>
+      </div>
+      <p class="kw-def">重新点燃，再次引发</p>
+      <p class="kw-def-en">To cause something to start again or become active once more.</p>
+      <p class="kw-ctx">&ldquo;The revelations about Lord Mandelson's vetting have reignited anger over his appointment and raise further questions over the prime minister's judgement.&rdquo;</p>
+      <p class="kw-ctx-cn">关于曼德尔森勋爵审查的揭露重新引发了对他的任命的愤怒，并进一步质疑首相的判断力。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">incompetent</span>
+        <button class="kw-speak-btn" data-word="incompetent" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪnˈkɒmpɪtənt/ adj.</span>
+      </div>
+      <p class="kw-def">无能的，不胜任的</p>
+      <p class="kw-def-en">Not having the necessary skills or ability to do something successfully.</p>
+      <p class="kw-ctx">&ldquo;Calling for the PM to stand down earlier, Conservative leader Kemi Badenoch said: "It is either, he knew that Mandelson failed the security vetting and lied to us in Parliament, on TV repeatedly, or he didn't know, didn't ask and said he had passed the security vetting - which means he is hopelessly incompetent."&rdquo;</p>
+      <p class="kw-ctx-cn">保守党领袖凯米·巴德诺克早些时候呼吁首相下台，她说：“要么他知道曼德尔森未能通过安全审查，并在议会和电视上反复对我们撒谎，要么他不知道、没询问，却说曼德尔森通过了安全审查——这意味着他无能至极。”</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">withhold</span>
+        <button class="kw-speak-btn" data-word="withhold" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/wɪðˈhəʊld/ v.</span>
+      </div>
+      <p class="kw-def">扣留，隐瞒</p>
+      <p class="kw-def-en">To refuse to give something or keep something back.</p>
+      <p class="kw-ctx">&ldquo;However, the Guardian reported that senior government officials had been considering whether to withhold documents from Parliament revealing Lord Mandelson was not given vetting approval from security officials.&rdquo;</p>
+      <p class="kw-ctx-cn">然而，《卫报》报道称，高级政府官员一直在考虑是否向议会隐瞒文件，这些文件显示曼德尔森勋爵未获得安全官员的审查批准。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "The Foreign Office's top civil servant is leaving his post after his department did not inform the prime minister that Lord Mandelson had failed security vetting for the role of US ambassador.", "start_ms": 0, "end_ms": 12456, "paragraph_index": 0}, {"index": 1, "text": "The BBC understands Sir Keir Starmer and Foreign Secretary Yvette Cooper have lost confidence in Sir Olly Robbins, and he has effectively been sacked.", "start_ms": 12456, "end_ms": 23256, "paragraph_index": 1}, {"index": 2, "text": "It comesafter the government confirmed the Foreign Officewent against the recommendation of the vetting agency and allowed Lord Mandelson to take up the post.", "start_ms": 23256, "end_ms": 33480, "paragraph_index": 2}, {"index": 3, "text": "A spokesperson said neither Sir Keir nor any minister were aware Lord Mandelson had failed the vetting process until earlier this week.", "start_ms": 33480, "end_ms": 42864, "paragraph_index": 3}, {"index": 4, "text": "Lord Mandelson was announced as the UK's ambassador to the US in December 2024, before in-depth vetting had been carried out, and formally took up the role on 10 February 2025.", "start_ms": 42864, "end_ms": 57168, "paragraph_index": 4}, {"index": 5, "text": "Just seven months later he was sacked over his ties to the late convicted sex offender Jeffrey Epstein.", "start_ms": 57168, "end_ms": 64536, "paragraph_index": 5}, {"index": 6, "text": "Sir Keir has faced calls to resign over allegations he misled Parliament and MPs when he claimed \"full due process\" was followed during the appointment.", "start_ms": 64536, "end_ms": 74952, "paragraph_index": 6}, {"index": 7, "text": "During Prime Minister's Questions on 10 September 2025, Sir Keir said three times that \"full due process\" was followed for the appointment.", "start_ms": 74952, "end_ms": 85632, "paragraph_index": 7}, {"index": 8, "text": "The Ministerial Code states that ministers who knowingly mislead Parliament are expected to resign.", "start_ms": 85632, "end_ms": 92712, "paragraph_index": 8}, {"index": 9, "text": "Taking questions from journalists following a press conference on 5 February in Hastings, Sir Keir also said that there was \"security vetting carried out independently by the security services, which is an intensive exercise that gave [Lord Mandelson] clearance for the role, and you have to go through that before you take up the post\".", "start_ms": 92712, "end_ms": 114576, "paragraph_index": 9}, {"index": 10, "text": "The revelations about Lord Mandelson's vetting have reignited anger over his appointment and raise further questions over the prime minister's judgement.", "start_ms": 114576, "end_ms": 124440, "paragraph_index": 10}, {"index": 11, "text": "Sir Keir is expected to give a statement on the issue in the House of Commons on Monday.", "start_ms": 124440, "end_ms": 130440, "paragraph_index": 11}, {"index": 12, "text": "Calling for the PM to stand down earlier, Conservative leader Kemi Badenoch said: \"It is either, he knew that Mandelson failed the security vetting and lied to us in Parliament, on TV repeatedly, or he didn't know, didn't ask and said he had passed the security vetting - which means he is hopelessly incompetent.\"", "start_ms": 130440, "end_ms": 150864, "paragraph_index": 12}, {"index": 13, "text": "Liberal Democrat leader Sir Ed Davey said that if it was true the PM was not aware Lord Mandelson had failed security vetting, he should have \"told Parliament at the earliest opportunity, not waited for the media to force the truth out\".", "start_ms": 150864, "end_ms": 166272, "paragraph_index": 13}, {"index": 14, "text": "\"His failure to do that alone is surely a breach of the ministerial code,\" he added.", "start_ms": 166272, "end_ms": 172368, "paragraph_index": 14}, {"index": 15, "text": "Reform UK, the Green Party and Plaid Cymru have also called for the prime minister to go, accusing him of lying about Lord Mandelson's vetting.", "start_ms": 172368, "end_ms": 182712, "paragraph_index": 15}, {"index": 16, "text": "Meanwhile, the Scottish National Party have written to the independent adviser on ministerial standards, Sir Laurie Magnus, calling for an investigation into whether the PM deliberately misled the public.", "start_ms": 182712, "end_ms": 196728, "paragraph_index": 16}, {"index": 17, "text": "SNP Westminster leader Stephen Flynn said: \"The prime minister is either incompetent, gullible or a liar.", "start_ms": 196728, "end_ms": 205032, "paragraph_index": 17}, {"index": 18, "text": "Or all three.\"", "start_ms": 205032, "end_ms": 207168, "paragraph_index": 17}, {"index": 19, "text": "Sir Olly, who has held a number of senior Civil Service roles and served as Theresa May's chief Brexit negotiator, was appointed permanent under-secretary at the Foreign Office in January 2025.", "start_ms": 207168, "end_ms": 221208, "paragraph_index": 18}, {"index": 20, "text": "Earlier, Labour MP Emily Thornberry, who chairs the Commons Foreign Affairs Committee, said she felt she had been \"misled\" by Sir Olly when he gave evidence to her committee last November about Lord Mandelson's vetting.", "start_ms": 221208, "end_ms": 235656, "paragraph_index": 19}, {"index": 21, "text": "\"We gave them direct questions and they half answered it, but they missed out the bit that was important...", "start_ms": 235656, "end_ms": 242256, "paragraph_index": 20}, {"index": 22, "text": "he didn't pass the vetting,\" she told the BBC.", "start_ms": 242256, "end_ms": 246264, "paragraph_index": 20}, {"index": 23, "text": "Friends of Morgan McSweeney, the PM's chief adviser at the time who resigned in February over his role in Lord Mandelson's appointment, told the BBC he had not known about the conclusion of the vetting process.", "start_ms": 246264, "end_ms": 260112, "paragraph_index": 21}, {"index": 24, "text": "The developed vetting process is carried out by UK Security Vetting, a specialist agency within the Cabinet Office, and is designed to make sure individuals are unlikely to abuse their access to secret material, or be subject to blackmail or bribery.", "start_ms": 260112, "end_ms": 277824, "paragraph_index": 22}, {"index": 25, "text": "It includes checks on a candidate's credit history and criminal record.", "start_ms": 277824, "end_ms": 283200, "paragraph_index": 23}, {"index": 26, "text": "Those being vetted also have to undertake an interview with a specially trained vetting officer, which can cover areas including candidates' health, friendships, family and sexual history.", "start_ms": 283200, "end_ms": 296208, "paragraph_index": 24}, {"index": 27, "text": "The BBC understands Lord Mandelson had no knowledge about the judgements reached during his vetting process until it was reported in the media, and that no-one at any level raised anything about it with him following his vetting interview.", "start_ms": 296208, "end_ms": 311040, "paragraph_index": 25}, {"index": 28, "text": "In February, the government agreed to release documents relating to Lord Mandelson's appointment, following a vote by MPs for them to be published.", "start_ms": 311040, "end_ms": 321336, "paragraph_index": 26}, {"index": 29, "text": "However,the Guardian reportedthat senior government officials had been considering whether to withhold documents from Parliament revealing Lord Mandelson was not given vetting approval from security officials.", "start_ms": 321336, "end_ms": 334296, "paragraph_index": 27}, {"index": 30, "text": "A spokesperson said the government was committed to complying with a parliamentary motion demanding the release of documents related to the appointment \"in full as soon as possible\".", "start_ms": 334296, "end_ms": 345480, "paragraph_index": 28}, {"index": 31, "text": "Sir Keir was said to be \"furious\" after he found out on Tuesday evening that Lord Mandelson had failed vetting, as part of the process of going through documents to be published.", "start_ms": 345480, "end_ms": 356952, "paragraph_index": 29}, {"index": 32, "text": "The BBC understands David Lammy, the foreign secretary at the time of Lord Mandelson's appointment, did not find out the Foreign Office had overruled the vetting until Thursday afternoon.", "start_ms": 356952, "end_ms": 369624, "paragraph_index": 30}], "total_duration_ms": 369624};
+  const WORD_GLOSS = {"lord": "勋爵", "sir": "爵士", "mandelson": "曼德尔森", "said": "表示", "security": "安全", "foreign": "外交", "keir": "基尔", "process": "程序", "appointment": "任命", "mandelson's": "曼德尔森的", "prime": "首相", "failed": "失败", "bbc": "英国广播公司", "parliament": "议会", "minister": "大臣", "role": "角色", "government": "政府", "february": "二月", "questions": "质询", "documents": "文件", "post": "职位", "understands": "理解", "olly": "奥利", "until": "直到", "earlier": "较早", "carried": "进行", "misled": "误导", "full": "完整", "ministerial": "部长级", "following": "随后", "gave": "给予", "pm": "首相", "leader": "领袖", "didn't": "没有", "told": "告知", "office": "办公室", "civil": "文职", "ambassador": "大使", "secretary": "秘书", "sacked": "解雇", "agency": "机构", "take": "担任", "spokesperson": "发言人", "aware": "知晓", "resign": "辞职", "mps": "议员", "due": "由于", "followed": "跟随", "minister's": "大臣的", "three": "三", "code": "准则", "expected": "预期", "go": "去", "commons": "下议院", "calling": "呼吁", "media": "媒体", "uk": "英国", "party": "政党", "adviser": "顾问", "whether": "是否", "senior": "高级", "chief": "首席", "committee": "委员会", "time": "时间", "history": "历史", "interview": "采访", "release": "发布", "published": "公布", "officials": "官员", "office's": "办公室的", "top": "最高", "servant": "公务员", "leaving": "离开", "department": "部门", "inform": "通知", "starmer": "斯塔默", "yvette": "伊薇特", "cooper": "库珀", "lost": "失去", "robbins": "罗宾斯", "effectively": "实际上", "comesafter": "紧随其后", "confirmed": "确认", "officewent": "办公室前往", "against": "反对", "allowed": "允许", "week": "周", "announced": "宣布", "uk's": "英国的", "december": "十二月", "in-depth": "深入", "formally": "正式", "took": "采取", "seven": "七", "months": "月", "later": "后来", "ties": "关系", "late": "晚期", "convicted": "定罪", "sex": "性", "offender": "违法者", "jeffrey": "杰弗里", "epstein": "爱泼斯坦", "faced": "面临", "calls": "呼吁", "claimed": "声称", "september": "九月", "times": "时报", "states": "美国", "ministers": "部长们", "knowingly": "明知地", "mislead": "误导", "taking": "接受", "journalists": "记者们", "press": "新闻界", "conference": "会议", "hastings": "黑斯廷斯", "independently": "独立地", "services": "服务", "exercise": "行使", "clearance": "许可", "revelations": "揭露", "anger": "愤怒", "raise": "引发", "judgement": "判断", "give": "发表", "statement": "声明", "issue": "问题", "house": "议会", "monday": "周一", "stand": "立场", "conservative": "保守党", "kemi": "凯米", "badenoch": "巴德诺赫", "knew": "知道", "lied": "撒谎", "tv": "电视", "repeatedly": "反复地", "know": "知道", "ask": "询问", "passed": "通过", "means": "手段", "hopelessly": "无可救药地", "liberal": "自由民主党", "democrat": "民主党人", "ed": "埃德", "davey": "戴维", "true": "真实", "earliest": "最早", "opportunity": "机会", "waited": "等待", "force": "迫使", "truth": "真相", "failure": "失败", "alone": "独自", "surely": "无疑", "breach": "违反", "added": "补充", "reform": "改革", "green": "绿党", "plaid": "威尔士党", "cymru": "威尔士", "called": "称为", "accusing": "指责", "lying": "说谎", "meanwhile": "与此同时", "scottish": "苏格兰", "national": "民族党", "written": "书面", "independent": "独立", "standards": "标准", "laurie": "劳里", "magnus": "马格努斯", "investigation": "调查", "deliberately": "故意地", "public": "公众", "snp": "苏格兰民族党", "westminster": "威斯敏斯特", "stephen": "斯蒂芬", "flynn": "弗林", "gullible": "轻信的", "liar": "说谎者", "held": "担任", "number": "数量", "service": "服务", "roles": "角色", "served": "担任", "theresa": "特蕾莎", "may's": "梅的", "brexit": "脱欧", "negotiator": "谈判代表", "appointed": "任命", "permanent": "常任", "under-secretary": "副大臣", "january": "一月", "labour": "工党", "mp": "议员", "emily": "艾米丽", "thornberry": "索恩伯里", "chairs": "主持", "affairs": "事务", "felt": "感到", "evidence": "证据", "last": "最后", "november": "十一月", "direct": "直接", "half": "一半", "answered": "回答", "missed": "错过", "bit": "一点", "important": "重要", "pass": "通过", "friends": "朋友", "morgan": "摩根", "mcsweeney": "麦克史威尼", "pm's": "首相的", "resigned": "辞职", "known": "已知", "conclusion": "结论", "developed": "制定", "specialist": "专家", "within": "在...内", "cabinet": "内阁", "designed": "设计", "make": "使", "sure": "确保", "individuals": "个人", "unlikely": "不太可能", "abuse": "滥用", "access": "访问", "secret": "秘密", "material": "材料", "subject": "主题", "blackmail": "敲诈", "bribery": "贿赂", "includes": "包括", "checks": "检查", "candidate's": "候选人的", "credit": "信用", "criminal": "刑事", "record": "记录", "vetted": "审查", "undertake": "承担", "specially": "特别", "trained": "训练", "officer": "官员", "cover": "涵盖", "areas": "领域", "including": "包括", "candidates": "候选人", "health": "健康", "friendships": "友谊", "family": "家庭", "sexual": "性", "knowledge": "知识", "judgements": "判断", "reached": "达成", "reported": "报道", "no-one": "没有人", "level": "级别", "raised": "提出", "anything": "任何事", "agreed": "同意", "relating": "相关", "vote": "投票", "however": "然而", "guardian": "卫报", "reportedthat": "报道称", "considering": "考虑", "revealing": "透露", "given": "给予", "approval": "批准", "committed": "承诺", "complying": "遵守", "parliamentary": "议会", "motion": "动议", "demanding": "要求", "related": "相关", "soon": "很快", "possible": "可能", "furious": "愤怒", "found": "发现", "tuesday": "星期二", "evening": "晚上", "part": "部分", "going": "进行", "david": "大卫", "lammy": "拉米", "find": "发现", "overruled": "否决", "thursday": "星期四", "afternoon": "下午"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // Fallback: Chinese only (words outside build-time glossary). Public LibreTranslate instance.
+  const ZH_FALLBACK_CACHE = {};
+  async function fetchChineseFallback(word) {
+    const key = word.toLowerCase();
+    const existing = ZH_FALLBACK_CACHE[key];
+    if (existing !== undefined && existing !== null) return existing;
+    ZH_FALLBACK_CACHE[key] = null;
+    try {
+      const resp = await fetch('https://libretranslate.com/translate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          q: word,
+          source: 'en',
+          target: 'zh',
+          format: 'text',
+        }),
+      });
+      if (!resp.ok) {
+        ZH_FALLBACK_CACHE[key] = '';
+        return '';
+      }
+      const data = await resp.json();
+      const zh = (data.translatedText || '').trim();
+      ZH_FALLBACK_CACHE[key] = zh;
+      if (zh) TRANS_CACHE[key] = zh;
+      return zh;
+    } catch {
+      ZH_FALLBACK_CACHE[key] = '';
+      return '';
+    }
+  }
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(async () => {
+      if (activeHoverEl !== el) return;
+
+      const cached = TRANS_CACHE[raw];
+      if (cached !== undefined && cached !== null) {
+        tooltip.textContent = cached || raw;
+        tooltip.style.display = 'block';
+        positionTooltip(el);
+        return;
+      }
+
+      tooltip.textContent = '...';
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+
+      const zh = await fetchChineseFallback(raw);
+      if (activeHoverEl !== el) { tooltip.style.display = 'none'; return; }
+      tooltip.textContent = zh || '（暂无中文释义）';
+      positionTooltip(el);
+    }, 250);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
