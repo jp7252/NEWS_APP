@@ -101,7 +101,10 @@ async def daily_pipeline(rebuild_only: bool = False):
 
         deepseek_key = os.environ.get("DEEPSEEK_API_KEY", "")
         if not deepseek_key:
-            logger.error("DEEPSEEK_API_KEY not set. Aborting.")
+            logger.error(
+                "DEEPSEEK_API_KEY not set. Aborting. "
+                "(Locally: add to .env. On GitHub Actions: Settings → Secrets → Actions → DEEPSEEK_API_KEY.)"
+            )
             sys.exit(1)
 
         logger.info("Step 1/6: Fetching top headline…")

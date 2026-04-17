@@ -459,39 +459,6 @@
   Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
   Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
 
-  // Fallback: Chinese only (words outside build-time glossary). Public LibreTranslate instance.
-  const ZH_FALLBACK_CACHE = {};
-  async function fetchChineseFallback(word) {
-    const key = word.toLowerCase();
-    const existing = ZH_FALLBACK_CACHE[key];
-    if (existing !== undefined && existing !== null) return existing;
-    ZH_FALLBACK_CACHE[key] = null;
-    try {
-      const resp = await fetch('https://libretranslate.com/translate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          q: word,
-          source: 'en',
-          target: 'zh',
-          format: 'text',
-        }),
-      });
-      if (!resp.ok) {
-        ZH_FALLBACK_CACHE[key] = '';
-        return '';
-      }
-      const data = await resp.json();
-      const zh = (data.translatedText || '').trim();
-      ZH_FALLBACK_CACHE[key] = zh;
-      if (zh) TRANS_CACHE[key] = zh;
-      return zh;
-    } catch {
-      ZH_FALLBACK_CACHE[key] = '';
-      return '';
-    }
-  }
-
   // ── Hover-to-translate: wrap English words ──
   const tooltip = document.getElementById('hover-tooltip');
   let tooltipTimer = null;
@@ -538,6 +505,19 @@
     tooltip.style.top = top + 'px';
   }
 
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
   document.addEventListener('mouseenter', (e) => {
     if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
     const el = e.target;
@@ -546,26 +526,13 @@
 
     activeHoverEl = el;
     clearTimeout(tooltipTimer);
-    tooltipTimer = setTimeout(async () => {
+    tooltipTimer = setTimeout(() => {
       if (activeHoverEl !== el) return;
-
-      const cached = TRANS_CACHE[raw];
-      if (cached !== undefined && cached !== null) {
-        tooltip.textContent = cached || raw;
-        tooltip.style.display = 'block';
-        positionTooltip(el);
-        return;
-      }
-
-      tooltip.textContent = '...';
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
       tooltip.style.display = 'block';
       positionTooltip(el);
-
-      const zh = await fetchChineseFallback(raw);
-      if (activeHoverEl !== el) { tooltip.style.display = 'none'; return; }
-      tooltip.textContent = zh || '（暂无中文释义）';
-      positionTooltip(el);
-    }, 250);
+    }, 200);
   }, true);
 
   document.addEventListener('mouseleave', (e) => {

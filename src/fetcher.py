@@ -79,7 +79,8 @@ def _extract_paragraphs(html: str) -> list[str]:
 
     paragraphs = []
     for p in article.find_all("p"):
-        text = p.get_text(strip=True)
+        # Preserve spaces across inline tags to avoid merged tokens like "comesafter".
+        text = p.get_text(" ", strip=True)
         if len(text) > 20:
             paragraphs.append(text)
 

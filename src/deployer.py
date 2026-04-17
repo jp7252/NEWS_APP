@@ -39,7 +39,7 @@ def save_data_json(data: str, date_str: str) -> Path:
 def deploy_to_github_pages(date_str: str) -> None:
     """Stage generated files, commit, and push to trigger GitHub Pages."""
     cmds = [
-        ["git", "add", "articles/", "audio/"],
+        ["git", "add", "articles/", "audio/", "data/"],
         ["git", "commit", "-m", f"📰 Daily update: {date_str}"],
         ["git", "push"],
     ]

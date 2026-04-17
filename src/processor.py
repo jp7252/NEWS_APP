@@ -5,6 +5,7 @@ import logging
 import re
 from collections import Counter
 from dataclasses import dataclass, field, replace
+from pathlib import Path
 
 from openai import OpenAI
 
@@ -14,39 +15,52 @@ logger = logging.getLogger(__name__)
 
 MAX_RETRIES = 3
 
-# Words excluded from the hover glossary (function words); content words like "comes" stay in.
-_EN_STOPWORDS = frozenset({
-    "a", "an", "the", "and", "or", "but", "if", "then", "else", "when",
-    "at", "from", "by", "for", "with", "about", "into", "through", "during",
-    "before", "after", "above", "below", "between", "under", "again", "further",
-    "once", "here", "there", "all", "each", "few", "more", "most", "other",
-    "some", "such", "no", "nor", "not", "only", "own", "same", "so", "than",
-    "too", "very", "just", "now", "i", "me", "my", "we", "our", "us", "you",
-    "your", "he", "him", "his", "she", "her", "it", "its", "they", "them", "their",
-    "what", "which", "who", "whom", "this", "that", "these", "those",
-    "am", "is", "are", "was", "were", "be", "been", "being",
-    "have", "has", "had", "having", "do", "does", "did", "doing",
-    "can", "could", "may", "might", "must", "shall", "should", "will", "would",
-    "of", "to", "in", "on", "off", "out", "up", "down", "over", "also",
-    "as", "both", "either", "neither", "any", "every", "such", "how", "why",
-})
-
 _GLOSSARY_CHUNK = 100
-_MAX_GLOSSARY_WORDS = 650
+_MAX_GLOSSARY_WORDS = 800
+_GLOBAL_GLOSSARY_PATH = Path(__file__).resolve().parent.parent / "data" / "word_glossary_master.json"
+
+# Only exclude fragments that aren't real words (contractions, single chars).
+_GLOSS_SKIP = re.compile(r"^(?:'s|'t|'d|'ll|'re|'ve|'m|[a-z])$")
 
 
 def _collect_glossary_candidates(paragraphs: list[str], keyword_words: set[str]) -> list[str]:
-    """Most frequent content words (excluding keywords + stopwords), capped for LLM cost."""
+    """All unique words in the article (excluding keywords), ordered by frequency."""
     text = " ".join(paragraphs)
-    tokens = re.findall(r"\b[a-z][a-z'-]*\b", text, flags=re.IGNORECASE)
+    tokens = re.findall(r"\b[a-zA-Z][a-zA-Z'-]*\b", text)
     counts: Counter[str] = Counter()
     for t in tokens:
         w = t.lower()
-        if len(w) < 2 or w in _EN_STOPWORDS or w in keyword_words:
+        if _GLOSS_SKIP.match(w) or w in keyword_words:
             continue
         counts[w] += 1
-    ordered = [w for w, _ in counts.most_common(_MAX_GLOSSARY_WORDS)]
-    return ordered
+    return [w for w, _ in counts.most_common(_MAX_GLOSSARY_WORDS)]
+
+
+def _load_global_glossary() -> dict[str, str]:
+    """Load persistent cross-article glossary cache."""
+    if not _GLOBAL_GLOSSARY_PATH.exists():
+        return {}
+    try:
+        raw = json.loads(_GLOBAL_GLOSSARY_PATH.read_text(encoding="utf-8"))
+    except Exception as e:
+        logger.warning("Failed to load global glossary cache: %s", e)
+        return {}
+    if not isinstance(raw, dict):
+        return {}
+    return {
+        str(k).lower(): str(v).strip()
+        for k, v in raw.items()
+        if isinstance(v, str) and str(v).strip()
+    }
+
+
+def _save_global_glossary(glossary: dict[str, str]) -> None:
+    """Persist cross-article glossary cache."""
+    _GLOBAL_GLOSSARY_PATH.parent.mkdir(parents=True, exist_ok=True)
+    _GLOBAL_GLOSSARY_PATH.write_text(
+        json.dumps(glossary, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
 
 
 def _translate_word_glossary(client: OpenAI, model: str, words: list[str]) -> dict[str, str]:
@@ -80,6 +94,37 @@ def _translate_word_glossary(client: OpenAI, model: str, words: list[str]) -> di
         if missing:
             logger.warning("Glossary missing %d/%d entries in chunk starting at %d", len(missing), len(chunk), i)
     return result
+
+
+def _build_article_glossary(
+    client: OpenAI,
+    model: str,
+    paragraphs: list[str],
+    keyword_words: set[str],
+) -> dict[str, str]:
+    """Build per-article glossary using persistent cache; only translate missing words."""
+    candidates = _collect_glossary_candidates(paragraphs, keyword_words)
+    if not candidates:
+        return {}
+
+    global_glossary = _load_global_glossary()
+    article_glossary = {w: global_glossary[w] for w in candidates if w in global_glossary}
+    missing = [w for w in candidates if w not in article_glossary]
+
+    if missing:
+        logger.info(
+            "LLM call 4/4: hover word glossary %d total, %d cache-hit, %d to translate…",
+            len(candidates), len(article_glossary), len(missing),
+        )
+        translated = _translate_word_glossary(client, model, missing)
+        article_glossary.update(translated)
+        if translated:
+            global_glossary.update(translated)
+            _save_global_glossary(global_glossary)
+    else:
+        logger.info("LLM call 4/4: hover word glossary all cache-hit (%d tokens).", len(candidates))
+
+    return article_glossary
 
 
 @dataclass
@@ -222,11 +267,7 @@ def process_article(
     summary_cn = _summarise(client, model, full_text)
 
     kw_lower = {k.word.lower() for k in keywords}
-    gloss_candidates = _collect_glossary_candidates(raw.paragraphs, kw_lower)
-    word_glossary: dict[str, str] = {}
-    if gloss_candidates:
-        logger.info("LLM call 4/4: hover word glossary (%d tokens)…", len(gloss_candidates))
-        word_glossary = _translate_word_glossary(client, model, gloss_candidates)
+    word_glossary = _build_article_glossary(client, model, raw.paragraphs, kw_lower)
 
     return ProcessedArticle(
         title=raw.title,
@@ -248,13 +289,9 @@ def attach_word_glossary(
     model: str = "deepseek-chat",
 ) -> ProcessedArticle:
     """Fill `word_glossary` when missing (e.g. old cached JSON). One or more LLM calls."""
-    if article.word_glossary:
-        return article
     kw_lower = {k.word.lower() for k in article.keywords}
-    candidates = _collect_glossary_candidates(article.paragraphs_en, kw_lower)
-    if not candidates:
-        return article
     client = OpenAI(api_key=api_key, base_url=base_url)
-    logger.info("Building hover word glossary (%d tokens)…", len(candidates))
-    glossary = _translate_word_glossary(client, model, candidates)
+    glossary = _build_article_glossary(client, model, article.paragraphs_en, kw_lower)
+    if not glossary:
+        return article
     return replace(article, word_glossary=glossary)
