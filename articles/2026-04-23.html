@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-04-23</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-04-23</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/news/1024/branded_news/0c8c/live/8608aac0-3f29-11f1-b55d-0f258dce1735.jpg" alt="Trump tells BBC that King's visit could 'absolutely' help repair relations with UK" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Trump tells BBC that King's visit could 'absolutely' help repair relations with UK</h1>
+      <p class="source">Source: <a href="https://www.bbc.com/news/articles/cx2wdegnzzjo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://jp7252.github.io/NEWS_APP/audio/2026-04-23.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">US President Donald Trump has said next week's state visit from King Charles and Queen Camilla could help <span class="keyword" data-word="repair" data-phonetic="/rɪˈpeər/" data-pos="v." data-def="修复，改善" data-def-en="to improve a relationship or situation after a problem">repair</span> relations with the UK.</span></p>
+        <p class="cn">美国总统唐纳德·特朗普表示，查尔斯国王和卡米拉王后下周的国事访问可能有助于修复与英国的关系。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">When asked in a phone interview with the BBC whether the visit could help <span class="keyword" data-word="repair" data-phonetic="/rɪˈpeər/" data-pos="v." data-def="修复，改善" data-def-en="to improve a relationship or situation after a problem">repair</span> the relationship, Trump said: "Absolutely.</span> <span class="sentence" data-sentence-index="2">He's <span class="keyword" data-word="fantastic" data-phonetic="/fænˈtæstɪk/" data-pos="adj." data-def="极好的，了不起的" data-def-en="extremely good or impressive">fantastic</span>.</span> <span class="sentence" data-sentence-index="3">He's a <span class="keyword" data-word="fantastic" data-phonetic="/fænˈtæstɪk/" data-pos="adj." data-def="极好的，了不起的" data-def-en="extremely good or impressive">fantastic</span> man.</span> <span class="sentence" data-sentence-index="4">Absolutely the answer is yes."</span></p>
+        <p class="cn">在接受BBC电话采访时，当被问及此次访问是否有助于修复关系时，特朗普说：“当然。他非常棒。他是个了不起的人。答案绝对是肯定的。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="5">"I know him well, I've known him for years," he said.</span> <span class="sentence" data-sentence-index="6">"He's a brave man, and he's a great man.</span> <span class="sentence" data-sentence-index="7">They would absolutely be a <span class="keyword" data-word="positive" data-phonetic="/ˈpɒzətɪv/" data-pos="n." data-def="积极因素，正面影响" data-def-en="a good or favorable thing">positive</span>."</span></p>
+        <p class="cn">“我跟他很熟，我认识他很多年了，”他说。“他是个勇敢的人，也是个伟大的人。他们绝对会带来积极影响。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="8">The president also spoke about his relationship with UK Prime Minister Sir Keir Starmer , who he said could only "<span class="keyword" data-word="recover" data-phonetic="/rɪˈkʌvər/" data-pos="v." data-def="恢复，复苏" data-def-en="to return to a normal state after a difficult situation">recover</span>" if he changed course on immigration.</span></p>
+        <p class="cn">总统还谈到了他与英国首相基尔·斯塔默爵士的关系，称后者只有在移民政策上改变方向才能“恢复”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="9">The King and Queen will travel to the US for a four-day visit beginning on Monday, and will meet with Trump at the White House.</span></p>
+        <p class="cn">国王和王后将于下周一开始对美国进行为期四天的访问，并将在白宫与特朗普会面。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="10">The King will have a private meeting with the president and also deliver an <span class="keyword" data-word="address" data-phonetic="/əˈdres/" data-pos="n." data-def="演讲，致辞" data-def-en="a formal speech to a group of people">address</span> to Congress.</span></p>
+        <p class="cn">国王将与总统举行私人会晤，并向美国国会发表演讲。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="11">After two days in Washington DC, they will travel to New York, Virginia and Bermuda before returning to the UK.</span></p>
+        <p class="cn">在华盛顿特区停留两天后，他们将前往纽约、弗吉尼亚和百慕大，然后返回英国。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="12">The Foreign Office said the trip would mark the 250th <span class="keyword" data-word="anniversary" data-phonetic="/ˌænɪˈvɜːrsəri/" data-pos="n." data-def="周年纪念" data-def-en="the date on which an event happened in a previous year">anniversary</span> of US independence, and would celebrate a partnership of "shared prosperity, security and history".</span></p>
+        <p class="cn">英国外交部表示，此次访问将纪念美国独立250周年，并庆祝“共享繁荣、安全与历史”的伙伴关系。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="13">In the five-minute interview on Thursday, Trump was also asked about his relationship with Sir Keir.</span></p>
+        <p class="cn">在周四五分钟的采访中，特朗普也被问及他与基尔爵士的关系。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="14">The two leaders have appeared <span class="keyword" data-word="at odds" data-phonetic="/æt ɒdz/" data-pos="phrase" data-def="意见不合，有分歧" data-def-en="in disagreement or conflict">at odds</span> over the war in Iran, and the prime minister has faced mounting pressure over his decision to appoint Lord Mandelson as UK ambassador to the US.</span></p>
+        <p class="cn">两位领导人在伊朗战争问题上似乎存在分歧，而首相因任命曼德尔森勋爵为英国驻美国大使而面临越来越大的压力。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="15">In a post on Truth Social on Monday, Trump said Lord Mandelson was "a really bad pick" but the prime minister had "plenty of time to <span class="keyword" data-word="recover" data-phonetic="/rɪˈkʌvər/" data-pos="v." data-def="恢复，复苏" data-def-en="to return to a normal state after a difficult situation">recover</span>".</span></p>
+        <p class="cn">在周一发布的Truth Social帖子中，特朗普称曼德尔森勋爵是“一个非常糟糕的选择”，但首相有“足够的时间来恢复”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="16">When asked what he meant by that post, Trump said: "If he opened the North Sea and if his immigration policies became strong, which right now they're not, he can <span class="keyword" data-word="recover" data-phonetic="/rɪˈkʌvər/" data-pos="v." data-def="恢复，复苏" data-def-en="to return to a normal state after a difficult situation">recover</span>, but if he doesn't, I don't think he has a chance."</span></p>
+        <p class="cn">当被问及那条帖子是什么意思时，特朗普说：“如果他开放北海，并且他的移民政策变得强硬——现在它们并不强硬——他就能恢复，但如果不这样做，我认为他没有机会。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="17">Trump has repeatedly called on the UK to increase oil and gas <span class="keyword" data-word="extraction" data-phonetic="/ɪkˈstrækʃən/" data-pos="n." data-def="开采，提取" data-def-en="the process of removing something from a place">extraction</span> in the North Sea.</span></p>
+        <p class="cn">特朗普一再呼吁英国增加北海的石油和天然气开采。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="18">"I make my decisions based on what's in the British national interest and not what other people say or do," Sir Keir said while talking to broadcasters about the president's comments on Thursday.</span></p>
+        <p class="cn">“我的决定基于什么符合英国国家利益，而不是别人说什么或做什么，”基尔爵士在周四就总统的评论对媒体说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="19">"That is why I took the decision that we would not be dragged into the war in Iran," he said.</span> <span class="sentence" data-sentence-index="20">"I'm not going to be diverted or deflected from that by what anybody else says."</span></p>
+        <p class="cn">“这就是为什么我决定我们不会被拖入伊朗战争，”他说。“我不会因为别人说什么而分心或改变方向。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="21">Trump has also criticised the UK government and other allies over their response to the Iran war.</span> <span class="sentence" data-sentence-index="22">He has said he is "not happy" with the level of support offered by the UK, while Sir Keir has repeatedly said the country will not be drawn into a wider conflict.</span></p>
+        <p class="cn">特朗普还批评了英国政府和其他盟友对伊朗战争的回应。他说他对英国提供的支持水平“不满意”，而基尔爵士一再表示英国不会卷入更广泛的冲突。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="23">When the president was asked why he needed allies such as the UK to get involved, he told the BBC: "I didn't need them at all but they should've been there.</span> <span class="sentence" data-sentence-index="24">I didn't need them, obviously."</span></p>
+        <p class="cn">当被问及为什么他需要英国等盟友参与时，特朗普告诉BBC：“我根本不需要他们，但他们应该在那里。显然，我不需要他们。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="25">"We've wiped Iran's military out," he added.</span> <span class="sentence" data-sentence-index="26">"I didn't need anybody."</span></p>
+        <p class="cn">“我们已经摧毁了伊朗的军事力量，”他补充说。“我不需要任何人。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="27">"I wanted to see whether or not they would be involved," Trump said, describing his calls for support from allies as "more of a test".</span></p>
+        <p class="cn">“我想看看他们是否会参与，”特朗普说，他形容呼吁盟友支持“更像一个测试”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="28">Trump was also asked whether his threat, made earlier this month, that "a whole civilisation will die tonight" unless Iran agreed to a deal was about nuclear weapons.</span> <span class="sentence" data-sentence-index="29">The comment was widely condemned, including by the Pope, the head of the UN and Sir Keir.</span></p>
+        <p class="cn">特朗普还被问及他本月早些时候发出的威胁——除非伊朗同意达成协议，否则“今晚整个文明都将灭亡”——是否与核武器有关。这一评论遭到广泛谴责，包括教皇、联合国秘书长和基尔爵士。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="30">"The other side is dying to make a deal," Trump said.</span> <span class="sentence" data-sentence-index="31">"So whatever I'm saying or whatever I'm doing, it seems to be working very well."</span></p>
+        <p class="cn">“对方渴望达成协议，”特朗普说。“所以无论我说什么或做什么，似乎都效果很好。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="32">Towards the end of the phone interview, the president also referenced his multi-billion dollar defamation lawsuit against the BBC.</span></p>
+        <p class="cn">在电话采访接近尾声时，总统还提到了他对BBC提起的数十亿美元诽谤诉讼。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="33">He is suing over the way a Panorama documentary edited together different sections of a speech he gave before the Capitol riot on 6 January 2021.</span></p>
+        <p class="cn">他起诉的原因是《全景》纪录片将他2021年1月6日国会大厦骚乱前演讲的不同部分剪辑在一起。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="34">Trump said the BBC had to be "very careful" or it could "destroy" its reputation.</span></p>
+        <p class="cn">特朗普表示，BBC必须“非常小心”，否则可能“毁掉”自己的声誉。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="35">The BBC has previously apologised to Trump over the Panorama edit, but rejected his demands for compensation.</span> <span class="sentence" data-sentence-index="36">It has said there is no basis for a defamation claim and filed to dismiss the lawsuit.</span></p>
+        <p class="cn">BBC此前曾就《全景》的剪辑向特朗普道歉，但拒绝了他的赔偿要求。该公司表示诽谤指控没有依据，并已申请驳回诉讼。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="37">"We have said throughout we will robustly defend the case against us," a BBC spokesperson said on Thursday.</span></p>
+        <p class="cn">“我们一直表示将坚决辩护此案，”BBC发言人周四表示。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="38">Sign up here to get the latest royal stories and analysis every week with our Royal Watch newsletter.</span> <span class="sentence" data-sentence-index="39">Those outside the UK can sign up here .</span></p>
+        <p class="cn">在此订阅，每周通过我们的《王室观察》通讯获取最新的王室故事和分析。英国以外的读者可在此订阅。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">repair</span>
+        <button class="kw-speak-btn" data-word="repair" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈpeər/ v.</span>
+      </div>
+      <p class="kw-def">修复，改善</p>
+      <p class="kw-def-en">to improve a relationship or situation after a problem</p>
+      <p class="kw-ctx">&ldquo;US President Donald Trump has said next week's state visit from King Charles and Queen Camilla could help repair relations with the UK.&rdquo;</p>
+      <p class="kw-ctx-cn">美国总统唐纳德·特朗普表示，下周查尔斯国王和卡米拉王后的国事访问可能有助于修复与英国的关系。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">fantastic</span>
+        <button class="kw-speak-btn" data-word="fantastic" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/fænˈtæstɪk/ adj.</span>
+      </div>
+      <p class="kw-def">极好的，了不起的</p>
+      <p class="kw-def-en">extremely good or impressive</p>
+      <p class="kw-ctx">&ldquo;"Absolutely. He's fantastic. He's a fantastic man. Absolutely the answer is yes."&rdquo;</p>
+      <p class="kw-ctx-cn">"当然。他非常棒。他是一个了不起的人。答案绝对是肯定的。"</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">positive</span>
+        <button class="kw-speak-btn" data-word="positive" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈpɒzətɪv/ n.</span>
+      </div>
+      <p class="kw-def">积极因素，正面影响</p>
+      <p class="kw-def-en">a good or favorable thing</p>
+      <p class="kw-ctx">&ldquo;"He's a brave man, and he's a great man. They would absolutely be a positive."&rdquo;</p>
+      <p class="kw-ctx-cn">"他是一个勇敢的人，一个伟大的人。他们绝对会是一个积极因素。"</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">recover</span>
+        <button class="kw-speak-btn" data-word="recover" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈkʌvər/ v.</span>
+      </div>
+      <p class="kw-def">恢复，复苏</p>
+      <p class="kw-def-en">to return to a normal state after a difficult situation</p>
+      <p class="kw-ctx">&ldquo;The president also spoke about his relationship with UK Prime Minister Sir Keir Starmer, who he said could only "recover" if he changed course on immigration.&rdquo;</p>
+      <p class="kw-ctx-cn">总统还谈到了他与英国首相基尔·斯塔默爵士的关系，他说斯塔默只有在移民问题上改变路线才能“恢复”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">address</span>
+        <button class="kw-speak-btn" data-word="address" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈdres/ n.</span>
+      </div>
+      <p class="kw-def">演讲，致辞</p>
+      <p class="kw-def-en">a formal speech to a group of people</p>
+      <p class="kw-ctx">&ldquo;The King will have a private meeting with the president and also deliver an address to Congress.&rdquo;</p>
+      <p class="kw-ctx-cn">国王将与总统举行私人会晤，并在国会发表演讲。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">anniversary</span>
+        <button class="kw-speak-btn" data-word="anniversary" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌænɪˈvɜːrsəri/ n.</span>
+      </div>
+      <p class="kw-def">周年纪念</p>
+      <p class="kw-def-en">the date on which an event happened in a previous year</p>
+      <p class="kw-ctx">&ldquo;The Foreign Office said the trip would mark the 250th anniversary of US independence, and would celebrate a partnership of "shared prosperity, security and history".&rdquo;</p>
+      <p class="kw-ctx-cn">外交部表示，此行将纪念美国独立250周年，并庆祝“共同繁荣、安全与历史”的伙伴关系。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">at odds</span>
+        <button class="kw-speak-btn" data-word="at odds" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/æt ɒdz/ phrase</span>
+      </div>
+      <p class="kw-def">意见不合，有分歧</p>
+      <p class="kw-def-en">in disagreement or conflict</p>
+      <p class="kw-ctx">&ldquo;The two leaders have appeared at odds over the war in Iran, and the prime minister has faced mounting pressure over his decision to appoint Lord Mandelson as UK ambassador to the US.&rdquo;</p>
+      <p class="kw-ctx-cn">两位领导人在伊朗战争问题上似乎意见不合，首相因任命曼德尔森勋爵为英国驻美大使而面临越来越大的压力。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">extraction</span>
+        <button class="kw-speak-btn" data-word="extraction" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪkˈstrækʃən/ n.</span>
+      </div>
+      <p class="kw-def">开采，提取</p>
+      <p class="kw-def-en">the process of removing something from a place</p>
+      <p class="kw-ctx">&ldquo;Trump has repeatedly called on the UK to increase oil and gas extraction in the North Sea.&rdquo;</p>
+      <p class="kw-ctx-cn">特朗普一再呼吁英国增加北海的石油和天然气开采。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "US President Donald Trump has said next week's state visit from King Charles and Queen Camilla could help repair relations with the UK.", "start_ms": 0, "end_ms": 9264, "paragraph_index": 0}, {"index": 1, "text": "When asked in a phone interview with the BBC whether the visit could help repair the relationship, Trump said: \"Absolutely.", "start_ms": 9264, "end_ms": 17568, "paragraph_index": 1}, {"index": 2, "text": "He's fantastic.", "start_ms": 17568, "end_ms": 19968, "paragraph_index": 1}, {"index": 3, "text": "He's a fantastic man.", "start_ms": 19968, "end_ms": 22608, "paragraph_index": 1}, {"index": 4, "text": "Absolutely the answer is yes.\"", "start_ms": 22608, "end_ms": 25800, "paragraph_index": 1}, {"index": 5, "text": "\"I know him well, I've known him for years,\" he said.", "start_ms": 25800, "end_ms": 30120, "paragraph_index": 2}, {"index": 6, "text": "\"He's a brave man, and he's a great man.", "start_ms": 30120, "end_ms": 33720, "paragraph_index": 2}, {"index": 7, "text": "They would absolutely be a positive.\"", "start_ms": 33720, "end_ms": 37080, "paragraph_index": 2}, {"index": 8, "text": "The president also spoke about his relationship with UK Prime Minister Sir Keir Starmer , who he said could only \"recover\" if he changed course on immigration.", "start_ms": 37080, "end_ms": 47784, "paragraph_index": 3}, {"index": 9, "text": "The King and Queen will travel to the US for a four-day visit beginning on Monday, and will meet with Trump at the White House.", "start_ms": 47784, "end_ms": 56016, "paragraph_index": 4}, {"index": 10, "text": "The King will have a private meeting with the president and also deliver an address to Congress.", "start_ms": 56016, "end_ms": 62112, "paragraph_index": 5}, {"index": 11, "text": "After two days in Washington DC, they will travel to New York, Virginia and Bermuda before returning to the UK.", "start_ms": 62112, "end_ms": 70752, "paragraph_index": 6}, {"index": 12, "text": "The Foreign Office said the trip would mark the 250th anniversary of US independence, and would celebrate a partnership of \"shared prosperity, security and history\".", "start_ms": 70752, "end_ms": 82968, "paragraph_index": 7}, {"index": 13, "text": "In the five-minute interview on Thursday, Trump was also asked about his relationship with Sir Keir.", "start_ms": 82968, "end_ms": 90192, "paragraph_index": 8}, {"index": 14, "text": "The two leaders have appeared at odds over the war in Iran, and the prime minister has faced mounting pressure over his decision to appoint Lord Mandelson as UK ambassador to the US.", "start_ms": 90192, "end_ms": 102648, "paragraph_index": 9}, {"index": 15, "text": "In a post on Truth Social on Monday, Trump said Lord Mandelson was \"a really bad pick\" but the prime minister had \"plenty of time to recover\".", "start_ms": 102648, "end_ms": 112608, "paragraph_index": 10}, {"index": 16, "text": "When asked what he meant by that post, Trump said: \"If he opened the North Sea and if his immigration policies became strong, which right now they're not, he can recover, but if he doesn't, I don't think he has a chance.\"", "start_ms": 112608, "end_ms": 126792, "paragraph_index": 11}, {"index": 17, "text": "Trump has repeatedly called on the UK to increase oil and gas extraction in the North Sea.", "start_ms": 126792, "end_ms": 133512, "paragraph_index": 12}, {"index": 18, "text": "\"I make my decisions based on what's in the British national interest and not what other people say or do,\" Sir Keir said while talking to broadcasters about the president's comments on Thursday.", "start_ms": 133512, "end_ms": 145632, "paragraph_index": 13}, {"index": 19, "text": "\"That is why I took the decision that we would not be dragged into the war in Iran,\" he said.", "start_ms": 145632, "end_ms": 151968, "paragraph_index": 14}, {"index": 20, "text": "\"I'm not going to be diverted or deflected from that by what anybody else says.\"", "start_ms": 151968, "end_ms": 157512, "paragraph_index": 14}, {"index": 21, "text": "Trump has also criticised the UK government and other allies over their response to the Iran war.", "start_ms": 157512, "end_ms": 164928, "paragraph_index": 15}, {"index": 22, "text": "He has said he is \"not happy\" with the level of support offered by the UK, while Sir Keir has repeatedly said the country will not be drawn into a wider conflict.", "start_ms": 164928, "end_ms": 175560, "paragraph_index": 15}, {"index": 23, "text": "When the president was asked why he needed allies such as the UK to get involved, he told the BBC: \"I didn't need them at all but they should've been there.", "start_ms": 175560, "end_ms": 185544, "paragraph_index": 16}, {"index": 24, "text": "I didn't need them, obviously.\"", "start_ms": 185544, "end_ms": 188640, "paragraph_index": 16}, {"index": 25, "text": "\"We've wiped Iran's military out,\" he added.", "start_ms": 188640, "end_ms": 192696, "paragraph_index": 17}, {"index": 26, "text": "\"I didn't need anybody.\"", "start_ms": 192696, "end_ms": 195288, "paragraph_index": 17}, {"index": 27, "text": "\"I wanted to see whether or not they would be involved,\" Trump said, describing his calls for support from allies as \"more of a test\".", "start_ms": 195288, "end_ms": 204192, "paragraph_index": 18}, {"index": 28, "text": "Trump was also asked whether his threat, made earlier this month, that \"a whole civilisation will die tonight\" unless Iran agreed to a deal was about nuclear weapons.", "start_ms": 204192, "end_ms": 215376, "paragraph_index": 19}, {"index": 29, "text": "The comment was widely condemned, including by the Pope, the head of the UN and Sir Keir.", "start_ms": 215376, "end_ms": 221928, "paragraph_index": 19}, {"index": 30, "text": "\"The other side is dying to make a deal,\" Trump said.", "start_ms": 221928, "end_ms": 226224, "paragraph_index": 20}, {"index": 31, "text": "\"So whatever I'm saying or whatever I'm doing, it seems to be working very well.\"", "start_ms": 226224, "end_ms": 232176, "paragraph_index": 20}, {"index": 32, "text": "Towards the end of the phone interview, the president also referenced his multi-billion dollar defamation lawsuit against the BBC.", "start_ms": 232176, "end_ms": 241104, "paragraph_index": 21}, {"index": 33, "text": "He is suing over the way a Panorama documentary edited together different sections of a speech he gave before the Capitol riot on 6 January 2021.", "start_ms": 241104, "end_ms": 252360, "paragraph_index": 22}, {"index": 34, "text": "Trump said the BBC had to be \"very careful\" or it could \"destroy\" its reputation.", "start_ms": 252360, "end_ms": 258528, "paragraph_index": 23}, {"index": 35, "text": "The BBC has previously apologised to Trump over the Panorama edit, but rejected his demands for compensation.", "start_ms": 258528, "end_ms": 267360, "paragraph_index": 24}, {"index": 36, "text": "It has said there is no basis for a defamation claim and filed to dismiss the lawsuit.", "start_ms": 267360, "end_ms": 273552, "paragraph_index": 24}, {"index": 37, "text": "\"We have said throughout we will robustly defend the case against us,\" a BBC spokesperson said on Thursday.", "start_ms": 273552, "end_ms": 281136, "paragraph_index": 25}, {"index": 38, "text": "Sign up here to get the latest royal stories and analysis every week with our Royal Watch newsletter.", "start_ms": 281136, "end_ms": 288192, "paragraph_index": 26}, {"index": 39, "text": "Those outside the UK can sign up here .", "start_ms": 288192, "end_ms": 291912, "paragraph_index": 26}], "total_duration_ms": 291912};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "said": "说", "and": "和", "he": "他", "trump": "特朗普", "on": "在", "has": "有", "uk": "英国", "with": "与", "in": "在", "his": "他的", "of": "的", "be": "是", "will": "将", "not": "不", "bbc": "英国广播公司", "is": "是", "also": "也", "was": "是", "us": "我们", "president": "总统", "asked": "询问", "for": "为了", "would": "将", "sir": "爵士", "keir": "基尔", "over": "超过", "that": "那个", "or": "或者", "could": "可能", "they": "它们", "about": "关于", "if": "如果", "iran": "伊朗", "but": "但是", "by": "被", "visit": "访问", "from": "来自", "king": "国王", "when": "当", "whether": "是否", "relationship": "关系", "absolutely": "绝对", "man": "男子", "prime": "首相", "minister": "部长", "at": "在", "have": "有", "thursday": "星期四", "war": "战争", "as": "作为", "what": "什么", "other": "其他", "we": "我们", "i'm": "我是", "allies": "盟友", "need": "需要", "it": "它", "him": "他", "well": "好", "monday": "星期一", "two": "两个", "before": "之前", "decision": "决定", "lord": "勋爵", "mandelson": "曼德尔森", "post": "职位", "had": "有", "north": "北部", "sea": "海域", "can": "可以", "repeatedly": "反复地", "make": "使", "while": "而", "why": "为何", "into": "进入", "get": "得到", "involved": "涉及的", "them": "他们", "there": "那里", "deal": "协议", "very": "非常", "against": "反对", "sign": "签署", "up": "向上", "here": "这里", "donald": "唐纳德", "next": "下一个", "state": "国家", "charles": "查尔斯", "answer": "回答", "yes": "是的", "know": "知道", "i've": "我已经", "known": "已知", "years": "多年", "spoke": "发言", "starmer": "斯塔默", "who": "谁", "only": "只有", "changed": "改变", "house": "议院", "an": "一个", "after": "之后", "days": "天", "washington": "华盛顿", "new": "新的", "foreign": "外交", "office": "办公室", "shared": "分享", "security": "安全", "history": "历史", "appeared": "出现", "faced": "面对", "pressure": "压力", "appoint": "任命", "ambassador": "大使", "truth": "真相", "social": "社交的", "bad": "糟糕", "time": "时间", "opened": "开火", "strong": "强烈", "which": "哪个", "right": "正确", "now": "现在", "doesn't": "不", "don't": "不要", "called": "称为", "oil": "石油", "gas": "气体", "my": "我的", "decisions": "决定", "national": "国家", "people": "人们", "say": "说", "do": "做", "president's": "总统的", "comments": "评论", "took": "担任", "going": "将要", "else": "其他", "says": "表示", "government": "政府", "their": "他们的", "country": "国家", "drawn": "划定", "conflict": "冲突", "needed": "需要", "such": "如此", "told": "告诉", "all": "所有", "been": "已经", "iran's": "伊朗的", "military": "军事", "out": "出来", "added": "补充", "see": "看到", "describing": "描述", "calls": "呼吁", "more": "更多", "made": "做出", "earlier": "较早", "this": "这个", "month": "月份", "agreed": "同意", "including": "包括", "head": "前往", "side": "方面", "so": "所以", "saying": "说", "seems": "似乎", "working": "工作", "towards": "对待", "end": "结束", "way": "方式", "together": "一起", "gave": "给予", "january": "一月", "its": "它的", "previously": "此前", "rejected": "拒绝", "no": "没有", "claim": "声称", "case": "案例", "spokesperson": "发言人", "latest": "最新的", "analysis": "分析", "every": "每个", "week": "周", "our": "我们的", "newsletter": "新闻简报", "those": "那些", "outside": "外部", "he's": "他是", "interview": "采访", "didn't": "没有", "queen": "女王", "help": "帮助", "phone": "电话", "immigration": "移民", "travel": "旅行", "anybody": "任何人", "support": "支持", "whatever": "无论什么", "defamation": "诽谤", "lawsuit": "诉讼", "panorama": "全景", "royal": "王室的", "week's": "一周的", "camilla": "卡米拉", "relations": "关系", "brave": "勇敢的", "great": "伟大的", "course": "课程", "four-day": "四天的", "beginning": "开始", "meet": "会见", "white": "白色的", "private": "私人的", "meeting": "会议", "deliver": "发表", "congress": "国会", "dc": "华盛顿特区", "york": "约克", "virginia": "弗吉尼亚", "bermuda": "百慕大", "returning": "返回", "trip": "旅行", "mark": "标志", "independence": "独立", "celebrate": "庆祝", "partnership": "伙伴关系", "prosperity": "繁荣", "five-minute": "五分钟的", "leaders": "领导人", "odds": "可能性", "mounting": "增加的", "really": "真正地", "pick": "选择", "plenty": "大量", "meant": "意味着", "policies": "政策", "became": "成为", "they're": "他们是", "think": "认为", "chance": "机会", "increase": "增加", "based": "基于", "what's": "什么是", "british": "英国的", "interest": "兴趣", "talking": "谈论", "broadcasters": "广播公司", "dragged": "拖累", "diverted": "转移", "deflected": "偏离", "criticised": "批评", "response": "回应", "happy": "高兴的", "level": "水平", "offered": "提供", "wider": "更广泛的", "should've": "本应该", "obviously": "显然", "we've": "我们已经", "wiped": "抹去", "wanted": "想要", "test": "测试", "threat": "威胁", "whole": "整个", "civilisation": "文明", "die": "死亡", "tonight": "今晚", "unless": "除非", "nuclear": "核的", "weapons": "武器", "comment": "评论", "widely": "广泛地", "condemned": "谴责", "pope": "教皇", "un": "联合国", "dying": "垂死的", "doing": "做", "referenced": "提及", "multi-billion": "数十亿的", "dollar": "美元", "suing": "起诉", "documentary": "纪录片", "edited": "编辑过的", "different": "不同的", "sections": "部分", "speech": "演讲", "capitol": "国会大厦", "riot": "骚乱", "careful": "谨慎的", "destroy": "摧毁", "reputation": "声誉", "apologised": "道歉", "edit": "编辑", "demands": "要求", "compensation": "赔偿", "basis": "基础", "filed": "提交", "dismiss": "驳回", "throughout": "贯穿", "robustly": "坚决地", "defend": "辩护", "stories": "报道", "watch": "观看"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
