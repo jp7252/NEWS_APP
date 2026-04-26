@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-04-26</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-04-26</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/news/1024/branded_news/8b9d/live/566dacb0-41aa-11f1-ac78-2112837ce2aa.jpg" alt="Trump and officials 'likely' targets of press dinner shooting suspect, authorities believe" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Trump and officials 'likely' targets of press dinner shooting suspect, authorities believe</h1>
+      <p class="source">Source: <a href="https://www.bbc.com/news/articles/c2d8dg57rzdo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://jp7252.github.io/NEWS_APP/audio/2026-04-26.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">US President Donald Trump and his officials were the "likely" targets of a suspected gunman who attempted to storm the White House Correspondents' Dinner, acting US Attorney General Todd Blanche has said.</span></p>
+        <p class="cn">美国代理司法部长托德·布兰奇（Todd Blanche）表示，美国总统唐纳德·特朗普（Donald Trump）及其官员是一名试图闯入白宫记者晚宴的嫌疑枪手的“可能”目标。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">The suspect, named by US media as 31-year-old Cole Tomas Allen, was arrested after police said he opened fire near a security checkpoint during the event at a Washington DC hotel on Saturday.</span></p>
+        <p class="cn">美国媒体确认嫌疑人为31岁的科尔·托马斯·艾伦（Cole Tomas Allen）。警方称，他在周六华盛顿特区一家酒店的活动期间，在安检点附近开枪，随后被捕。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Blanche, speaking to NBC News, said the <span class="keyword" data-word="alleged" data-phonetic="/əˈledʒd/" data-pos="adj." data-def="被指控的，所谓的" data-def-en="Claimed to be true, but not yet proven.">alleged</span> gunman's motive is still under investigation, but that "<span class="keyword" data-word="preliminary" data-phonetic="/prɪˈlɪmɪnəri/" data-pos="adj." data-def="初步的，预备的" data-def-en="Coming before the main event or process; initial.">preliminary</span>" findings suggest he was targeting administration officials.</span></p>
+        <p class="cn">布兰奇在接受NBC新闻采访时表示，这名枪手的动机仍在调查中，但“初步”调查结果表明他针对的是政府官员。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">The FBI's criminal division and terrorism task-force are investigating the incident.</span></p>
+        <p class="cn">联邦调查局（FBI）的刑事部门和反恐工作组正在调查此事。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Trump, who was rushed off the stage to safety, told reporters at a briefing after the shooting on Saturday: "I can't imagine that there's any profession that's more dangerous".</span></p>
+        <p class="cn">特朗普被迅速带下舞台至安全地点。他在周六枪击事件后的简报会上对记者说：“我无法想象还有哪个职业比这更危险。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">In a statement on Sunday, the White House said Trump "stands fearless" after surviving, alongside cabinet members, "an assassination attempt when shots were fired".</span></p>
+        <p class="cn">白宫在周日的一份声明中表示，特朗普与内阁成员一起在“枪声响起时遭遇暗杀企图”后幸存下来，并“无所畏惧”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">The White House Correspondents' Association president, Weijia Jiang, called the attack "<span class="keyword" data-word="harrowing" data-phonetic="/ˈhærəʊɪŋ/" data-pos="adj." data-def="令人痛苦的，折磨人的" data-def-en="Causing great distress or suffering.">harrowing</span>".</span></p>
+        <p class="cn">白宫记者协会主席姜伟佳（Weijia Jiang）称此次袭击“令人痛心”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">On Sunday, Jiang, who was sat next to Trump at the dinner, thanked the Secret Service for actions which "protected thousands of guests".</span></p>
+        <p class="cn">周日，在晚宴上坐在特朗普旁边的姜伟佳感谢特勤局采取行动，“保护了数千名宾客”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">She added the board will meet and determine how to proceed, and will release updates when available.</span></p>
+        <p class="cn">她补充说，董事会将开会决定下一步行动，并在有进展时发布更新。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">On Sunday, Trump told Fox News that the suspect "had a lot of hatred in his heart for a while", and said his family knew he had "difficulties".</span> <span class="sentence" data-sentence-index="10">He added that the suspect had a "<span class="keyword" data-word="manifesto" data-phonetic="/ˌmænɪˈfestəʊ/" data-pos="n." data-def="宣言，声明" data-def-en="A public declaration of intentions, motives, or views.">manifesto</span>".</span></p>
+        <p class="cn">周日，特朗普告诉福克斯新闻，嫌疑人“心里积攒了很长时间的仇恨”，并说他的家人知道他“有困难”。他还表示嫌疑人有一份“宣言”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">At about 20:35 local time (00:35 GMT) on Saturday gunshots rang out in the foyer of the Washington Hilton hotel, where the White House Correspondents' dinner was taking place in the ballroom on a floor below.</span></p>
+        <p class="cn">当地时间周六20:35（格林尼治时间00:35），华盛顿希尔顿酒店门厅响起枪声，而白宫记者晚宴正在楼下的大宴会厅举行。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">The president, First Lady Melania Trump, and Vice-President JD Vance were also rushed out of the room by security.</span></p>
+        <p class="cn">总统、第一夫人梅拉尼娅·特朗普（Melania Trump）和副总统JD·万斯（JD Vance）也被安保人员迅速带离房间。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="13">Officials said law enforcement exchanged fire with the <span class="keyword" data-word="alleged" data-phonetic="/əˈledʒd/" data-pos="adj." data-def="被指控的，所谓的" data-def-en="Claimed to be true, but not yet proven.">alleged</span> attacker and intercepted him, and "believe" the suspect fired his weapon.</span> <span class="sentence" data-sentence-index="14">He was not struck, but was taken to hospital for <span class="keyword" data-word="evaluation" data-phonetic="/ɪˌvæljuˈeɪʃən/" data-pos="n." data-def="评估，评价" data-def-en="The process of assessing or judging the value or condition of something.">evaluation</span>.</span></p>
+        <p class="cn">官员们表示，执法人员与袭击者交火并拦截了他，且“相信”嫌疑人开了枪。嫌疑人未被击中，但被送往医院进行评估。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="15">Police said he was carrying two guns, as well as knives.</span></p>
+        <p class="cn">警方称他携带了两支枪和刀具。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="16">Investigators are reviewing writings from the suspect, which state he wanted to specifically target administration officials, a senior US official told CBS News.</span></p>
+        <p class="cn">一名美国高级官员告诉CBS新闻，调查人员正在审查嫌疑人的文字，其中显示他想要专门针对政府官员。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="17">One of Allen's family members alerted police after receiving writings from him before the attack.</span> <span class="sentence" data-sentence-index="18">The writings sent to family members reportedly did not specifically mention the White House Correspondents' Dinner.</span></p>
+        <p class="cn">艾伦的一名家人在袭击前收到他的文字后报警。据报道，发给家人的文字并未具体提及白宫记者晚宴。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="19">An officer who was shot and injured during the incident has been discharged from hospital.</span> <span class="sentence" data-sentence-index="20">His bullet proof vest "helped us avoid a potential tragedy," the Secret Service's chief of communications, Anthony Guglielmi, told the BBC.</span></p>
+        <p class="cn">一名在事件中中弹受伤的警官已出院。特勤局通讯主管安东尼·古列尔米（Anthony Guglielmi）告诉BBC，他的防弹背心“帮助我们避免了一场潜在的悲剧”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="21">Several BBC reporters were in attendance at the dinner, and described scenes of widespread confusion following the sound of gunshots.</span></p>
+        <p class="cn">几名BBC记者出席了晚宴，他们描述了枪声响起后现场一片混乱的场景。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="22">Gary O'Donoghue, the BBC's Chief North America correspondent, said he heard "booming sounds".</span></p>
+        <p class="cn">BBC首席北美记者加里·奥多诺霍（Gary O'Donoghue）表示，他听到了“轰隆声”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="23">"Within moments, I thought – that is the low thudding sound that semi-automatic weapons make," he said.</span></p>
+        <p class="cn">他说：“片刻之间，我就想到——那是半自动武器发出的低沉撞击声。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="24">The room was briefly locked down, before an announcement was made that the event would be rescheduled and attendees were ushered out.</span></p>
+        <p class="cn">房间短暂封锁，随后宣布活动改期，与会者被引导离开。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="25">Blanche told the BBC's US partner CBS News that investigators believe the suspect travelled to the capital by train - from Los Angeles to Chicago, before heading to DC.</span></p>
+        <p class="cn">布兰奇告诉BBC的美国合作伙伴CBS新闻，调查人员认为嫌疑人乘火车前往首都——从洛杉矶到芝加哥，然后前往华盛顿。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="26">Allen describes himself as a mechanical engineer, game developer and teacher on LinkedIn.</span> <span class="sentence" data-sentence-index="27">He is from Torrance, California, where an address believed to be linked to him is being searched.</span></p>
+        <p class="cn">艾伦在领英（LinkedIn）上自称是机械工程师、游戏开发者和教师。他来自加利福尼亚州托伦斯，警方正在搜查一处据信与他有关的地址。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="28">He will be formally charged in federal court on Monday with assault of a federal officer and using a firearm during a crime of violence, officials said.</span></p>
+        <p class="cn">官员们表示，他将于周一出庭联邦法院，被正式指控袭击联邦官员和在暴力犯罪中使用枪支。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="29">The president delivered a briefing from the White House after the attack.</span> <span class="sentence" data-sentence-index="30">Speaking while wearing black tie attire to a room full of journalists also in formal wear, he praised the Secret Service, and said that everyone in the room owed them a "tremendous debt of gratitude".</span></p>
+        <p class="cn">袭击发生后，总统在白宫发表了简报。他穿着燕尾服，面对满屋同样身着正装的记者发表讲话，赞扬了特勤局，并表示房间里的每个人都欠他们“一份巨大的感激之情”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="31">Though he has levelled criticism at the media during his two terms as president, Trump also took a moment to thank the press for their "responsible coverage" of the attack.</span></p>
+        <p class="cn">尽管特朗普在两届总统任期内曾批评媒体，但他也借此机会感谢媒体对袭击的“负责任报道”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="32">He also called for people to "resolve our differences peacefully".</span></p>
+        <p class="cn">他还呼吁人们“和平解决分歧”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="33">He has used the incident to further his argument for building a new ballroom at the White House, writing on Truth Social that it would not have happened "with the Militarily Top Secret Ballroom currently under construction".</span></p>
+        <p class="cn">他利用这一事件进一步论证在白宫建造新宴会厅的必要性，在Truth Social上写道，如果“目前正在建设的军事最高机密宴会厅”存在，就不会发生此事。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="34">The controversial project has faced a number of legal challenges.</span></p>
+        <p class="cn">这个有争议的项目面临多项法律挑战。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="35">It is the third time Trump has faced an assassination threat.</span> <span class="sentence" data-sentence-index="36">A bullet <span class="keyword" data-word="grazed" data-phonetic="/ɡreɪzd/" data-pos="v." data-def="擦过，轻擦" data-def-en="To touch or scrape lightly in passing.">grazed</span> his ear in July 2024 at a rally in Butler, Pennsylvania, and in September 2024, a suspected gunman was spotted hiding in the bushes of his golf club in West Palm Beach, Florida.</span></p>
+        <p class="cn">这是特朗普第三次遭遇暗杀威胁。2024年7月，他在宾夕法尼亚州巴特勒的一次集会上被子弹擦伤耳朵；2024年9月，一名嫌疑枪手被发现藏匿在佛罗里达州西棕榈滩高尔夫俱乐部的灌木丛中。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="37">Trump was attending the White House Correspondents' Dinner for the first time as president.</span> <span class="sentence" data-sentence-index="38">He last attended in 2011 as a private citizen.</span></p>
+        <p class="cn">特朗普是首次以总统身份出席白宫记者晚宴。他上一次参加是在2011年，当时是普通公民。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="39">World leaders have since condemned the incident.</span></p>
+        <p class="cn">世界领导人随后谴责了这一事件。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="40">UK Prime Minister Sir Keir Starmer said he was "shocked" by the attack, adding: "Any attack on democratic institutions or on the freedom of the press must be condemned in the strongest possible terms."</span></p>
+        <p class="cn">英国首相基尔·斯塔默爵士（Sir Keir Starmer）表示，他对此次袭击感到“震惊”，并补充说：“任何针对民主机构或新闻自由的袭击都必须受到最强烈的谴责。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="41">Mark Carney, Canada's prime minister, said he is "relieved" that Trump and the first lady, along with those in attendance, were safe.</span></p>
+        <p class="cn">加拿大总理马克·卡尼（Mark Carney）表示，他对特朗普和第一夫人以及所有在场人员安全感到“欣慰”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="42">His Australian counterpart, Anthony Albanese, also said he is "pleased to hear" that those at the scene were safe.</span></p>
+        <p class="cn">澳大利亚总理安东尼·阿尔巴尼斯（Anthony Albanese）也表示，他“很高兴听到”现场人员安全。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">alleged</span>
+        <button class="kw-speak-btn" data-word="alleged" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈledʒd/ adj.</span>
+      </div>
+      <p class="kw-def">被指控的，所谓的</p>
+      <p class="kw-def-en">Claimed to be true, but not yet proven.</p>
+      <p class="kw-ctx">&ldquo;Blanche, speaking to NBC News, said the alleged gunman's motive is still under investigation.&rdquo;</p>
+      <p class="kw-ctx-cn">布兰奇在接受NBC新闻采访时表示，被指控的枪手的动机仍在调查中。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">preliminary</span>
+        <button class="kw-speak-btn" data-word="preliminary" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/prɪˈlɪmɪnəri/ adj.</span>
+      </div>
+      <p class="kw-def">初步的，预备的</p>
+      <p class="kw-def-en">Coming before the main event or process; initial.</p>
+      <p class="kw-ctx">&ldquo;Blanche, speaking to NBC News, said the alleged gunman's motive is still under investigation, but that 'preliminary' findings suggest he was targeting administration officials.&rdquo;</p>
+      <p class="kw-ctx-cn">布兰奇在接受NBC新闻采访时表示，被指控的枪手的动机仍在调查中，但“初步”调查结果表明他的目标是政府官员。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">harrowing</span>
+        <button class="kw-speak-btn" data-word="harrowing" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈhærəʊɪŋ/ adj.</span>
+      </div>
+      <p class="kw-def">令人痛苦的，折磨人的</p>
+      <p class="kw-def-en">Causing great distress or suffering.</p>
+      <p class="kw-ctx">&ldquo;The White House Correspondents' Association president, Weijia Jiang, called the attack 'harrowing'.&rdquo;</p>
+      <p class="kw-ctx-cn">白宫记者协会主席蒋维佳称这次袭击“令人痛苦”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">manifesto</span>
+        <button class="kw-speak-btn" data-word="manifesto" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌmænɪˈfestəʊ/ n.</span>
+      </div>
+      <p class="kw-def">宣言，声明</p>
+      <p class="kw-def-en">A public declaration of intentions, motives, or views.</p>
+      <p class="kw-ctx">&ldquo;He added that the suspect had a 'manifesto'.&rdquo;</p>
+      <p class="kw-ctx-cn">他补充说，嫌疑人有一份“宣言”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">intercept</span>
+        <button class="kw-speak-btn" data-word="intercept" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌɪntəˈsept/ v.</span>
+      </div>
+      <p class="kw-def">拦截，阻止</p>
+      <p class="kw-def-en">To stop or seize something or someone before reaching a destination.</p>
+      <p class="kw-ctx">&ldquo;Officials said law enforcement exchanged fire with the alleged attacker and intercepted him.&rdquo;</p>
+      <p class="kw-ctx-cn">官员们表示，执法部门与被指控的袭击者交火并拦截了他。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">evaluation</span>
+        <button class="kw-speak-btn" data-word="evaluation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪˌvæljuˈeɪʃən/ n.</span>
+      </div>
+      <p class="kw-def">评估，评价</p>
+      <p class="kw-def-en">The process of assessing or judging the value or condition of something.</p>
+      <p class="kw-ctx">&ldquo;He was not struck, but was taken to hospital for evaluation.&rdquo;</p>
+      <p class="kw-ctx-cn">他没有被击中，但被送往医院进行评估。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">attendee</span>
+        <button class="kw-speak-btn" data-word="attendee" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˌtenˈdiː/ n.</span>
+      </div>
+      <p class="kw-def">出席者，参加者</p>
+      <p class="kw-def-en">A person who is present at an event.</p>
+      <p class="kw-ctx">&ldquo;The room was briefly locked down, before an announcement was made that the event would be rescheduled and attendees were ushered out.&rdquo;</p>
+      <p class="kw-ctx-cn">房间被短暂封锁，随后宣布活动将改期，与会者被引导离开。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">grazed</span>
+        <button class="kw-speak-btn" data-word="grazed" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɡreɪzd/ v.</span>
+      </div>
+      <p class="kw-def">擦过，轻擦</p>
+      <p class="kw-def-en">To touch or scrape lightly in passing.</p>
+      <p class="kw-ctx">&ldquo;A bullet grazed his ear in July 2024 at a rally in Butler, Pennsylvania.&rdquo;</p>
+      <p class="kw-ctx-cn">2024年7月，在宾夕法尼亚州巴特勒的一次集会上，一颗子弹擦伤了他的耳朵。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "US President Donald Trump and his officials were the \"likely\" targets of a suspected gunman who attempted to storm the White House Correspondents' Dinner, acting US Attorney General Todd Blanche has said.", "start_ms": 0, "end_ms": 13176, "paragraph_index": 0}, {"index": 1, "text": "The suspect, named by US media as 31-year-old Cole Tomas Allen, was arrested after police said he opened fire near a security checkpoint during the event at a Washington DC hotel on Saturday.", "start_ms": 13176, "end_ms": 27480, "paragraph_index": 1}, {"index": 2, "text": "Blanche, speaking to NBC News, said the alleged gunman's motive is still under investigation, but that \"preliminary\" findings suggest he was targeting administration officials.", "start_ms": 27480, "end_ms": 39696, "paragraph_index": 2}, {"index": 3, "text": "The FBI's criminal division and terrorism task-force are investigating the incident.", "start_ms": 39696, "end_ms": 46152, "paragraph_index": 3}, {"index": 4, "text": "Trump, who was rushed off the stage to safety, told reporters at a briefing after the shooting on Saturday: \"I can't imagine that there's any profession that's more dangerous\".", "start_ms": 46152, "end_ms": 57552, "paragraph_index": 4}, {"index": 5, "text": "In a statement on Sunday, the White House said Trump \"stands fearless\" after surviving, alongside cabinet members, \"an assassination attempt when shots were fired\".", "start_ms": 57552, "end_ms": 68808, "paragraph_index": 5}, {"index": 6, "text": "The White House Correspondents' Association president, Weijia Jiang, called the attack \"harrowing\".", "start_ms": 68808, "end_ms": 76008, "paragraph_index": 6}, {"index": 7, "text": "On Sunday, Jiang, who was sat next to Trump at the dinner, thanked the Secret Service for actions which \"protected thousands of guests\".", "start_ms": 76008, "end_ms": 85392, "paragraph_index": 7}, {"index": 8, "text": "She added the board will meet and determine how to proceed, and will release updates when available.", "start_ms": 85392, "end_ms": 91968, "paragraph_index": 8}, {"index": 9, "text": "On Sunday, Trump told Fox News that the suspect \"had a lot of hatred in his heart for a while\", and said his family knew he had \"difficulties\".", "start_ms": 91968, "end_ms": 102048, "paragraph_index": 9}, {"index": 10, "text": "He added that the suspect had a \"manifesto\".", "start_ms": 102048, "end_ms": 105840, "paragraph_index": 9}, {"index": 11, "text": "At about 20:35 local time (00:35 GMT) on Saturday gunshots rang out in the foyer of the Washington Hilton hotel, where the White House Correspondents' dinner was taking place in the ballroom on a floor below.", "start_ms": 105840, "end_ms": 121896, "paragraph_index": 10}, {"index": 12, "text": "The president, First Lady Melania Trump, and Vice-President JD Vance were also rushed out of the room by security.", "start_ms": 121896, "end_ms": 130392, "paragraph_index": 11}, {"index": 13, "text": "Officials said law enforcement exchanged fire with the alleged attacker and intercepted him, and \"believe\" the suspect fired his weapon.", "start_ms": 130392, "end_ms": 139560, "paragraph_index": 12}, {"index": 14, "text": "He was not struck, but was taken to hospital for evaluation.", "start_ms": 139560, "end_ms": 144696, "paragraph_index": 12}, {"index": 15, "text": "Police said he was carrying two guns, as well as knives.", "start_ms": 144696, "end_ms": 149424, "paragraph_index": 13}, {"index": 16, "text": "Investigators are reviewing writings from the suspect, which state he wanted to specifically target administration officials, a senior US official told CBS News.", "start_ms": 149424, "end_ms": 160848, "paragraph_index": 14}, {"index": 17, "text": "One of Allen's family members alerted police after receiving writings from him before the attack.", "start_ms": 160848, "end_ms": 167616, "paragraph_index": 15}, {"index": 18, "text": "The writings sent to family members reportedly did not specifically mention the White House Correspondents' Dinner.", "start_ms": 167616, "end_ms": 175080, "paragraph_index": 15}, {"index": 19, "text": "An officer who was shot and injured during the incident has been discharged from hospital.", "start_ms": 175080, "end_ms": 181272, "paragraph_index": 16}, {"index": 20, "text": "His bullet proof vest \"helped us avoid a potential tragedy,\" the Secret Service's chief of communications, Anthony Guglielmi, told the BBC.", "start_ms": 181272, "end_ms": 191736, "paragraph_index": 16}, {"index": 21, "text": "Several BBC reporters were in attendance at the dinner, and described scenes of widespread confusion following the sound of gunshots.", "start_ms": 191736, "end_ms": 201072, "paragraph_index": 17}, {"index": 22, "text": "Gary O'Donoghue, the BBC's Chief North America correspondent, said he heard \"booming sounds\".", "start_ms": 201072, "end_ms": 208584, "paragraph_index": 18}, {"index": 23, "text": "\"Within moments, I thought \u2013 that is the low thudding sound that semi-automatic weapons make,\" he said.", "start_ms": 208584, "end_ms": 215640, "paragraph_index": 19}, {"index": 24, "text": "The room was briefly locked down, before an announcement was made that the event would be rescheduled and attendees were ushered out.", "start_ms": 215640, "end_ms": 224232, "paragraph_index": 20}, {"index": 25, "text": "Blanche told the BBC's US partner CBS News that investigators believe the suspect travelled to the capital by train - from Los Angeles to Chicago, before heading to DC.", "start_ms": 224232, "end_ms": 236760, "paragraph_index": 21}, {"index": 26, "text": "Allen describes himself as a mechanical engineer, game developer and teacher on LinkedIn.", "start_ms": 236760, "end_ms": 243864, "paragraph_index": 22}, {"index": 27, "text": "He is from Torrance, California, where an address believed to be linked to him is being searched.", "start_ms": 243864, "end_ms": 250584, "paragraph_index": 22}, {"index": 28, "text": "He will be formally charged in federal court on Monday with assault of a federal officer and using a firearm during a crime of violence, officials said.", "start_ms": 250584, "end_ms": 260592, "paragraph_index": 23}, {"index": 29, "text": "The president delivered a briefing from the White House after the attack.", "start_ms": 260592, "end_ms": 265464, "paragraph_index": 24}, {"index": 30, "text": "Speaking while wearing black tie attire to a room full of journalists also in formal wear, he praised the Secret Service, and said that everyone in the room owed them a \"tremendous debt of gratitude\".", "start_ms": 265464, "end_ms": 278352, "paragraph_index": 24}, {"index": 31, "text": "Though he has levelled criticism at the media during his two terms as president, Trump also took a moment to thank the press for their \"responsible coverage\" of the attack.", "start_ms": 278352, "end_ms": 289152, "paragraph_index": 25}, {"index": 32, "text": "He also called for people to \"resolve our differences peacefully\".", "start_ms": 289152, "end_ms": 293784, "paragraph_index": 26}, {"index": 33, "text": "He has used the incident to further his argument for building a new ballroom at the White House, writing on Truth Social that it would not have happened \"with the Militarily Top Secret Ballroom currently under construction\".", "start_ms": 293784, "end_ms": 307128, "paragraph_index": 27}, {"index": 34, "text": "The controversial project has faced a number of legal challenges.", "start_ms": 307128, "end_ms": 312168, "paragraph_index": 28}, {"index": 35, "text": "It is the third time Trump has faced an assassination threat.", "start_ms": 312168, "end_ms": 316800, "paragraph_index": 29}, {"index": 36, "text": "A bullet grazed his ear in July 2024 at a rally in Butler, Pennsylvania, and in September 2024, a suspected gunman was spotted hiding in the bushes of his golf club in West Palm Beach, Florida.", "start_ms": 316800, "end_ms": 331704, "paragraph_index": 29}, {"index": 37, "text": "Trump was attending the White House Correspondents' Dinner for the first time as president.", "start_ms": 331704, "end_ms": 337608, "paragraph_index": 30}, {"index": 38, "text": "He last attended in 2011 as a private citizen.", "start_ms": 337608, "end_ms": 342360, "paragraph_index": 30}, {"index": 39, "text": "World leaders have since condemned the incident.", "start_ms": 342360, "end_ms": 346176, "paragraph_index": 31}, {"index": 40, "text": "UK Prime Minister Sir Keir Starmer said he was \"shocked\" by the attack, adding: \"Any attack on democratic institutions or on the freedom of the press must be condemned in the strongest possible terms.\"", "start_ms": 346176, "end_ms": 359640, "paragraph_index": 32}, {"index": 41, "text": "Mark Carney, Canada's prime minister, said he is \"relieved\" that Trump and the first lady, along with those in attendance, were safe.", "start_ms": 359640, "end_ms": 368784, "paragraph_index": 33}, {"index": 42, "text": "His Australian counterpart, Anthony Albanese, also said he is \"pleased to hear\" that those at the scene were safe.", "start_ms": 368784, "end_ms": 376776, "paragraph_index": 34}], "total_duration_ms": 376776};
+  const WORD_GLOSS = {"the": "这个", "he": "他", "to": "到", "of": "的", "and": "和", "in": "在", "said": "说", "was": "是", "on": "在", "that": "那个", "trump": "特朗普", "his": "他的", "at": "在", "white": "白色的", "house": "议院", "were": "是", "as": "作为", "is": "是", "for": "为了", "us": "我们", "president": "总统", "has": "有", "attack": "袭击", "from": "来自", "officials": "官员", "after": "之后", "told": "告诉", "an": "一个", "also": "也", "who": "谁", "by": "被", "during": "在期间", "news": "新闻", "incident": "事件", "room": "房间", "with": "与", "be": "是", "police": "警方", "saturday": "星期六", "sunday": "星期日", "members": "成员", "will": "将", "had": "有", "time": "时间", "out": "出来", "first": "第一轮", "him": "他", "not": "不", "before": "之前", "media": "媒体", "fire": "射击", "security": "安全", "washington": "华盛顿", "dc": "华盛顿特区", "hotel": "酒店", "speaking": "发言", "under": "在...之下", "but": "但是", "are": "是", "reporters": "记者们", "briefing": "简报", "any": "任何", "when": "当", "fired": "发射", "called": "称为", "service": "服务", "which": "哪个", "added": "补充", "while": "而", "where": "那里", "two": "两个", "chief": "首席", "bbc": "英国广播公司", "would": "将", "press": "新闻", "it": "它", "have": "有", "faced": "面对", "condemned": "谴责", "prime": "首相", "minister": "部长", "those": "那些", "donald": "唐纳德", "targets": "目标", "attempted": "试图", "opened": "开火", "near": "附近", "still": "仍然", "investigation": "调查", "criminal": "犯罪的", "division": "分裂", "terrorism": "恐怖主义", "investigating": "调查", "off": "离开", "stage": "舞台", "safety": "安全", "shooting": "射击", "can't": "不能", "more": "更多", "dangerous": "危险", "statement": "声明", "cabinet": "内阁", "next": "下一个", "thanked": "感谢", "actions": "行动", "protected": "保护", "she": "她", "meet": "会见", "how": "如何", "updates": "更新", "hatred": "仇恨", "heart": "核心", "about": "关于", "taking": "采取", "place": "地点", "vice-president": "副总统", "jd": "JD", "vance": "万斯", "weapon": "武器", "taken": "采取", "well": "好", "reviewing": "审查", "state": "国家", "wanted": "想要", "target": "目标", "senior": "高级", "official": "官方", "one": "一个", "sent": "派遣", "did": "做了", "injured": "受伤", "been": "已经", "potential": "潜在", "communications": "通讯", "several": "数个", "described": "描述", "confusion": "混乱", "following": "随后", "north": "北部", "america": "美国", "sounds": "听起来", "within": "在内部", "moments": "时刻", "thought": "认为", "weapons": "武器", "make": "使", "briefly": "短暂地", "locked": "锁定", "down": "下来", "made": "做出", "capital": "资本", "heading": "领导", "believed": "据信", "linked": "关联的", "being": "正在", "searched": "搜查", "formally": "正式", "monday": "星期一", "using": "使用", "violence": "暴力", "delivered": "递送", "black": "黑色", "full": "完整", "journalists": "记者", "them": "他们", "tremendous": "巨大的", "took": "担任", "moment": "时刻", "thank": "感谢", "their": "他们的", "responsible": "负责的", "people": "人们", "our": "我们的", "differences": "差异", "used": "使用", "further": "进一步的", "building": "建筑物", "new": "新的", "truth": "真相", "social": "社交的", "happened": "发生", "top": "顶级的", "currently": "目前", "number": "数量", "threat": "威胁", "september": "九月", "west": "西部", "attending": "出席", "last": "最后", "private": "私人的", "leaders": "领导人", "since": "自从", "uk": "英国", "sir": "爵士", "keir": "基尔", "starmer": "斯塔默", "adding": "补充说", "or": "或者", "must": "必须", "possible": "可能的", "mark": "标志", "hear": "听到", "dinner": "晚餐", "suspect": "嫌疑人", "correspondents": "记者", "secret": "秘密", "blanche": "布兰奇", "family": "家庭", "ballroom": "舞厅", "writings": "著作", "suspected": "涉嫌", "gunman": "枪手", "allen": "艾伦", "event": "事件", "administration": "政府", "rushed": "急忙送往", "assassination": "暗杀", "jiang": "江", "gunshots": "枪声", "lady": "女士", "believe": "认为", "hospital": "医院", "investigators": "调查人员", "specifically": "具体来说", "cbs": "哥伦比亚广播公司", "officer": "警官", "bullet": "子弹", "anthony": "安东尼", "attendance": "出席", "sound": "声音", "bbc's": "英国广播公司的", "federal": "联邦", "terms": "条件", "safe": "安全", "likely": "可能", "storm": "风暴", "acting": "代理", "attorney": "检察官", "general": "总", "todd": "托德", "named": "名为", "year-old": "岁的", "cole": "科尔", "tomas": "托马斯", "arrested": "被捕", "checkpoint": "检查站", "nbc": "全国广播公司", "gunman's": "枪手的", "motive": "动机", "findings": "调查结果", "suggest": "表明", "targeting": "针对", "fbi's": "联邦调查局的", "task-force": "特别工作组", "imagine": "想象", "there's": "有", "profession": "职业", "that's": "那是", "stands": "立场", "fearless": "无畏的", "surviving": "幸存", "alongside": "与...一起", "attempt": "企图", "shots": "枪击", "association": "协会", "weijia": "魏嘉", "sat": "坐", "thousands": "数千", "guests": "宾客", "board": "董事会", "determine": "确定", "proceed": "进行", "release": "发布", "available": "可获取", "fox": "福克斯", "lot": "很多", "knew": "知道", "difficulties": "困难", "local": "当地", "gmt": "格林尼治标准时间", "rang": "响起", "foyer": "门厅", "hilton": "希尔顿", "floor": "楼层", "below": "下方", "melania": "梅拉尼娅", "law": "法律", "enforcement": "执法", "exchanged": "交换", "attacker": "袭击者", "intercepted": "拦截", "struck": "击中", "carrying": "携带", "guns": "枪支", "knives": "刀具", "allen's": "艾伦的", "alerted": "警报", "receiving": "接收", "reportedly": "据报道", "mention": "提及", "shot": "开枪", "discharged": "发射", "proof": "证据", "vest": "背心", "helped": "帮助", "avoid": "避免", "tragedy": "悲剧", "service's": "服务的", "guglielmi": "古列尔米", "scenes": "场景", "widespread": "广泛的", "gary": "加里", "o'donoghue": "奥多诺霍", "correspondent": "记者", "heard": "听到", "booming": "轰鸣的", "low": "低的", "thudding": "砰砰声", "semi-automatic": "半自动的", "announcement": "公告", "rescheduled": "改期", "attendees": "出席者", "ushered": "引导", "partner": "伴侣", "travelled": "旅行", "train": "火车", "los": "洛斯", "angeles": "安吉利斯", "chicago": "芝加哥", "describes": "描述", "himself": "他自己", "mechanical": "机械的", "engineer": "工程师", "game": "游戏", "developer": "开发者", "teacher": "教师", "linkedin": "领英", "torrance": "托伦斯", "california": "加利福尼亚", "address": "地址", "charged": "指控", "court": "法庭", "assault": "袭击", "firearm": "枪支", "crime": "犯罪", "wearing": "穿着", "tie": "领带", "attire": "服装", "formal": "正式的", "wear": "穿着", "praised": "赞扬", "everyone": "每个人", "owed": "欠", "debt": "债务", "gratitude": "感激", "though": "尽管", "levelled": "提出", "criticism": "批评", "coverage": "报道", "resolve": "解决", "peacefully": "和平地", "argument": "争论", "writing": "写作", "militarily": "军事上", "construction": "建设", "controversial": "有争议的", "project": "项目", "legal": "法律的", "challenges": "挑战", "third": "第三", "ear": "耳朵", "july": "七月", "rally": "集会", "butler": "巴特勒", "pennsylvania": "宾夕法尼亚", "spotted": "发现", "hiding": "躲藏", "bushes": "灌木丛", "golf": "高尔夫", "club": "俱乐部", "palm": "棕榈", "beach": "海滩", "florida": "佛罗里达", "attended": "参加", "citizen": "公民", "world": "世界", "shocked": "震惊", "democratic": "民主的", "institutions": "机构", "freedom": "自由", "strongest": "最强烈的", "carney": "卡尼", "canada's": "加拿大的", "relieved": "松了一口气", "along": "一起", "australian": "澳大利亚的", "counterpart": "同行", "albanese": "阿尔巴尼斯", "pleased": "高兴", "scene": "现场"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
