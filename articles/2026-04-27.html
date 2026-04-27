@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-04-27</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-04-27</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/news/1024/branded_news/d1ee/live/2c05d8a0-427a-11f1-b55d-0f258dce1735.jpg" alt="Suspect charged with attempted assassination of Trump at Washington dinner" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Suspect charged with attempted assassination of Trump at Washington dinner</h1>
+      <p class="source">Source: <a href="https://www.bbc.com/news/articles/cew7wez72vxo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://jp7252.github.io/NEWS_APP/audio/2026-04-27.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">A California man has been charged with attempting to <span class="keyword" data-word="assassinate" data-phonetic="/əˈsæsɪneɪt/" data-pos="v." data-def="暗杀" data-def-en="To murder a prominent person, often for political reasons.">assassinate</span> US President Donald Trump in an incident that has sparked a White House security review.</span></p>
+        <p class="cn">一名加州男子被指控企图暗杀美国总统唐纳德·特朗普，这一事件引发了白宫安全审查。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Cole Tomas Allen, 31, was also charged with two firearms offences when he appeared in court in Washington DC on Monday.</span> <span class="sentence" data-sentence-index="2">He did not enter a plea.</span></p>
+        <p class="cn">31岁的科尔·托马斯·艾伦周一在华盛顿特区出庭时，还被指控两项枪支犯罪。他没有提出抗辩。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="3">He was carrying a semi-automatic handgun, a pump-action shotgun and three knives as he charged past a security checkpoint at the White House Correspondents' Association dinner on Saturday, say prosecutors.</span></p>
+        <p class="cn">检察官称，周六在白宫记者协会晚宴上，他携带一把半自动手枪、一把泵动式霰弹枪和三把刀冲过安检点。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="4">A Secret Service agent was hit but not seriously wounded during the attack at a hotel.</span> <span class="sentence" data-sentence-index="5">The accused faces life in prison if found guilty.</span> <span class="sentence" data-sentence-index="6">He is due to appear in court again on Thursday.</span></p>
+        <p class="cn">一名特勤局特工在酒店袭击中中弹，但伤势不重。如果罪名成立，被告将面临终身监禁。他将于周四再次出庭。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="7">Dressed in a blue jumpsuit with a nametag for Monday's court appearance, the suspect appeared calm and was softly spoken as he answered almost every question from the judge with either "yes, your honour" or "no, your honour".</span></p>
+        <p class="cn">周一出庭时，嫌疑人穿着蓝色连体服，佩戴姓名标签，显得很平静，说话轻声细语，几乎对法官的每个问题都回答“是，法官大人”或“不是，法官大人”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="8">He stated his age and said he had a master's degree.</span></p>
+        <p class="cn">他报出了自己的年龄，并说自己拥有硕士学位。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="9">Reporters in court said the defendant seemed to closely observe the proceedings, and looked directly at the judge during questions.</span></p>
+        <p class="cn">法庭上的记者称，被告似乎仔细观察了诉讼程序，并在提问时直视法官。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="10">Three US marshals stood behind him, and one was at his side, while the federal <span class="keyword" data-word="prosecutor" data-phonetic="/ˈprɒsɪkjuːtər/" data-pos="n." data-def="检察官" data-def-en="A lawyer who conducts a case against a defendant in court.">prosecutor</span> handling the case, US Attorney for Washington Jeanine Pirro, looked on.</span></p>
+        <p class="cn">三名美国法警站在他身后，一名在他身边，而负责此案的联邦检察官、华盛顿特区联邦检察官珍妮·皮罗则在旁听。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="11">During Saturday night's incident, Trump, Vice-President JD Vance, cabinet members and other White House senior figures were rushed from the Washington Hilton hotel ballroom after gunfire rang out.</span></p>
+        <p class="cn">在周六晚的事件中，枪声响起后，特朗普、副总统JD·万斯、内阁成员和其他白宫高级人物被紧急撤离华盛顿希尔顿酒店宴会厅。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="12">The suspect allegedly rushed through a security checkpoint one floor above the basement venue.</span></p>
+        <p class="cn">据称，嫌疑人冲过了地下室场地上一层楼的安检点。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="13">"One Secret Service officer was shot in the chest, but was wearing a <span class="keyword" data-word="ballistic vest" data-phonetic="/bəˈlɪstɪk vest/" data-pos="n." data-def="防弹背心" data-def-en="A protective garment worn to absorb the impact of bullets.">ballistic vest</span> that worked," Acting Attorney General Todd Blanche told a news conference on Monday.</span></p>
+        <p class="cn">“一名特勤局警官胸部中弹，但他穿着防弹背心，起了作用，”代理司法部长托德·布兰奇周一的新闻发布会上说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="14">"This heroic officer who was hit fired five times at Allen, who was not shot but fell to the ground and was promptly arrested."</span></p>
+        <p class="cn">“这位英勇的警官中弹后向艾伦开了五枪，艾伦没有中弹，但倒在地上，很快被逮捕。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="15">Blanche said the suspect is believed to have discharged his shotgun at least once.</span></p>
+        <p class="cn">布兰奇说，据信嫌疑人至少开了一枪霰弹枪。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="16">It is not clear whether the Secret Service agent was shot by the suspect, or was caught in crossfire from other law enforcement.</span> <span class="sentence" data-sentence-index="17">The Secret Service agent has been released from hospital.</span> <span class="sentence" data-sentence-index="18">Pirro said he had a knee injury.</span></p>
+        <p class="cn">目前尚不清楚特勤局特工是被嫌疑人击中，还是被其他执法人员的交叉火力击中。该特工已出院。皮罗说他膝盖受伤。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="19">The court heard that the accused had crossed multiple state lines in order to try to kill Trump.</span></p>
+        <p class="cn">法庭获悉，被告跨越多个州界试图杀死特朗普。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="20">He is said to have left his home in the Los Angeles area on 21 April, travelling by train to Chicago.</span></p>
+        <p class="cn">据称，他于4月21日离开洛杉矶地区的家，乘火车前往芝加哥。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="21">On 24 April, he left Chicago, and arrived in Washington where he checked into the Hilton.</span></p>
+        <p class="cn">4月24日，他离开芝加哥，抵达华盛顿，入住希尔顿酒店。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="22">The following day, he walked to the event checkpoint, and "ran through while holding a long gun", said Blanche.</span></p>
+        <p class="cn">第二天，他走到活动安检点，“手持长枪冲了过去”，布兰奇说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="23">The suspect studied at the prestigious California Institute of Technology, and worshipped at the Pasadena United Reformed Church in the Los Angeles area.</span></p>
+        <p class="cn">嫌疑人曾在著名的加州理工学院学习，并在洛杉矶地区的帕萨迪纳联合归正教会做礼拜。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="24">Federal campaign finance records show he donated $25 to a Democratic Party political action committee in support of Kamala Harris for president in 2024.</span></p>
+        <p class="cn">联邦竞选财务记录显示，他于2024年向一个支持卡玛拉·哈里斯竞选总统的民主党政治行动委员会捐赠了25美元。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="25">Attempting to <span class="keyword" data-word="assassinate" data-phonetic="/əˈsæsɪneɪt/" data-pos="v." data-def="暗杀" data-def-en="To murder a prominent person, often for political reasons.">assassinate</span> the president carries a potential life sentence.</span></p>
+        <p class="cn">企图暗杀总统最高可判处终身监禁。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="26">The other charges - transportation of a firearm between states to commit a felony and discharging a firearm in a crime of violence - both have maximum sentences of 10 years.</span></p>
+        <p class="cn">其他指控——跨州运输枪支以实施重罪和在暴力犯罪中开枪——最高刑期均为10年。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="27">At Monday's news conference, Pirro said the suspect's intent, based on writing he sent to his family before the attack, was to bring down as many high-ranking cabinet members as he could.</span></p>
+        <p class="cn">在周一的新闻发布会上，皮罗表示，根据嫌疑人在袭击前发给家人的文字，他的意图是尽可能多地打倒高级内阁成员。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="28">Prosecutors requested that Allen remain detained, arguing that the assassination attempt <span class="keyword" data-word="charge" data-phonetic="/tʃɑːrdʒ/" data-pos="v." data-def="指控" data-def-en="To formally accuse someone of a crime.">charge</span> could be considered terrorism.</span> <span class="sentence" data-sentence-index="29">Pirro said more charges could be filed.</span></p>
+        <p class="cn">检察官要求继续拘留艾伦，认为企图暗杀指控可被视为恐怖主义。皮罗表示可能提出更多指控。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="30">As US investigators look into the third alleged assassination attempt against Trump, security officials are reviewing how the situation was handled, and how to beef up protection of the president.</span></p>
+        <p class="cn">随着美国调查人员调查针对特朗普的第三起疑似暗杀企图，安全官员正在审查事件的处理方式以及如何加强总统保护。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="31">Many have questioned whether the security <span class="keyword" data-word="perimeter" data-phonetic="/pəˈrɪmɪtər/" data-pos="n." data-def="周边；边界" data-def-en="The outer boundary of an area, often used for security.">perimeter</span> at the Washington Hilton was strong enough, why attendees were never asked to show identification at the event, and why the president, vice-president and others in the line of succession were all gathered in one place.</span></p>
+        <p class="cn">许多人质疑华盛顿希尔顿酒店的安全警戒线是否足够严密，为何活动从未要求与会者出示身份证明，以及为何总统、副总统和其他继任者都聚集在一个地方。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="32">In Monday's news conference, Blanche maintained that "law enforcement did not fail" in its job to protect the event.</span></p>
+        <p class="cn">在周一的新闻发布会上，布兰奇坚称“执法部门在保护活动方面没有失职”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="33">He noted that one thing should be "clear" - the gunman was one floor away, "with hundreds of federal agents between him and the President of the United States".</span></p>
+        <p class="cn">他指出，有一件事应该“清楚”——枪手就在一层楼之外，“在他和美国总统之间有数百名联邦特工”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="34">A senior White House official told the BBC that Trump was "standing by" the leadership of the Secret Service, an arm of the Department of Homeland Security (DHS) that protects high-level government officials.</span></p>
+        <p class="cn">一位白宫高级官员告诉BBC，特朗普“支持”特勤局的领导层。特勤局是国土安全部下属机构，负责保护高级政府官员。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="35">White House Chief of Staff Susie Wiles will convene a meeting this week to "discuss <span class="keyword" data-word="protocol" data-phonetic="/ˈproʊtəkɒl/" data-pos="n." data-def="协议；规程" data-def-en="A set of rules or procedures for a specific situation.">protocol</span> and practices for major events", the official also said.</span></p>
+        <p class="cn">该官员还表示，白宫办公厅主任苏西·威尔斯本周将召开会议，“讨论重大活动的规程和做法”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="36">At a news briefing on Monday, White House Press Secretary Karoline Leavitt said Trump "believes the protocols worked" for security on Saturday and blamed rising political violence on the rhetoric of Democrats.</span></p>
+        <p class="cn">在周一的新闻发布会上，白宫新闻秘书卡罗琳·莱维特表示，特朗普“相信周六的安全规程发挥了作用”，并将政治暴力升级归咎于民主党的言论。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="37">Trump has offered assurances that King Charles III will "be very safe" during his four-day state visit to the US, which began on Monday at the White House.</span></p>
+        <p class="cn">特朗普保证，查尔斯三世国王在为期四天的国事访问期间将“非常安全”。此次访问于周一在白宫开始。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="38">The president's security detail must meanwhile prepare for a rescheduling of the White House correspondents' dinner.</span></p>
+        <p class="cn">与此同时，总统的安全细节必须为重新安排白宫记者晚宴做准备。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="39">FBI Director Kash Patel told Fox News on Monday that "we're going to be so ready" for Trump to attend the event in the next 30 days and that "the security posture, I imagine, is going to be completely different".</span></p>
+        <p class="cn">FBI局长卡什·帕特尔周一告诉福克斯新闻，“我们将做好充分准备”让特朗普在30天内参加活动，并且“我想安全态势将完全不同”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="40">No new date has yet been set for a second try at the annual dinner.</span></p>
+        <p class="cn">年度晚宴的第二次尝试尚未确定新日期。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="41">Preparations for the event typically take months.</span></p>
+        <p class="cn">活动的准备工作通常需要数月。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="42">The Washington Hilton, where John Hinckley Jr attempted to <span class="keyword" data-word="assassinate" data-phonetic="/əˈsæsɪneɪt/" data-pos="v." data-def="暗杀" data-def-en="To murder a prominent person, often for political reasons.">assassinate</span> then-President Ronald Reagan 45 years ago, said it followed security instructions from the Secret Service.</span></p>
+        <p class="cn">华盛顿希尔顿酒店——45年前小约翰·欣克利曾在此企图暗杀时任总统罗纳德·里根——表示遵循了特勤局的安全指示。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="43">"The hotel was operating under <span class="keyword" data-word="stringent" data-phonetic="/ˈstrɪndʒənt/" data-pos="adj." data-def="严格的；严厉的" data-def-en="Strict, precise, and demanding rigorous standards.">stringent</span> security protocols for the property as directed by the US Secret Service, which led security for the event," it said in a statement, according to Reuters, adding that it had worked with local police and other security teams.</span></p>
+        <p class="cn">据路透社报道，该酒店在一份声明中表示，“酒店按照美国特勤局的指示，对酒店采取了严格的安全协议”，并补充说已与当地警方和其他安全团队合作。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">assassinate</span>
+        <button class="kw-speak-btn" data-word="assassinate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈsæsɪneɪt/ v.</span>
+      </div>
+      <p class="kw-def">暗杀</p>
+      <p class="kw-def-en">To murder a prominent person, often for political reasons.</p>
+      <p class="kw-ctx">&ldquo;A California man has been charged with attempting to assassinate US President Donald Trump in an incident that has sparked a White House security review.&rdquo;</p>
+      <p class="kw-ctx-cn">一名加州男子被指控试图暗杀美国总统唐纳德·特朗普，这一事件引发了白宫的安全审查。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">charge</span>
+        <button class="kw-speak-btn" data-word="charge" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/tʃɑːrdʒ/ v.</span>
+      </div>
+      <p class="kw-def">指控</p>
+      <p class="kw-def-en">To formally accuse someone of a crime.</p>
+      <p class="kw-ctx">&ldquo;A California man has been charged with attempting to assassinate US President Donald Trump in an incident that has sparked a White House security review.&rdquo;</p>
+      <p class="kw-ctx-cn">一名加州男子被指控试图暗杀美国总统唐纳德·特朗普，这一事件引发了白宫的安全审查。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">prosecutor</span>
+        <button class="kw-speak-btn" data-word="prosecutor" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈprɒsɪkjuːtər/ n.</span>
+      </div>
+      <p class="kw-def">检察官</p>
+      <p class="kw-def-en">A lawyer who conducts a case against a defendant in court.</p>
+      <p class="kw-ctx">&ldquo;Three US marshals stood behind him, and one was at his side, while the federal prosecutor handling the case, US Attorney for Washington Jeanine Pirro, looked on.&rdquo;</p>
+      <p class="kw-ctx-cn">三名美国法警站在他身后，一名在他身边，而处理此案的联邦检察官、华盛顿特区联邦检察官珍妮·皮罗在一旁观看。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">ballistic vest</span>
+        <button class="kw-speak-btn" data-word="ballistic vest" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/bəˈlɪstɪk vest/ n.</span>
+      </div>
+      <p class="kw-def">防弹背心</p>
+      <p class="kw-def-en">A protective garment worn to absorb the impact of bullets.</p>
+      <p class="kw-ctx">&ldquo;"One Secret Service officer was shot in the chest, but was wearing a ballistic vest that worked," Acting Attorney General Todd Blanche told a news conference on Monday.&rdquo;</p>
+      <p class="kw-ctx-cn">“一名特勤局官员胸部中弹，但他穿着防弹背心，起了作用，”代理司法部长托德·布兰奇在周一的新闻发布会上说。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">detain</span>
+        <button class="kw-speak-btn" data-word="detain" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈteɪn/ v.</span>
+      </div>
+      <p class="kw-def">拘留</p>
+      <p class="kw-def-en">To keep someone in official custody, especially for questioning.</p>
+      <p class="kw-ctx">&ldquo;Prosecutors requested that Allen remain detained, arguing that the assassination attempt charge could be considered terrorism.&rdquo;</p>
+      <p class="kw-ctx-cn">检察官要求继续拘留艾伦，辩称暗杀未遂指控可被视为恐怖主义。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">perimeter</span>
+        <button class="kw-speak-btn" data-word="perimeter" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/pəˈrɪmɪtər/ n.</span>
+      </div>
+      <p class="kw-def">周边；边界</p>
+      <p class="kw-def-en">The outer boundary of an area, often used for security.</p>
+      <p class="kw-ctx">&ldquo;Many have questioned whether the security perimeter at the Washington Hilton was strong enough, why attendees were never asked to show identification at the event, and why the president, vice-president and others in the line of succession were all gathered in one place.&rdquo;</p>
+      <p class="kw-ctx-cn">许多人质疑华盛顿希尔顿酒店的安全警戒线是否足够严密，为何活动从未要求与会者出示身份证明，以及为何总统、副总统和其他顺位继承人聚集在同一地点。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">protocol</span>
+        <button class="kw-speak-btn" data-word="protocol" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈproʊtəkɒl/ n.</span>
+      </div>
+      <p class="kw-def">协议；规程</p>
+      <p class="kw-def-en">A set of rules or procedures for a specific situation.</p>
+      <p class="kw-ctx">&ldquo;White House Chief of Staff Susie Wiles will convene a meeting this week to "discuss protocol and practices for major events", the official also said.&rdquo;</p>
+      <p class="kw-ctx-cn">白宫办公厅主任苏西·威尔斯本周将召开会议，“讨论重大活动的规程和做法”，该官员还表示。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">stringent</span>
+        <button class="kw-speak-btn" data-word="stringent" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈstrɪndʒənt/ adj.</span>
+      </div>
+      <p class="kw-def">严格的；严厉的</p>
+      <p class="kw-def-en">Strict, precise, and demanding rigorous standards.</p>
+      <p class="kw-ctx">&ldquo;"The hotel was operating under stringent security protocols for the property as directed by the US Secret Service, which led security for the event," it said in a statement, according to Reuters, adding that it had worked with local police and other security teams.&rdquo;</p>
+      <p class="kw-ctx-cn">据路透社报道，该酒店在一份声明中表示：“酒店按照美国特勤局的指示，对酒店实施了严格的安全协议，特勤局负责活动的安保工作。”并补充说，酒店与当地警方和其他安保团队进行了合作。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "A California man has been charged with attempting to assassinate US President Donald Trump in an incident that has sparked a White House security review.", "start_ms": 0, "end_ms": 9984, "paragraph_index": 0}, {"index": 1, "text": "Cole Tomas Allen, 31, was also charged with two firearms offences when he appeared in court in Washington DC on Monday.", "start_ms": 9984, "end_ms": 19872, "paragraph_index": 1}, {"index": 2, "text": "He did not enter a plea.", "start_ms": 19872, "end_ms": 22536, "paragraph_index": 1}, {"index": 3, "text": "He was carrying a semi-automatic handgun, a pump-action shotgun and three knives as he charged past a security checkpoint at the White House Correspondents' Association dinner on Saturday, say prosecutors.", "start_ms": 22536, "end_ms": 36576, "paragraph_index": 2}, {"index": 4, "text": "A Secret Service agent was hit but not seriously wounded during the attack at a hotel.", "start_ms": 36576, "end_ms": 42936, "paragraph_index": 3}, {"index": 5, "text": "The accused faces life in prison if found guilty.", "start_ms": 42936, "end_ms": 47184, "paragraph_index": 3}, {"index": 6, "text": "He is due to appear in court again on Thursday.", "start_ms": 47184, "end_ms": 51000, "paragraph_index": 3}, {"index": 7, "text": "Dressed in a blue jumpsuit with a nametag for Monday's court appearance, the suspect appeared calm and was softly spoken as he answered almost every question from the judge with either \"yes, your honour\" or \"no, your honour\".", "start_ms": 51000, "end_ms": 65448, "paragraph_index": 4}, {"index": 8, "text": "He stated his age and said he had a master's degree.", "start_ms": 65448, "end_ms": 69576, "paragraph_index": 5}, {"index": 9, "text": "Reporters in court said the defendant seemed to closely observe the proceedings, and looked directly at the judge during questions.", "start_ms": 69576, "end_ms": 78240, "paragraph_index": 6}, {"index": 10, "text": "Three US marshals stood behind him, and one was at his side, while the federal prosecutor handling the case, US Attorney for Washington Jeanine Pirro, looked on.", "start_ms": 78240, "end_ms": 89880, "paragraph_index": 7}, {"index": 11, "text": "During Saturday night's incident, Trump, Vice-President JD Vance, cabinet members and other White House senior figures were rushed from the Washington Hilton hotel ballroom after gunfire rang out.", "start_ms": 89880, "end_ms": 103560, "paragraph_index": 8}, {"index": 12, "text": "The suspect allegedly rushed through a security checkpoint one floor above the basement venue.", "start_ms": 103560, "end_ms": 110184, "paragraph_index": 9}, {"index": 13, "text": "\"One Secret Service officer was shot in the chest, but was wearing a ballistic vest that worked,\" Acting Attorney General Todd Blanche told a news conference on Monday.", "start_ms": 110184, "end_ms": 121320, "paragraph_index": 10}, {"index": 14, "text": "\"This heroic officer who was hit fired five times at Allen, who was not shot but fell to the ground and was promptly arrested.\"", "start_ms": 121320, "end_ms": 130056, "paragraph_index": 11}, {"index": 15, "text": "Blanche said the suspect is believed to have discharged his shotgun at least once.", "start_ms": 130056, "end_ms": 135936, "paragraph_index": 12}, {"index": 16, "text": "It is not clear whether the Secret Service agent was shot by the suspect, or was caught in crossfire from other law enforcement.", "start_ms": 135936, "end_ms": 144696, "paragraph_index": 13}, {"index": 17, "text": "The Secret Service agent has been released from hospital.", "start_ms": 144696, "end_ms": 149064, "paragraph_index": 13}, {"index": 18, "text": "Pirro said he had a knee injury.", "start_ms": 149064, "end_ms": 152136, "paragraph_index": 13}, {"index": 19, "text": "The court heard that the accused had crossed multiple state lines in order to try to kill Trump.", "start_ms": 152136, "end_ms": 158736, "paragraph_index": 14}, {"index": 20, "text": "He is said to have left his home in the Los Angeles area on 21 April, travelling by train to Chicago.", "start_ms": 158736, "end_ms": 166632, "paragraph_index": 15}, {"index": 21, "text": "On 24 April, he left Chicago, and arrived in Washington where he checked into the Hilton.", "start_ms": 166632, "end_ms": 173736, "paragraph_index": 16}, {"index": 22, "text": "The following day, he walked to the event checkpoint, and \"ran through while holding a long gun\", said Blanche.", "start_ms": 173736, "end_ms": 181440, "paragraph_index": 17}, {"index": 23, "text": "The suspect studied at the prestigious California Institute of Technology, and worshipped at the Pasadena United Reformed Church in the Los Angeles area.", "start_ms": 181440, "end_ms": 192240, "paragraph_index": 18}, {"index": 24, "text": "Federal campaign finance records show he donated $25 to a Democratic Party political action committee in support of Kamala Harris for president in 2024.", "start_ms": 192240, "end_ms": 204456, "paragraph_index": 19}, {"index": 25, "text": "Attempting to assassinate the president carries a potential life sentence.", "start_ms": 204456, "end_ms": 209856, "paragraph_index": 20}, {"index": 26, "text": "The other charges - transportation of a firearm between states to commit a felony and discharging a firearm in a crime of violence - both have maximum sentences of 10 years.", "start_ms": 209856, "end_ms": 221856, "paragraph_index": 21}, {"index": 27, "text": "At Monday's news conference, Pirro said the suspect's intent, based on writing he sent to his family before the attack, was to bring down as many high-ranking cabinet members as he could.", "start_ms": 221856, "end_ms": 234672, "paragraph_index": 22}, {"index": 28, "text": "Prosecutors requested that Allen remain detained, arguing that the assassination attempt charge could be considered terrorism.", "start_ms": 234672, "end_ms": 243480, "paragraph_index": 23}, {"index": 29, "text": "Pirro said more charges could be filed.", "start_ms": 243480, "end_ms": 247032, "paragraph_index": 23}, {"index": 30, "text": "As US investigators look into the third alleged assassination attempt against Trump, security officials are reviewing how the situation was handled, and how to beef up protection of the president.", "start_ms": 247032, "end_ms": 259944, "paragraph_index": 24}, {"index": 31, "text": "Many have questioned whether the security perimeter at the Washington Hilton was strong enough, why attendees were never asked to show identification at the event, and why the president, vice-president and others in the line of succession were all gathered in one place.", "start_ms": 259944, "end_ms": 276960, "paragraph_index": 25}, {"index": 32, "text": "In Monday's news conference, Blanche maintained that \"law enforcement did not fail\" in its job to protect the event.", "start_ms": 276960, "end_ms": 285192, "paragraph_index": 26}, {"index": 33, "text": "He noted that one thing should be \"clear\" - the gunman was one floor away, \"with hundreds of federal agents between him and the President of the United States\".", "start_ms": 285192, "end_ms": 295200, "paragraph_index": 27}, {"index": 34, "text": "A senior White House official told the BBC that Trump was \"standing by\" the leadership of the Secret Service, an arm of the Department of Homeland Security (DHS) that protects high-level government officials.", "start_ms": 295200, "end_ms": 309024, "paragraph_index": 28}, {"index": 35, "text": "White House Chief of Staff Susie Wiles will convene a meeting this week to \"discuss protocol and practices for major events\", the official also said.", "start_ms": 309024, "end_ms": 319128, "paragraph_index": 29}, {"index": 36, "text": "At a news briefing on Monday, White House Press Secretary Karoline Leavitt said Trump \"believes the protocols worked\" for security on Saturday and blamed rising political violence on the rhetoric of Democrats.", "start_ms": 319128, "end_ms": 332976, "paragraph_index": 30}, {"index": 37, "text": "Trump has offered assurances that King Charles III will \"be very safe\" during his four-day state visit to the US, which began on Monday at the White House.", "start_ms": 332976, "end_ms": 343704, "paragraph_index": 31}, {"index": 38, "text": "The president's security detail must meanwhile prepare for a rescheduling of the White House correspondents' dinner.", "start_ms": 343704, "end_ms": 351576, "paragraph_index": 32}, {"index": 39, "text": "FBI Director Kash Patel told Fox News on Monday that \"we're going to be so ready\" for Trump to attend the event in the next 30 days and that \"the security posture, I imagine, is going to be completely different\".", "start_ms": 351576, "end_ms": 365688, "paragraph_index": 33}, {"index": 40, "text": "No new date has yet been set for a second try at the annual dinner.", "start_ms": 365688, "end_ms": 370728, "paragraph_index": 34}, {"index": 41, "text": "Preparations for the event typically take months.", "start_ms": 370728, "end_ms": 374808, "paragraph_index": 35}, {"index": 42, "text": "The Washington Hilton, where John Hinckley Jr attempted to assassinate then-President Ronald Reagan 45 years ago, said it followed security instructions from the Secret Service.", "start_ms": 374808, "end_ms": 387168, "paragraph_index": 36}, {"index": 43, "text": "\"The hotel was operating under stringent security protocols for the property as directed by the US Secret Service, which led security for the event,\" it said in a statement, according to Reuters, adding that it had worked with local police and other security teams.", "start_ms": 387168, "end_ms": 404712, "paragraph_index": 37}], "total_duration_ms": 404712};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "in": "在", "and": "和", "was": "是", "he": "他", "of": "的", "at": "在", "that": "那个", "security": "安全", "on": "在", "said": "说", "for": "为了", "trump": "特朗普", "white": "白色的", "house": "议院", "secret": "秘密", "service": "服务", "with": "与", "us": "我们", "president": "总统", "washington": "华盛顿", "as": "作为", "his": "他的", "one": "一个", "event": "事件", "be": "是", "has": "有", "court": "法庭", "monday": "星期一", "not": "不", "is": "是", "suspect": "嫌疑人", "from": "来自", "news": "新闻", "during": "在期间", "had": "有", "other": "其他", "hilton": "希尔顿", "blanche": "布兰奇", "have": "有", "it": "它", "by": "被", "been": "已经", "charged": "指控", "allen": "艾伦", "checkpoint": "检查站", "dinner": "晚餐", "saturday": "星期六", "but": "但是", "hotel": "酒店", "federal": "联邦", "were": "是", "shot": "开枪", "told": "告诉", "conference": "会议", "could": "可能", "california": "加利福尼亚", "an": "一个", "incident": "事件", "also": "也", "appeared": "出现", "did": "做了", "three": "三个", "correspondents": "记者", "hit": "击中", "attack": "袭击", "accused": "被指控", "life": "生活", "your": "你的", "or": "或者", "no": "没有", "looked": "看起来", "him": "他", "while": "而", "attorney": "检察官", "vice-president": "副总统", "cabinet": "内阁", "members": "成员", "senior": "高级", "rushed": "急忙送往", "through": "通过", "floor": "楼层", "officer": "警官", "this": "这个", "who": "谁", "clear": "明确", "whether": "是否", "law": "法律", "enforcement": "执法", "state": "国家", "left": "离开", "los": "洛斯", "angeles": "安吉利斯", "april": "四月", "chicago": "芝加哥", "where": "那里", "into": "进入", "united": "联合", "political": "政治的", "firearm": "枪支", "between": "之间", "states": "国家", "violence": "暴力", "years": "多年", "assassination": "暗杀", "attempt": "企图", "officials": "官员", "how": "如何", "why": "为何", "official": "官方", "will": "将", "which": "哪个", "going": "将要", "man": "男子", "donald": "唐纳德", "review": "审查", "cole": "科尔", "tomas": "托马斯", "two": "两个", "when": "当", "dc": "华盛顿特区", "carrying": "携带", "semi-automatic": "半自动的", "knives": "刀具", "past": "过去", "association": "协会", "say": "说", "seriously": "认真地", "if": "如果", "found": "发现", "due": "应得", "appear": "出现", "again": "再次", "thursday": "星期四", "appearance": "出现", "spoken": "发言", "every": "每个", "question": "问题", "either": "要么", "yes": "是的", "stated": "陈述", "reporters": "记者们", "closely": "密切", "directly": "直接地", "questions": "问题", "stood": "站立", "side": "方面", "handling": "处理", "case": "案例", "night's": "夜晚的", "jd": "JD", "vance": "万斯", "ballroom": "舞厅", "after": "之后", "gunfire": "炮火", "rang": "响起", "out": "出来", "above": "超过", "wearing": "穿着", "vest": "背心", "acting": "代理", "general": "总", "todd": "托德", "fired": "发射", "arrested": "被捕", "believed": "据信", "discharged": "发射", "least": "至少", "hospital": "医院", "heard": "听到", "order": "命令", "train": "火车", "arrived": "抵达", "following": "随后", "day": "天", "ran": "运行", "long": "长久", "campaign": "竞选活动", "democratic": "民主的", "party": "政党", "committee": "委员会", "support": "支持", "potential": "潜在", "crime": "犯罪", "both": "两者", "sentences": "刑期", "based": "基于", "writing": "写作", "sent": "派遣", "family": "家庭", "before": "之前", "bring": "带来", "down": "下来", "remain": "仍然", "considered": "认为", "terrorism": "恐怖主义", "more": "更多", "filed": "提交", "investigators": "调查人员", "third": "第三", "against": "反对", "are": "是", "reviewing": "审查", "situation": "局势", "up": "向上", "questioned": "质疑", "strong": "强烈", "enough": "足够", "attendees": "出席者", "never": "从未", "asked": "询问", "others": "其他", "line": "界限", "all": "所有", "place": "地点", "its": "它的", "job": "工作", "protect": "保护", "thing": "事情", "should": "应该", "gunman": "枪手", "away": "离开", "bbc": "英国广播公司", "leadership": "领导力", "department": "部门", "high-level": "高层", "government": "政府", "chief": "首席", "staff": "员工", "meeting": "会议", "week": "周", "discuss": "讨论", "major": "重大的", "events": "事件", "briefing": "简报", "press": "新闻", "secretary": "秘书", "karoline": "卡罗琳", "leavitt": "莱维特", "blamed": "指责", "offered": "提供", "king": "国王", "charles": "查尔斯", "very": "非常", "safe": "安全", "four-day": "四天的", "visit": "访问", "began": "开始", "president's": "总统的", "must": "必须", "meanwhile": "与此同时", "fox": "福克斯", "we're": "我们是", "so": "所以", "ready": "准备就绪", "next": "下一个", "days": "天", "imagine": "想象", "completely": "完全", "different": "不同的", "new": "新的", "yet": "尚未", "set": "设定", "second": "第二", "take": "采取", "months": "月", "attempted": "试图", "followed": "遵循", "under": "在...之下", "led": "带领", "statement": "声明", "according": "根据", "reuters": "路透社", "adding": "补充说", "local": "当地", "police": "警方", "pirro": "皮罗", "agent": "特工", "monday's": "周一的", "worked": "工作", "attempting": "试图", "shotgun": "霰弹枪", "prosecutors": "检察官", "judge": "法官", "honour": "阁下", "try": "审判", "area": "区域", "show": "显示", "charges": "指控", "many": "许多", "protocols": "规程", "sparked": "引发", "firearms": "枪支", "offences": "罪行", "enter": "提出", "plea": "抗辩", "handgun": "手枪", "pump-action": "泵动式", "wounded": "受伤的", "faces": "面临", "prison": "监狱", "guilty": "有罪", "dressed": "穿着", "blue": "蓝色", "jumpsuit": "连体服", "nametag": "姓名牌", "calm": "平静的", "softly": "轻声地", "answered": "回答", "almost": "几乎", "age": "年龄", "master's": "硕士", "degree": "学位", "defendant": "被告", "seemed": "似乎", "observe": "观察", "proceedings": "诉讼程序", "marshals": "法警", "behind": "在...后面", "jeanine": "珍妮", "figures": "人物", "allegedly": "据称", "basement": "地下室", "venue": "地点", "chest": "胸部", "ballistic": "弹道", "heroic": "英勇的", "five": "五", "times": "次", "fell": "倒下", "ground": "地面", "promptly": "立即", "once": "一旦", "caught": "被卷入", "crossfire": "交火", "released": "释放", "knee": "膝盖", "injury": "受伤", "crossed": "穿过", "multiple": "多条", "lines": "线", "kill": "杀死", "home": "家", "travelling": "旅行", "checked": "检查", "walked": "走", "holding": "拿着", "gun": "枪", "studied": "学习", "prestigious": "著名的", "institute": "学院", "technology": "技术", "worshipped": "崇拜", "pasadena": "帕萨迪纳", "reformed": "改革宗", "church": "教堂", "finance": "财务", "records": "记录", "donated": "捐赠", "action": "行动", "kamala": "卡玛拉", "harris": "哈里斯", "carries": "携带", "sentence": "判决", "transportation": "运输", "commit": "犯下", "felony": "重罪", "discharging": "发射", "maximum": "最高", "suspect's": "嫌疑人的", "intent": "意图", "high-ranking": "高级的", "requested": "要求", "detained": "拘留", "arguing": "争论", "look": "看起来", "alleged": "据称的", "handled": "处理", "beef": "加强", "protection": "保护", "identification": "识别", "succession": "继任", "gathered": "聚集", "maintained": "保持", "fail": "失败", "noted": "指出", "hundreds": "数百", "agents": "特工", "standing": "站立", "arm": "武装", "homeland": "国土", "dhs": "国土安全部", "protects": "保护", "susie": "苏西", "wiles": "怀尔斯", "convene": "召集", "practices": "做法", "believes": "认为", "rising": "上升的", "rhetoric": "言论", "democrats": "民主党人", "assurances": "保证", "iii": "三世", "detail": "细节", "prepare": "准备", "rescheduling": "重新安排", "fbi": "联邦调查局", "director": "局长", "kash": "卡什", "patel": "帕特尔", "attend": "出席", "posture": "姿态", "date": "日期", "annual": "年度", "preparations": "准备工作", "typically": "通常", "john": "约翰", "hinckley": "欣克利", "jr": "小", "then-president": "时任总统", "ronald": "罗纳德", "reagan": "里根", "ago": "以前", "instructions": "指示", "operating": "操作", "property": "财产", "directed": "指示", "teams": "团队"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
