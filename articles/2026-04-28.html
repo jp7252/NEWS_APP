@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-04-28</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-04-28</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/news/1024/branded_news/04dd/live/4be42d20-4347-11f1-92c0-150b8e44bb63.jpg" alt="Five takeaways from the King's historic address to Congress" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Five takeaways from the King's historic address to Congress</h1>
+      <p class="source">Source: <a href="https://www.bbc.com/news/articles/c8jvl3x19v9o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://jp7252.github.io/NEWS_APP/audio/2026-04-28.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">King Charles III's visit to the US was meant to be a celebration – of America's 250th anniversary, of enduring Anglo-American ties and of the "special relationship".</span> <span class="sentence" data-sentence-index="1">But it has also been billed as a rescue mission.</span></p>
+        <p class="cn">英国国王查尔斯三世对美国的访问本应是一场庆祝——庆祝美国建国250周年、庆祝持久的英美关系以及“特殊关系”。但这次访问也被宣传为一次“救援任务”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="2">The current state of US-UK relations is <span class="keyword" data-word="strained" data-phonetic="/streɪnd/" data-pos="adj." data-def="紧张的，不自然的" data-def-en="showing signs of stress or tension">strained</span> – a reflection of British reluctance to fully back the joint US-Israeli war against Iran.</span> <span class="sentence" data-sentence-index="3">So the King's goal has been to ease those tensions with a royal charm offensive, most notably with his joint address to Congress on Tuesday afternoon.</span></p>
+        <p class="cn">目前美英关系紧张——这反映了英国不愿全力支持美以联合对伊朗的战争。因此，国王的目标是通过一场王室魅力攻势来缓和这些紧张关系，最引人注目的是他周二下午在国会的联合演讲。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="4">There is some reason for hope.</span> <span class="sentence" data-sentence-index="5">President Donald Trump has a notably <span class="keyword" data-word="mercurial" data-phonetic="/mɜːrˈkjʊriəl/" data-pos="adj." data-def="多变的，反复无常的" data-def-en="subject to sudden or unpredictable changes of mood or mind">mercurial</span> personality.</span> <span class="sentence" data-sentence-index="6">Warm relations can turn chilly in a flash.</span> <span class="sentence" data-sentence-index="7">But the reverse is also true, and former antagonists can be rehabilitated, welcomed once again into the president's good graces.</span></p>
+        <p class="cn">有理由抱有希望。唐纳德·特朗普总统性格极其反复无常。友好关系可能瞬间变冷。但反之亦然，曾经的对手也可能被修复，重新获得总统的青睐。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="8">A strain is not a rupture.</span> <span class="sentence" data-sentence-index="9">And towards the end of his speech, the King spoke of the "<span class="keyword" data-word="reconciliation" data-phonetic="/ˌrekənsɪliˈeɪʃn/" data-pos="n." data-def="和解，调和" data-def-en="the restoration of friendly relations">reconciliation</span> and renewal" that he said characterised the centuries of interactions between the two nations.</span></p>
+        <p class="cn">紧张并非破裂。在演讲接近尾声时，国王谈到了“和解与复兴”，他说这是两国数百年互动的特点。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="10">Whether such words in public and, in all likelihood, behind closed doors will be enough to reinforce the Anglo-American alliance remains to be seen.</span> <span class="sentence" data-sentence-index="11">But, in brief remarks after an afternoon White House meeting, Trump appeared pleased.</span></p>
+        <p class="cn">这些公开场合以及很可能私下里的言辞是否足以巩固英美联盟，仍有待观察。但在白宫下午会晤后的简短讲话中，特朗普显得很高兴。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="12">"He's a fantastic person," the president said of the King.</span> <span class="sentence" data-sentence-index="13">"They're incredible people and it's a real honour."</span></p>
+        <p class="cn">“他是个了不起的人，”总统谈到国王时说。“他们是不可思议的人，这真是莫大的荣幸。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="14">But there were also some lines in the King's speech, the first royal address to Congress since Queen Elizabeth II spoke at the Capitol in 1991, that may have <span class="keyword" data-word="buoyed" data-phonetic="/bɔɪd/" data-pos="v." data-def="鼓舞，支持" data-def-en="to keep afloat or support; to encourage">buoyed</span> Democrats – and raised eyebrows in the White House.</span></p>
+        <p class="cn">但国王演讲中也有一些内容可能让民主党人振奋——并在白宫引起惊讶。这是自1991年伊丽莎白二世女王在国会发表讲话以来，英国君主首次在国会演讲。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="15">Admitting you have a problem is the first step of recovery, as the saying goes.</span> <span class="sentence" data-sentence-index="16">And so King Charles started his speech by diving right into the "times of great uncertainty" that confront both the US and the UK.</span></p>
+        <p class="cn">俗话说，承认问题是康复的第一步。因此，查尔斯国王在演讲开始时直接谈到了美英两国都面临的“极度不确定的时代”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="17">He ticked through conflicts in the Middle East and Europe – sources of recent <span class="keyword" data-word="contention" data-phonetic="/kənˈtenʃn/" data-pos="n." data-def="争论，分歧" data-def-en="disagreement or dispute">contention</span> between the US and the UK - while also noting the threat to democracy presented by the kind of political violence that upended Saturday night's White House Correspondents' Dinner.</span></p>
+        <p class="cn">他逐一列举了中东和欧洲的冲突——这些是美英近期争论的根源——同时指出，上周六晚白宫记者协会晚宴上那种政治暴力对民主构成了威胁。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="18">From there, the King pivoted to talking about the fact that the US and the UK haven't always seen eye to eye.</span></p>
+        <p class="cn">接着，国王转向谈论美英两国并非总是意见一致的事实。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="19">"With the spirit of 1776 in our minds," he said, "we can perhaps agree that we do not always agree".</span></p>
+        <p class="cn">“怀着1776年的精神，”他说，“我们或许可以同意，我们并不总是意见一致。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="20">That was all a set-up, however, for his conclusion that the two nations, when in alignment, can do great things "not just for the benefit of our peoples, but of all peoples".</span></p>
+        <p class="cn">然而，这一切都是为他结论所做的铺垫：两国团结一致时，可以成就伟大的事业，“不仅造福我们的人民，也造福所有人民”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="21">When King Charles noted the British legal tradition, <span class="keyword" data-word="enshrined" data-phonetic="/ɪnˈʃraɪnd/" data-pos="v." data-def="珍藏，铭记" data-def-en="to preserve or cherish as sacred">enshrined</span> in the Magna Carta, that "executive power is subject to checks and balances", he received another standing ovation – with a twist.</span></p>
+        <p class="cn">当查尔斯国王提到英国法律传统（体现在《大宪章》中）即“行政权力受到制衡”时，他再次获得起立鼓掌——但情况有些微妙。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="22">The cheers started on the Democratic side of the chamber, before spreading across the entire room.</span></p>
+        <p class="cn">欢呼声从议会的民主党一侧开始，然后蔓延到整个房间。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="23">Donald Trump's critics on the left have frequently denounced the president for what they see as his abuse of power.</span></p>
+        <p class="cn">特朗普的左翼批评者经常谴责总统，认为他滥用权力。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="24">A sense that the president should be subject to rigorous checks and balances was one of the motivating sentiments behind the "no kings" rallies that have drawn hundreds of thousands across the nation over the past year.</span></p>
+        <p class="cn">总统应受到严格制衡的观念，是过去一年吸引全国数十万人参加的“不要国王”集会背后的动机之一。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="25">Later, as the King closed out his speech, one of his final lines prompted some muttering – of both agreement and concern – from the Democratic side.</span></p>
+        <p class="cn">随后，在国王结束演讲时，他最后几句话之一引起了民主党一侧的窃窃私语——既有赞同也有担忧。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="26">"America's words carry weight and meaning, as they have since independence," the King said.</span> <span class="sentence" data-sentence-index="27">"The actions of this great nation matter even more."</span></p>
+        <p class="cn">“美国的言辞自独立以来就具有分量和意义，”国王说。“这个伟大国家的行动则更为重要。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="28">Democrats, of course, have frequently been critics of Trump's words, and how he delivers them, as well as his actions.</span></p>
+        <p class="cn">当然，民主党人经常批评特朗普的言辞、他表达方式以及他的行动。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="29">Whether intended or not, it appears liberals in the audience may have viewed the King as delivering a message of warning to the nation – while offering them a chance, once again, to express their "no kings" sentiment.</span></p>
+        <p class="cn">无论有意与否，听众中的自由派似乎可能认为国王在向国家传递警告信息——同时给他们一个再次表达“不要国王”情绪的机会。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="30">Quoting former US Secretary of State Henry Kissinger, the King spoke of an Atlantic partnership and noted – not for the first time among America's European allies – that the only time Nato mobilsed in defence of one of its member-states was after the 9/11 terror attacks by al-Qaeda.</span></p>
+        <p class="cn">引用美国前国务卿亨利·基辛格的话，国王谈到了大西洋伙伴关系，并指出——这并非首次在美国的欧洲盟友中提及——北约唯一一次动员保卫其成员国是在基地组织发动9/11恐怖袭击之后。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="31">Trump has <span class="keyword" data-word="derided" data-phonetic="/dɪˈraɪdɪd/" data-pos="v." data-def="嘲笑，嘲弄" data-def-en="to express contempt for; ridicule">derided</span> the British Navy, long a source of pride for the kingdom.</span> <span class="sentence" data-sentence-index="32">He called their ships "toys" and said their aircraft carriers "didn't work".</span></p>
+        <p class="cn">特朗普曾嘲笑英国海军，而英国海军长期以来是英国的骄傲。他称英国军舰为“玩具”，并说它们的航空母舰“不顶用”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="33">King Charles, who served for five years in the Royal Navy, made a specific mention of his time in the service – using it as an entry point to remark on benefits of security and intelligence relations between the two nations – and between America and Europe.</span></p>
+        <p class="cn">曾在皇家海军服役五年的查尔斯国王特别提到了他的服役经历——以此作为切入点，谈论两国之间以及美欧之间安全与情报关系的好处。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="34">He even found an avenue to mention climate change, an issue that has been a longtime concern of his.</span></p>
+        <p class="cn">他甚至找到了提及气候变化的方式，这是他长期关注的问题。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="35">"From the depths of the Atlantic to the disastrously melting ice-caps of the Arctic, the commitment and expertise of the United States Armed Forces and its allies lie at the heart of Nato, pledged to each other's defence, protecting our citizens and interests, keeping North Americans and Europeans safe from our common adversaries," he said.</span></p>
+        <p class="cn">“从大西洋深处到北极灾难性融化的冰盖，美国武装部队及其盟友的承诺和专业知识是北约的核心，彼此承诺防御，保护我们的公民和利益，确保北美和欧洲人民免受共同对手的侵害，”他说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="36">Issues of international politics aside, one of the biggest questions surrounding King Charles's visit had been whether he would reference Jeffrey Epstein in his remarks or address the late sex offender's victims .</span></p>
+        <p class="cn">撇开国际政治问题不谈，围绕查尔斯国王访问的最大问题之一是他是否会在讲话中提及杰弗里·爱泼斯坦，或向这位已故性犯罪者的受害者讲话。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="37">The closest he came, perhaps, was an <span class="keyword" data-word="oblique" data-phonetic="/əˈbliːk/" data-pos="adj." data-def="间接的，不直接的" data-def-en="not explicit or direct in addressing a point">oblique</span> reference to the need to "support victims of some of the ills that, so tragically, exist in both our societies today",</span></p>
+        <p class="cn">他最接近的表述，或许是对需要“支持一些不幸存在于我们两国社会中的弊病的受害者”的隐晦提及。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="38">That, as Americans might say, is weak tea.</span></p>
+        <p class="cn">用美国人的话说，这不过是“淡茶”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="39">Last year, over the objections of the Trump administration, Congress passed legislation mandating the release of US government-held files related to the Epstein investigation.</span></p>
+        <p class="cn">去年，尽管特朗普政府反对，国会还是通过了立法，强制要求公布美国政府持有的与爱泼斯坦调查相关的文件。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="40">Those files led to new revelations about the depth of connections Epstein had to the rich and powerful, including former UK ambassador to the US Peter Mandelson and the King's brother, Andrew Mountbatten-Windsor.</span></p>
+        <p class="cn">这些文件揭示了爱泼斯坦与权贵之间联系的深度，包括前英国驻美大使彼得·曼德尔森和国王的弟弟安德鲁·蒙巴顿-温莎。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="41">For now, the Epstein saga has had greater repercussions in the UK compared to the US, where few in current positions of political power have faced adverse consequences.</span></p>
+        <p class="cn">目前，爱泼斯坦丑闻在英国的影响比在美国更大，在美国几乎没有现任政治人物面临不利后果。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="42">Even if the subject didn't come up during the speech, the issue is not fading from the headlines – and the full story here in the US may be yet to emerge.</span></p>
+        <p class="cn">即使这个话题在演讲中没有出现，这个问题也不会从新闻头条中消失——而美国的完整故事可能尚未浮出水面。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="43">Given the seriousness of the King's objectives – with no less than the future of US-UK relations at stake – his speech was, at times, whimsical.</span></p>
+        <p class="cn">考虑到国王目标的严肃性——涉及美英关系的未来——他的演讲有时显得异想天开。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="44">He opened with the oft-quoted – and misquoted -  line from Oscar Wilde about the US and England having everything in common "except, of course, a language".</span></p>
+        <p class="cn">他以奥斯卡·王尔德那句常被引用（也常被误引）的话开场：美国和英国“除了语言，什么都一样”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="45">He joked about the member of British parliament who is held "hostage" when the King speaks at Westminster – and wondered whether anyone in Congress had volunteered for such a job today.</span></p>
+        <p class="cn">他开玩笑说，当国王在威斯敏斯特演讲时，有英国议员被“扣为人质”——并想知道今天是否有人自愿在国会担任这个角色。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="46">He also riffed on how US independence was "just the other day" for a nation as old as Great Britain and that he wasn't coming to the US as a "cunning rearguard action" to reestablish British rule.</span></p>
+        <p class="cn">他还即兴发挥说，对于像英国这样古老的国家来说，美国独立“不过是前几天的事”，而他来美国并非为了“狡猾的后卫行动”以重建英国统治。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="47">There may be tensions between the US and the UK at the moment, but on Tuesday the King appears to have successfully broken the ice.</span></p>
+        <p class="cn">美英之间目前可能存在紧张关系，但周二国王似乎成功打破了僵局。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="48">Follow the twists and turns of Trump's second term with North America correspondent Anthony Zurcher's weekly US Politics Unspun newsletter.</span></p>
+        <p class="cn">关注北美记者安东尼·祖彻的每周《美国政治不设防》通讯，追踪特朗普第二任期的曲折发展。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="38">
+        <p class="en"><span class="sentence" data-sentence-index="49">Readers in the UK can sign up here .</span> <span class="sentence" data-sentence-index="50">Those outside the UK can sign up here .</span></p>
+        <p class="cn">英国读者可在此注册。英国以外读者可在此注册。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">strained</span>
+        <button class="kw-speak-btn" data-word="strained" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/streɪnd/ adj.</span>
+      </div>
+      <p class="kw-def">紧张的，不自然的</p>
+      <p class="kw-def-en">showing signs of stress or tension</p>
+      <p class="kw-ctx">&ldquo;The current state of US-UK relations is strained – a reflection of British reluctance to fully back the joint US-Israeli war against Iran.&rdquo;</p>
+      <p class="kw-ctx-cn">当前美英关系紧张——这反映了英国不愿全力支持美以联合对伊朗的战争。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">mercurial</span>
+        <button class="kw-speak-btn" data-word="mercurial" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/mɜːrˈkjʊriəl/ adj.</span>
+      </div>
+      <p class="kw-def">多变的，反复无常的</p>
+      <p class="kw-def-en">subject to sudden or unpredictable changes of mood or mind</p>
+      <p class="kw-ctx">&ldquo;President Donald Trump has a notably mercurial personality.&rdquo;</p>
+      <p class="kw-ctx-cn">唐纳德·特朗普总统有着出了名反复无常的性格。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">reconciliation</span>
+        <button class="kw-speak-btn" data-word="reconciliation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌrekənsɪliˈeɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">和解，调和</p>
+      <p class="kw-def-en">the restoration of friendly relations</p>
+      <p class="kw-ctx">&ldquo;And towards the end of his speech, the King spoke of the 'reconciliation and renewal' that he said characterised the centuries of interactions between the two nations.&rdquo;</p>
+      <p class="kw-ctx-cn">在演讲接近尾声时，国王谈到了“和解与更新”，他说这是两国几个世纪以来互动的特点。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">buoyed</span>
+        <button class="kw-speak-btn" data-word="buoyed" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/bɔɪd/ v.</span>
+      </div>
+      <p class="kw-def">鼓舞，支持</p>
+      <p class="kw-def-en">to keep afloat or support; to encourage</p>
+      <p class="kw-ctx">&ldquo;But there were also some lines in the King's speech... that may have buoyed Democrats – and raised eyebrows in the White House.&rdquo;</p>
+      <p class="kw-ctx-cn">但国王的演讲中也有一些内容可能鼓舞了民主党人——并让白宫感到惊讶。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">contention</span>
+        <button class="kw-speak-btn" data-word="contention" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kənˈtenʃn/ n.</span>
+      </div>
+      <p class="kw-def">争论，分歧</p>
+      <p class="kw-def-en">disagreement or dispute</p>
+      <p class="kw-ctx">&ldquo;He ticked through conflicts in the Middle East and Europe – sources of recent contention between the US and the UK.&rdquo;</p>
+      <p class="kw-ctx-cn">他逐一列举了中东和欧洲的冲突——这些是最近美英之间争论的根源。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">enshrined</span>
+        <button class="kw-speak-btn" data-word="enshrined" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪnˈʃraɪnd/ v.</span>
+      </div>
+      <p class="kw-def">珍藏，铭记</p>
+      <p class="kw-def-en">to preserve or cherish as sacred</p>
+      <p class="kw-ctx">&ldquo;When King Charles noted the British legal tradition, enshrined in the Magna Carta, that 'executive power is subject to checks and balances'...&rdquo;</p>
+      <p class="kw-ctx-cn">当查尔斯国王提到英国法律传统，即《大宪章》中所载的“行政权力受到制衡”时……</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">derided</span>
+        <button class="kw-speak-btn" data-word="derided" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈraɪdɪd/ v.</span>
+      </div>
+      <p class="kw-def">嘲笑，嘲弄</p>
+      <p class="kw-def-en">to express contempt for; ridicule</p>
+      <p class="kw-ctx">&ldquo;Trump has derided the British Navy, long a source of pride for the kingdom.&rdquo;</p>
+      <p class="kw-ctx-cn">特朗普曾嘲笑英国海军，而英国海军长期以来是英国的骄傲。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">oblique</span>
+        <button class="kw-speak-btn" data-word="oblique" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈbliːk/ adj.</span>
+      </div>
+      <p class="kw-def">间接的，不直接的</p>
+      <p class="kw-def-en">not explicit or direct in addressing a point</p>
+      <p class="kw-ctx">&ldquo;The closest he came, perhaps, was an oblique reference to the need to 'support victims of some of the ills that, so tragically, exist in both our societies today'.&rdquo;</p>
+      <p class="kw-ctx-cn">他可能最接近的是间接提到需要“支持那些不幸存在于我们两国社会中的一些弊病的受害者”。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "King Charles III's visit to the US was meant to be a celebration \u2013 of America's 250th anniversary, of enduring Anglo-American ties and of the \"special relationship\".", "start_ms": 0, "end_ms": 12912, "paragraph_index": 0}, {"index": 1, "text": "But it has also been billed as a rescue mission.", "start_ms": 12912, "end_ms": 16584, "paragraph_index": 0}, {"index": 2, "text": "The current state of US-UK relations is strained \u2013 a reflection of British reluctance to fully back the joint US-Israeli war against Iran.", "start_ms": 16584, "end_ms": 26592, "paragraph_index": 1}, {"index": 3, "text": "So the King's goal has been to ease those tensions with a royal charm offensive, most notably with his joint address to Congress on Tuesday afternoon.", "start_ms": 26592, "end_ms": 36576, "paragraph_index": 1}, {"index": 4, "text": "There is some reason for hope.", "start_ms": 36576, "end_ms": 39336, "paragraph_index": 2}, {"index": 5, "text": "President Donald Trump has a notably mercurial personality.", "start_ms": 39336, "end_ms": 44280, "paragraph_index": 2}, {"index": 6, "text": "Warm relations can turn chilly in a flash.", "start_ms": 44280, "end_ms": 48144, "paragraph_index": 2}, {"index": 7, "text": "But the reverse is also true, and former antagonists can be rehabilitated, welcomed once again into the president's good graces.", "start_ms": 48144, "end_ms": 57720, "paragraph_index": 2}, {"index": 8, "text": "A strain is not a rupture.", "start_ms": 57720, "end_ms": 60456, "paragraph_index": 3}, {"index": 9, "text": "And towards the end of his speech, the King spoke of the \"reconciliation and renewal\" that he said characterised the centuries of interactions between the two nations.", "start_ms": 60456, "end_ms": 71352, "paragraph_index": 3}, {"index": 10, "text": "Whether such words in public and, in all likelihood, behind closed doors will be enough to reinforce the Anglo-American alliance remains to be seen.", "start_ms": 71352, "end_ms": 82008, "paragraph_index": 4}, {"index": 11, "text": "But, in brief remarks after an afternoon White House meeting, Trump appeared pleased.", "start_ms": 82008, "end_ms": 88392, "paragraph_index": 4}, {"index": 12, "text": "\"He's a fantastic person,\" the president said of the King.", "start_ms": 88392, "end_ms": 92952, "paragraph_index": 5}, {"index": 13, "text": "\"They're incredible people and it's a real honour.\"", "start_ms": 92952, "end_ms": 96600, "paragraph_index": 5}, {"index": 14, "text": "But there were also some lines in the King's speech, the first royal address to Congress since Queen Elizabeth II spoke at the Capitol in 1991, that may have buoyed Democrats \u2013 and raised eyebrows in the White House.", "start_ms": 96600, "end_ms": 111240, "paragraph_index": 6}, {"index": 15, "text": "Admitting you have a problem is the first step of recovery, as the saying goes.", "start_ms": 111240, "end_ms": 117000, "paragraph_index": 7}, {"index": 16, "text": "And so King Charles started his speech by diving right into the \"times of great uncertainty\" that confront both the US and the UK.", "start_ms": 117000, "end_ms": 126024, "paragraph_index": 7}, {"index": 17, "text": "He ticked through conflicts in the Middle East and Europe \u2013 sources of recent contention between the US and the UK - while also noting the threat to democracy presented by the kind of political violence that upended Saturday night's White House Correspondents' Dinner.", "start_ms": 126024, "end_ms": 142536, "paragraph_index": 8}, {"index": 18, "text": "From there, the King pivoted to talking about the fact that the US and the UK haven't always seen eye to eye.", "start_ms": 142536, "end_ms": 150432, "paragraph_index": 9}, {"index": 19, "text": "\"With the spirit of 1776 in our minds,\" he said, \"we can perhaps agree that we do not always agree\".", "start_ms": 150432, "end_ms": 158544, "paragraph_index": 10}, {"index": 20, "text": "That was all a set-up, however, for his conclusion that the two nations, when in alignment, can do great things \"not just for the benefit of our peoples, but of all peoples\".", "start_ms": 158544, "end_ms": 170208, "paragraph_index": 11}, {"index": 21, "text": "When King Charles noted the British legal tradition, enshrined in the Magna Carta, that \"executive power is subject to checks and balances\", he received another standing ovation \u2013 with a twist.", "start_ms": 170208, "end_ms": 183192, "paragraph_index": 12}, {"index": 22, "text": "The cheers started on the Democratic side of the chamber, before spreading across the entire room.", "start_ms": 183192, "end_ms": 190032, "paragraph_index": 13}, {"index": 23, "text": "Donald Trump's critics on the left have frequently denounced the president for what they see as his abuse of power.", "start_ms": 190032, "end_ms": 197424, "paragraph_index": 14}, {"index": 24, "text": "A sense that the president should be subject to rigorous checks and balances was one of the motivating sentiments behind the \"no kings\" rallies that have drawn hundreds of thousands across the nation over the past year.", "start_ms": 197424, "end_ms": 210504, "paragraph_index": 15}, {"index": 25, "text": "Later, as the King closed out his speech, one of his final lines prompted some muttering \u2013 of both agreement and concern \u2013 from the Democratic side.", "start_ms": 210504, "end_ms": 220992, "paragraph_index": 16}, {"index": 26, "text": "\"America's words carry weight and meaning, as they have since independence,\" the King said.", "start_ms": 220992, "end_ms": 227424, "paragraph_index": 17}, {"index": 27, "text": "\"The actions of this great nation matter even more.\"", "start_ms": 227424, "end_ms": 231552, "paragraph_index": 17}, {"index": 28, "text": "Democrats, of course, have frequently been critics of Trump's words, and how he delivers them, as well as his actions.", "start_ms": 231552, "end_ms": 240120, "paragraph_index": 18}, {"index": 29, "text": "Whether intended or not, it appears liberals in the audience may have viewed the King as delivering a message of warning to the nation \u2013 while offering them a chance, once again, to express their \"no kings\" sentiment.", "start_ms": 240120, "end_ms": 254112, "paragraph_index": 19}, {"index": 30, "text": "Quoting former US Secretary of State Henry Kissinger, the King spoke of an Atlantic partnership and noted \u2013 not for the first time among America's European allies \u2013 that the only time Nato mobilsed in defence of one of its member-states was after the 9/11 terror attacks by al-Qaeda.", "start_ms": 254112, "end_ms": 273192, "paragraph_index": 20}, {"index": 31, "text": "Trump has derided the British Navy, long a source of pride for the kingdom.", "start_ms": 273192, "end_ms": 278688, "paragraph_index": 21}, {"index": 32, "text": "He called their ships \"toys\" and said their aircraft carriers \"didn't work\".", "start_ms": 278688, "end_ms": 283896, "paragraph_index": 21}, {"index": 33, "text": "King Charles, who served for five years in the Royal Navy, made a specific mention of his time in the service \u2013 using it as an entry point to remark on benefits of security and intelligence relations between the two nations \u2013 and between America and Europe.", "start_ms": 283896, "end_ms": 301080, "paragraph_index": 22}, {"index": 34, "text": "He even found an avenue to mention climate change, an issue that has been a longtime concern of his.", "start_ms": 301080, "end_ms": 308400, "paragraph_index": 23}, {"index": 35, "text": "\"From the depths of the Atlantic to the disastrously melting ice-caps of the Arctic, the commitment and expertise of the United States Armed Forces and its allies lie at the heart of Nato, pledged to each other's defence, protecting our citizens and interests, keeping North Americans and Europeans safe from our common adversaries,\" he said.", "start_ms": 308400, "end_ms": 330768, "paragraph_index": 24}, {"index": 36, "text": "Issues of international politics aside, one of the biggest questions surrounding King Charles's visit had been whether he would reference Jeffrey Epstein in his remarks or address the late sex offender's victims .", "start_ms": 330768, "end_ms": 344304, "paragraph_index": 25}, {"index": 37, "text": "The closest he came, perhaps, was an oblique reference to the need to \"support victims of some of the ills that, so tragically, exist in both our societies today\",", "start_ms": 344304, "end_ms": 355704, "paragraph_index": 26}, {"index": 38, "text": "That, as Americans might say, is weak tea.", "start_ms": 355704, "end_ms": 360144, "paragraph_index": 27}, {"index": 39, "text": "Last year, over the objections of the Trump administration, Congress passed legislation mandating the release of US government-held files related to the Epstein investigation.", "start_ms": 360144, "end_ms": 372360, "paragraph_index": 28}, {"index": 40, "text": "Those files led to new revelations about the depth of connections Epstein had to the rich and powerful, including former UK ambassador to the US Peter Mandelson and the King's brother, Andrew Mountbatten-Windsor.", "start_ms": 372360, "end_ms": 386832, "paragraph_index": 29}, {"index": 41, "text": "For now, the Epstein saga has had greater repercussions in the UK compared to the US, where few in current positions of political power have faced adverse consequences.", "start_ms": 386832, "end_ms": 399000, "paragraph_index": 30}, {"index": 42, "text": "Even if the subject didn't come up during the speech, the issue is not fading from the headlines \u2013 and the full story here in the US may be yet to emerge.", "start_ms": 399000, "end_ms": 409464, "paragraph_index": 31}, {"index": 43, "text": "Given the seriousness of the King's objectives \u2013 with no less than the future of US-UK relations at stake \u2013 his speech was, at times, whimsical.", "start_ms": 409464, "end_ms": 420384, "paragraph_index": 32}, {"index": 44, "text": "He opened with the oft-quoted \u2013 and misquoted -  line from Oscar Wilde about the US and England having everything in common \"except, of course, a language\".", "start_ms": 420384, "end_ms": 430920, "paragraph_index": 33}, {"index": 45, "text": "He joked about the member of British parliament who is held \"hostage\" when the King speaks at Westminster \u2013 and wondered whether anyone in Congress had volunteered for such a job today.", "start_ms": 430920, "end_ms": 442248, "paragraph_index": 34}, {"index": 46, "text": "He also riffed on how US independence was \"just the other day\" for a nation as old as Great Britain and that he wasn't coming to the US as a \"cunning rearguard action\" to reestablish British rule.", "start_ms": 442248, "end_ms": 454872, "paragraph_index": 35}, {"index": 47, "text": "There may be tensions between the US and the UK at the moment, but on Tuesday the King appears to have successfully broken the ice.", "start_ms": 454872, "end_ms": 463824, "paragraph_index": 36}, {"index": 48, "text": "Follow the twists and turns of Trump's second term with North America correspondent Anthony Zurcher's weekly US Politics Unspun newsletter.", "start_ms": 463824, "end_ms": 473520, "paragraph_index": 37}, {"index": 49, "text": "Readers in the UK can sign up here .", "start_ms": 473520, "end_ms": 476976, "paragraph_index": 38}, {"index": 50, "text": "Those outside the UK can sign up here .", "start_ms": 476976, "end_ms": 480696, "paragraph_index": 38}], "total_duration_ms": 480696};
+  const WORD_GLOSS = {"the": "这个", "of": "的", "and": "和", "to": "到", "in": "在", "that": "那个", "king": "国王", "us": "我们", "he": "他", "as": "作为", "his": "他的", "for": "为了", "is": "是", "have": "有", "uk": "英国", "was": "是", "be": "是", "with": "与", "but": "但是", "has": "有", "on": "在", "can": "可以", "not": "不", "speech": "演讲", "said": "说", "an": "一个", "at": "在", "from": "来自", "also": "也", "been": "已经", "british": "英国的", "between": "之间", "our": "我们的", "charles": "查尔斯", "relations": "关系", "congress": "国会", "there": "那里", "some": "一些", "president": "总统", "trump": "特朗普", "whether": "是否", "may": "可能", "great": "伟大的", "about": "关于", "one": "一个", "had": "有", "epstein": "爱泼斯坦", "it": "它", "so": "所以", "those": "那些", "royal": "王室的", "address": "地址", "former": "前任", "spoke": "发言", "two": "两个", "words": "言辞", "all": "所有", "white": "白色的", "house": "议院", "first": "第一轮", "by": "被", "both": "两者", "when": "当", "power": "权力", "trump's": "特朗普的", "no": "没有", "even": "甚至", "their": "他们的", "time": "时间", "up": "向上", "here": "这里", "visit": "访问", "current": "当前的", "state": "国家", "tuesday": "星期二", "donald": "唐纳德", "once": "一旦", "again": "再次", "into": "进入", "such": "如此", "behind": "在...后面", "closed": "关闭", "seen": "被视为", "after": "之后", "lines": "线", "since": "自从", "democrats": "民主党人", "started": "开始", "times": "次", "europe": "欧洲", "while": "而", "political": "政治的", "always": "总是", "we": "我们", "perhaps": "或许", "do": "做", "just": "只是", "noted": "指出", "checks": "审查", "democratic": "民主的", "side": "方面", "across": "跨越", "they": "它们", "over": "超过", "year": "年", "concern": "关切", "independence": "独立", "actions": "行动", "course": "课程", "how": "如何", "them": "他们", "or": "或者", "allies": "盟友", "defence": "国防", "its": "它的", "navy": "海军", "didn't": "没有", "who": "谁", "mention": "提及", "america": "美国", "issue": "问题", "north": "北部", "politics": "政治", "today": "今天", "sign": "签署", "meant": "意味着", "ties": "联系", "special": "特别的", "relationship": "关系", "back": "后退", "war": "战争", "against": "反对", "iran": "伊朗", "most": "最", "reason": "原因", "hope": "希望", "warm": "温暖的", "turn": "转变", "true": "真实", "president's": "总统的", "good": "良好", "towards": "对待", "end": "结束", "public": "公众", "will": "将", "enough": "足够", "meeting": "会议", "appeared": "出现", "pleased": "高兴", "he's": "他是", "person": "个人", "they're": "他们是", "incredible": "难以置信", "people": "人们", "it's": "它是", "honour": "阁下", "were": "是", "queen": "女王", "capitol": "国会大厦", "raised": "提出的", "you": "你", "saying": "说", "right": "正确", "through": "通过", "east": "东部", "sources": "消息来源", "recent": "最近", "threat": "威胁", "presented": "提交", "kind": "种类", "violence": "暴力", "saturday": "星期六", "night's": "夜晚的", "correspondents": "记者", "dinner": "晚餐", "talking": "谈论", "fact": "事实", "haven't": "尚未", "however": "然而", "legal": "法律的", "another": "另一个", "standing": "站立", "before": "之前", "room": "房间", "left": "离开", "what": "什么", "see": "看到", "should": "应该", "drawn": "划定", "hundreds": "数百", "thousands": "数千", "past": "过去", "later": "后来", "out": "出来", "final": "最终", "agreement": "协议", "this": "这个", "more": "更多", "well": "好", "intended": "打算的", "warning": "警告", "offering": "提供", "chance": "机会", "secretary": "秘书", "partnership": "伙伴关系", "among": "在...之中", "only": "只有", "attacks": "袭击", "long": "长久", "kingdom": "王国", "called": "称为", "ships": "舰船", "work": "工作", "five": "五", "years": "多年", "made": "做出", "service": "服务", "using": "使用", "point": "点", "security": "安全", "found": "发现", "change": "改变", "united": "联合", "states": "国家", "armed": "武装的", "heart": "核心", "safe": "安全", "international": "国际", "questions": "问题", "would": "将", "jeffrey": "杰弗里", "late": "已故", "sex": "性", "came": "到来", "need": "需要", "support": "支持", "might": "可能", "say": "说", "last": "最后", "administration": "政府", "passed": "通过", "release": "发布", "investigation": "调查", "led": "带领", "new": "新的", "including": "包括", "ambassador": "大使", "peter": "彼得", "mandelson": "曼德尔森", "now": "现在", "where": "那里", "few": "少数", "faced": "面对", "if": "如果", "come": "到来", "during": "在期间", "fading": "消退", "full": "完整", "story": "故事", "yet": "尚未", "given": "给定", "than": "比", "opened": "开火", "line": "界限", "having": "拥有", "everything": "一切", "language": "语言", "member": "成员", "parliament": "议会", "held": "举行", "hostage": "人质", "westminster": "威斯敏斯特", "anyone": "任何人", "job": "工作", "other": "其他", "day": "天", "old": "旧的", "britain": "英国", "wasn't": "不是", "action": "行动", "moment": "时刻", "follow": "关注", "second": "第二", "correspondent": "记者", "anthony": "安东尼", "newsletter": "新闻简报", "outside": "外部", "king's": "国王的", "nation": "国家", "america's": "美国的", "nations": "国家（复数）", "subject": "主题", "anglo-american": "英美的", "us-uk": "美英", "joint": "联合的", "tensions": "紧张局势", "notably": "尤其", "afternoon": "下午", "remarks": "言论", "eye": "目光", "agree": "同意", "peoples": "民族", "balances": "平衡", "critics": "批评者", "frequently": "频繁地", "kings": "国王们", "appears": "似乎", "atlantic": "大西洋", "nato": "北约", "americans": "美国人", "common": "共同的", "reference": "提及", "victims": "受害者", "files": "文件", "iii's": "三世的", "celebration": "庆祝", "anniversary": "周年纪念", "enduring": "持久的", "billed": "宣传为", "rescue": "救援", "mission": "使命", "reflection": "反思", "reluctance": "不情愿", "fully": "完全地", "us-israeli": "美以", "goal": "目标", "ease": "缓解", "charm": "魅力", "offensive": "冒犯的", "personality": "个性", "chilly": "冷淡的", "flash": "闪现", "reverse": "逆转", "antagonists": "对手", "rehabilitated": "恢复名誉", "welcomed": "受到欢迎", "graces": "优雅", "strain": "紧张", "rupture": "破裂", "renewal": "更新", "characterised": "以...为特征", "centuries": "几个世纪", "interactions": "互动", "likelihood": "可能性", "doors": "门", "reinforce": "加强", "alliance": "联盟", "remains": "仍然", "brief": "简短的", "fantastic": "极好的", "real": "真正的", "elizabeth": "伊丽莎白", "ii": "二世", "eyebrows": "眉毛", "admitting": "承认", "problem": "问题", "step": "步骤", "recovery": "恢复", "goes": "进行", "diving": "跳水", "uncertainty": "不确定性", "confront": "面对", "ticked": "打勾", "conflicts": "冲突", "middle": "中间", "noting": "指出", "democracy": "民主", "upended": "颠覆", "pivoted": "转向", "spirit": "精神", "minds": "思想", "set-up": "安排", "conclusion": "结论", "alignment": "结盟", "things": "事情", "benefit": "利益", "tradition": "传统", "magna": "大", "carta": "宪章", "executive": "行政的", "received": "受到", "ovation": "热烈欢迎", "twist": "转折", "cheers": "欢呼", "chamber": "议院", "spreading": "传播", "entire": "整个", "denounced": "谴责", "abuse": "滥用", "sense": "感觉", "rigorous": "严格的", "motivating": "激励的", "sentiments": "情绪", "rallies": "集会", "prompted": "促使", "muttering": "嘀咕", "carry": "携带", "weight": "重量", "meaning": "意义", "matter": "事情", "delivers": "传递", "liberals": "自由派", "audience": "观众", "viewed": "看待", "delivering": "传递", "message": "信息", "express": "表达", "sentiment": "情感", "quoting": "引用", "henry": "亨利", "kissinger": "基辛格", "european": "欧洲的", "mobilsed": "动员", "member-states": "成员国", "terror": "恐怖", "al-qaeda": "基地组织", "source": "来源", "pride": "骄傲", "toys": "玩具", "aircraft": "飞机", "carriers": "航母", "served": "服役", "specific": "具体的", "entry": "条目", "remark": "言论", "benefits": "好处", "intelligence": "情报", "avenue": "途径", "climate": "气候", "longtime": "长期的", "depths": "深处", "disastrously": "灾难性地", "melting": "融化", "ice-caps": "冰盖", "arctic": "北极", "commitment": "承诺", "expertise": "专业知识", "forces": "力量", "lie": "在于", "pledged": "承诺", "each": "每个", "other's": "彼此的", "protecting": "保护", "citizens": "公民", "interests": "利益", "keeping": "保持", "europeans": "欧洲人", "adversaries": "对手", "issues": "问题", "aside": "抛开", "biggest": "最大的", "surrounding": "围绕", "charles's": "查尔斯的", "offender's": "罪犯的", "closest": "最亲密的", "ills": "弊病", "tragically": "悲剧地", "exist": "存在", "societies": "社会", "weak": "弱的", "tea": "茶", "objections": "反对", "legislation": "立法", "mandating": "强制", "government-held": "政府持有的", "related": "相关的", "revelations": "揭露", "depth": "深度", "connections": "联系", "rich": "富有的", "powerful": "强大的", "brother": "兄弟", "andrew": "安德鲁", "mountbatten-windsor": "蒙巴顿-温莎", "saga": "传奇", "greater": "更大的", "repercussions": "反响", "compared": "比较", "positions": "立场", "adverse": "不利的", "consequences": "后果", "headlines": "头条", "emerge": "出现", "seriousness": "严重性", "objectives": "目标", "less": "更少", "future": "未来", "stake": "利害关系", "whimsical": "异想天开的", "oft-quoted": "常被引用的", "misquoted": "被错误引用的", "oscar": "奥斯卡奖", "wilde": "王尔德", "england": "英格兰", "except": "除了", "joked": "开玩笑说", "speaks": "发言", "wondered": "想知道", "volunteered": "自愿提供", "riffed": "即兴发挥", "coming": "即将到来的", "cunning": "狡猾的", "rearguard": "后卫", "reestablish": "重建", "rule": "统治", "successfully": "成功地", "broken": "打破的", "ice": "冰", "twists": "曲折", "turns": "转折", "term": "术语", "zurcher's": "祖尔彻的", "weekly": "每周的", "unspun": "未扭曲的", "readers": "读者"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
