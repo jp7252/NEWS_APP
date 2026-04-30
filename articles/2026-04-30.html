@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-04-30</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-04-30</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/news/1024/branded_news/9ba4/live/12d58d20-44c4-11f1-9273-a335ca8f6d64.png" alt="UK terrorism threat level raised to severe after Golders Green attack" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>UK terrorism threat level raised to severe after Golders Green attack</h1>
+      <p class="source">Source: <a href="https://www.bbc.com/news/articles/cq6p4pz6p62o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://jp7252.github.io/NEWS_APP/audio/2026-04-30.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">The terrorism threat level in the UK has been increased by the government from "<span class="keyword" data-word="substantial" data-phonetic="/səbˈstænʃl/" data-pos="adj." data-def="重大的；实质的" data-def-en="of considerable importance, size, or worth">substantial</span>" to "<span class="keyword" data-word="severe" data-phonetic="/sɪˈvɪər/" data-pos="adj." data-def="严重的；严峻的" data-def-en="very great in intensity or degree">severe</span>" - meaning that a terrorist attack is considered highly likely in the next six months.</span></p>
+        <p class="cn">英国政府已将恐怖主义威胁等级从“重大”提升至“严重”——这意味着未来六个月内发生恐怖袭击的可能性被认为很高。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">It comes after two Jewish men were stabbed in north London on Wednesday in an attack the Metropolitan Police is treating as a terrorist <span class="keyword" data-word="incident" data-phonetic="/ˈɪnsɪdənt/" data-pos="n." data-def="事件；事故" data-def-en="an event or occurrence, especially one that is unusual or unpleasant">incident</span>.</span></p>
+        <p class="cn">此前，周三在伦敦北部发生了一起两名犹太男子被刺伤的事件，伦敦警察厅将其视为恐怖事件处理。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">The government said on Thursday evening that the increase in the threat level was not solely as a result of the Golders Green attack, but had also been "driven by an increase in broader Islamist and extreme right-wing" threats.</span></p>
+        <p class="cn">政府周四晚间表示，威胁等级的提升并非仅仅因为戈尔德斯格林袭击事件，还“受到更广泛的伊斯兰主义和极右翼威胁增加”的推动。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Wednesday's attack is the latest in a string of incidents targeting the UK Jewish community.</span></p>
+        <p class="cn">周三的袭击是针对英国犹太社区的一系列事件中的最新一起。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">The last time the threat level was considered <span class="keyword" data-word="severe" data-phonetic="/sɪˈvɪər/" data-pos="adj." data-def="严重的；严峻的" data-def-en="very great in intensity or degree">severe</span> was in February 2022.</span></p>
+        <p class="cn">上一次威胁等级被定为“严重”是在2022年2月。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">Home Secretary Shabana Mahmood said the raising of the threat level "will be a source of concern to many, particularly amongst our Jewish community, who have suffered so much".</span></p>
+        <p class="cn">内政大臣沙巴纳·马哈茂德表示，威胁等级的提升“将引起许多人的担忧，尤其是我们犹太社区，他们已遭受了太多苦难”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">But she insisted the government "will do everything in our power to rid society of the evil of antisemitism", noting an earlier announcement increasing funding for policing and security around Jewish sites.</span></p>
+        <p class="cn">但她坚称政府“将尽一切努力消除社会中的反犹太主义邪恶”，并提到此前宣布增加犹太场所周边警务和安全资金的公告。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">"As the threat level rises, I urge everyone to be <span class="keyword" data-word="vigilant" data-phonetic="/ˈvɪdʒɪlənt/" data-pos="adj." data-def="警惕的；警觉的" data-def-en="keeping careful watch for possible danger or difficulties">vigilant</span>, as they go about their daily lives, and report any concerns they have to the police," Mahmood added.</span></p>
+        <p class="cn">“随着威胁等级上升，我敦促大家在日常生活中保持警惕，并向警方报告任何担忧，”马哈茂德补充道。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">The head of the Met's counter-terrorism unit told reporters outside New Scotland Yard shortly after the level was raised that the UK had been "experiencing a gradual terrorist threat for some time".</span></p>
+        <p class="cn">伦敦警察厅反恐部门负责人在威胁等级提升后不久于新苏格兰场外告诉记者，英国“一段时间以来一直在经历逐渐升级的恐怖威胁”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">Assistant Commissioner Laurence Taylor said: "Our casework is increasing across a number of ideologies, and within that, we are seeing an <span class="keyword" data-word="elevated" data-phonetic="/ˈelɪveɪtɪd/" data-pos="adj." data-def="升高的；提高的" data-def-en="raised in level, degree, or rank">elevated</span> threat to Jewish and Israeli individuals and institutions in the UK.</span></p>
+        <p class="cn">助理专员劳伦斯·泰勒表示：“我们的案件工作量在多种意识形态领域都在增加，其中我们看到针对英国犹太人和以色列个人及机构的威胁有所上升。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">"We're also working against an unpredictable global situation that has consequences closer to home, including physical threats by state linked actors."</span></p>
+        <p class="cn">“我们还在应对不可预测的全球局势，这给国内带来了后果，包括与国家行为体相关的物理威胁。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">Taylor said police will be reviewing "all events across the country".</span></p>
+        <p class="cn">泰勒表示，警方将审查“全国所有活动”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="12">Essa Suleiman, 45, remains in police <span class="keyword" data-word="custody" data-phonetic="/ˈkʌstədi/" data-pos="n." data-def="拘留；监护" data-def-en="the state of being held by the police or legal authorities">custody</span> having been arrested on the suspicion of attempting to murder Shloime Rand, 34, and Moshe Shine, 76, in Wednesday's attack.</span></p>
+        <p class="cn">45岁的埃萨·苏莱曼因涉嫌在周三的袭击中谋杀34岁的什洛姆·兰德和76岁的莫舍·希恩而被捕，目前仍被警方拘留。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="13">The Metropolitan Police said he had been referred to Prevent - a key part of the UK's counter-terrorism strategy - in 2020 but the case was shelved later the same year.</span></p>
+        <p class="cn">伦敦警察厅表示，他曾在2020年被转介至“预防计划”——英国反恐战略的关键部分——但该案于同年晚些时候被搁置。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="14">Police also believe the suspect may have been involved in an earlier <span class="keyword" data-word="incident" data-phonetic="/ˈɪnsɪdənt/" data-pos="n." data-def="事件；事故" data-def-en="an event or occurrence, especially one that is unusual or unpleasant">incident</span> in south-east London on Tuesday.</span></p>
+        <p class="cn">警方还认为，该嫌疑人可能参与了周二在伦敦东南部发生的一起早期事件。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="15">It comes after a spate of incidents in recent months targeting the UK Jewish community.</span></p>
+        <p class="cn">此前，近几个月发生了一系列针对英国犹太社区的事件。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="16">Two Jewish people were killed in October last year and three left in a serious condition after a car ramming and stabbing attack outside a synagogue in Manchester .</span> <span class="sentence" data-sentence-index="17">One of the men was killed by a bullet fired by police.</span></p>
+        <p class="cn">去年10月，在曼彻斯特一座犹太教堂外发生汽车冲撞和持刀袭击事件，造成两名犹太人死亡，三人重伤。其中一名男子被警方开枪打死。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="18">Earlier this year in March - near to the scene of Wednesday's stabbings - four Jewish charity-owned Hatzola ambulances were set on fire in the car park of a synagogue in Golders Green.</span></p>
+        <p class="cn">今年3月，在周三持刀袭击现场附近，戈尔德斯格林一座犹太教堂的停车场内，四辆犹太慈善机构拥有的哈佐拉救护车被纵火。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="19">In recent weeks the Finchley Reform Synagogue in north London was attacked and days later a bottle containing a type of accelerant was thrown through the window of Kenton United Synagogue .</span></p>
+        <p class="cn">最近几周，伦敦北部的芬奇利改革派犹太教堂遭到袭击，几天后，一个装有助燃剂的瓶子被扔进肯顿联合犹太教堂的窗户。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="20">The decision to raise the threat level to the second-highest threat level was taken by security and intelligence experts from the Joint Terrorism Analysis Centre (JTAC) and independently of ministers, the government said.</span></p>
+        <p class="cn">政府表示，将威胁等级提升至第二高等级的决定是由联合恐怖主义分析中心的安全和情报专家独立于部长们做出的。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="21">The UK was last placed on a "<span class="keyword" data-word="severe" data-phonetic="/sɪˈvɪər/" data-pos="adj." data-def="严重的；严峻的" data-def-en="very great in intensity or degree">severe</span>" terrorism threat level in November 2021 , after a bomb ignited outside Liverpool Women's Hospital and the murder of MP Sir David Amess the previous month.</span></p>
+        <p class="cn">英国上一次被置于“严重”恐怖威胁等级是在2021年11月，此前利物浦妇女医院外发生炸弹爆炸，以及前一个月议员大卫·埃默斯爵士被谋杀。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="22">It was lowered to "<span class="keyword" data-word="substantial" data-phonetic="/səbˈstænʃl/" data-pos="adj." data-def="重大的；实质的" data-def-en="of considerable importance, size, or worth">substantial</span>" in February 2022 .</span></p>
+        <p class="cn">该等级于2022年2月降至“重大”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="23">There are five terror threat levels in the UK:</span></p>
+        <p class="cn">英国有五个恐怖威胁等级：</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="24">Security Minister Dan Jarvis said people should be "alert and <span class="keyword" data-word="vigilant" data-phonetic="/ˈvɪdʒɪlənt/" data-pos="adj." data-def="警惕的；警觉的" data-def-en="keeping careful watch for possible danger or difficulties">vigilant</span>" but not "alarmed".</span></p>
+        <p class="cn">安全部长丹·贾维斯表示，人们应“保持警惕和警觉”，但不要“惊慌”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="25">He said the public should be reassured that the intelligence services, the police and government were "working round the clock to keep the public safe".</span></p>
+        <p class="cn">他说，公众应放心，情报部门、警方和政府正在“夜以继日地工作以确保公众安全”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="26">Meanwhile, London Mayor Sir Sadiq Khan said there will be extra police on the capital's streets - including armed officers.</span></p>
+        <p class="cn">与此同时，伦敦市长萨迪克·汗爵士表示，首都街头将有额外警力——包括武装警察。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="27">"I want to reassure all Londoners and visitors that we are doing everything possible to protect our city and keep all of our communities safe," he sadi.</span></p>
+        <p class="cn">“我想向所有伦敦人和游客保证，我们正在尽一切可能保护我们的城市，确保所有社区的安全，”他说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="28">The raised level also comes against a backdrop of "increased state-linked physical threats which is encouraging acts of violence, including against the Jewish community", the government added.</span></p>
+        <p class="cn">政府还补充说，威胁等级的提升也发生在“与国家行为体相关的物理威胁增加，这鼓励了暴力行为，包括针对犹太社区的暴力”的背景下。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="29">Some of the prior incidents have been linked to groups with ties to foreign regimes.</span> <span class="sentence" data-sentence-index="30">Police have not made any such links with Wednesday's attack.</span></p>
+        <p class="cn">此前的一些事件与有外国政权背景的组织有关。警方尚未将周三的袭击与任何此类组织联系起来。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="31">Met Police Commissioner Sir Mark Rowley referred to a rise in "racist and antisemitic hate crime" while speaking in Golders Green on Wednesday.</span></p>
+        <p class="cn">伦敦警察厅专员马克·罗利爵士周三在戈尔德斯格林发言时提到了“种族主义和反犹太仇恨犯罪”的增加。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="32">He said police were aware that some people were being encouraged or paid to commit acts of violence by foreign organisations and hostile states - though he said he could not comment on any live investigations.</span></p>
+        <p class="cn">他说，警方意识到一些人受到外国组织和敌对国家的鼓励或资助来实施暴力行为——尽管他表示无法对任何正在进行的调查发表评论。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="33">Elsewhere on Thursday, angry protesters jeered and heckled Sir Keir Starmer when he visited Golders Green to meet Jewish volunteer organisations and first responders on Thursday.</span></p>
+        <p class="cn">周四，在其他地方，愤怒的抗议者在基尔·斯塔默爵士访问戈尔德斯格林会见犹太志愿者组织和急救人员时发出嘘声和质问。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="34">The prime minister said he understood the "high levels of anxiety and concern", adding: "That anxiety has been there for a very long time, and the appalling terrorist attack yesterday made it worse."</span></p>
+        <p class="cn">首相表示，他理解“高度的焦虑和担忧”，并补充道：“这种焦虑已经存在很长时间，昨天骇人听闻的恐怖袭击使情况更糟。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="35">The government announced the extra £25m in funding for increased police patrols and security in Jewish communities.</span> <span class="sentence" data-sentence-index="36">Funding will also be used to put further protections in place around synagogues, schools and community centres.</span></p>
+        <p class="cn">政府宣布额外拨款2500万英镑，用于增加犹太社区的警察巡逻和安全保障。资金还将用于在犹太教堂、学校和社区中心周围加强保护。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="37">Sir Keir said the government was now considering introducing fresh measures, including stronger powers to "shut down charities that promote antisemitism" and "prevent hate preachers from entering our country", as well as speeding up sentencing on antisemitic attacks "so there is stronger de facto <span class="keyword" data-word="deterrence" data-phonetic="/dɪˈterəns/" data-pos="n." data-def="威慑；遏制" data-def-en="the act of discouraging an action by instilling doubt or fear of consequences">deterrence</span>".</span></p>
+        <p class="cn">基尔爵士表示，政府正在考虑推出新措施，包括更强有力的权力来“关闭宣扬反犹太主义的慈善机构”和“阻止仇恨传教士进入我国”，以及加快对反犹太主义袭击的判决，“以形成更强的实际威慑”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="38">"We need stronger powers to tackle the malign threat posted by states like Iran," he said, vowing to fast-track legislation.</span></p>
+        <p class="cn">“我们需要更强有力的权力来应对像伊朗这样的国家构成的恶意威胁，”他说，并誓言要加速立法。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="39">But he also called on "everyone decent in this country to open their eyes to Jewish pain, Jewish suffering and Jewish fear", saying "far too many people in this country diminish" antisemitism.</span></p>
+        <p class="cn">但他也呼吁“这个国家所有正直的人睁开眼睛，看到犹太人的痛苦、犹太人的苦难和犹太人的恐惧”，并指出“这个国家有太多人轻视”反犹太主义。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">substantial</span>
+        <button class="kw-speak-btn" data-word="substantial" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/səbˈstænʃl/ adj.</span>
+      </div>
+      <p class="kw-def">重大的；实质的</p>
+      <p class="kw-def-en">of considerable importance, size, or worth</p>
+      <p class="kw-ctx">&ldquo;The terrorism threat level in the UK has been increased by the government from 'substantial' to 'severe'.&rdquo;</p>
+      <p class="kw-ctx-cn">英国政府已将恐怖主义威胁级别从“重大”提升至“严重”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">severe</span>
+        <button class="kw-speak-btn" data-word="severe" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/sɪˈvɪər/ adj.</span>
+      </div>
+      <p class="kw-def">严重的；严峻的</p>
+      <p class="kw-def-en">very great in intensity or degree</p>
+      <p class="kw-ctx">&ldquo;The terrorism threat level in the UK has been increased by the government from 'substantial' to 'severe'.&rdquo;</p>
+      <p class="kw-ctx-cn">英国政府已将恐怖主义威胁级别从“重大”提升至“严重”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">incident</span>
+        <button class="kw-speak-btn" data-word="incident" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈɪnsɪdənt/ n.</span>
+      </div>
+      <p class="kw-def">事件；事故</p>
+      <p class="kw-def-en">an event or occurrence, especially one that is unusual or unpleasant</p>
+      <p class="kw-ctx">&ldquo;It comes after two Jewish men were stabbed in north London on Wednesday in an attack the Metropolitan Police is treating as a terrorist incident.&rdquo;</p>
+      <p class="kw-ctx-cn">此前，周三在伦敦北部两名犹太男子被刺伤，伦敦警察厅将此袭击视为恐怖主义事件。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">vigilant</span>
+        <button class="kw-speak-btn" data-word="vigilant" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈvɪdʒɪlənt/ adj.</span>
+      </div>
+      <p class="kw-def">警惕的；警觉的</p>
+      <p class="kw-def-en">keeping careful watch for possible danger or difficulties</p>
+      <p class="kw-ctx">&ldquo;As the threat level rises, I urge everyone to be vigilant, as they go about their daily lives, and report any concerns they have to the police.&rdquo;</p>
+      <p class="kw-ctx-cn">随着威胁级别上升，我敦促大家在日常生活中保持警惕，并向警方报告任何担忧。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">elevated</span>
+        <button class="kw-speak-btn" data-word="elevated" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈelɪveɪtɪd/ adj.</span>
+      </div>
+      <p class="kw-def">升高的；提高的</p>
+      <p class="kw-def-en">raised in level, degree, or rank</p>
+      <p class="kw-ctx">&ldquo;We are seeing an elevated threat to Jewish and Israeli individuals and institutions in the UK.&rdquo;</p>
+      <p class="kw-ctx-cn">我们看到英国犹太人和以色列个人及机构面临的威胁有所升高。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">custody</span>
+        <button class="kw-speak-btn" data-word="custody" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈkʌstədi/ n.</span>
+      </div>
+      <p class="kw-def">拘留；监护</p>
+      <p class="kw-def-en">the state of being held by the police or legal authorities</p>
+      <p class="kw-ctx">&ldquo;Essa Suleiman, 45, remains in police custody having been arrested on the suspicion of attempting to murder...&rdquo;</p>
+      <p class="kw-ctx-cn">45岁的埃萨·苏莱曼因涉嫌谋杀未遂而被捕，目前仍被警方拘留。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">referral</span>
+        <button class="kw-speak-btn" data-word="referral" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈfɜːrəl/ n.</span>
+      </div>
+      <p class="kw-def">转介；提交</p>
+      <p class="kw-def-en">the act of sending someone to a person or agency for help or information</p>
+      <p class="kw-ctx">&ldquo;The Metropolitan Police said he had been referred to Prevent - a key part of the UK's counter-terrorism strategy - in 2020 but the case was shelved later the same year.&rdquo;</p>
+      <p class="kw-ctx-cn">伦敦警察厅表示，他曾在2020年被转介至“预防”计划——英国反恐战略的关键部分——但该案于同年晚些时候被搁置。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">deterrence</span>
+        <button class="kw-speak-btn" data-word="deterrence" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈterəns/ n.</span>
+      </div>
+      <p class="kw-def">威慑；遏制</p>
+      <p class="kw-def-en">the act of discouraging an action by instilling doubt or fear of consequences</p>
+      <p class="kw-ctx">&ldquo;Sir Keir said the government was now considering introducing fresh measures... speeding up sentencing on antisemitic attacks so there is stronger de facto deterrence.&rdquo;</p>
+      <p class="kw-ctx-cn">基尔爵士表示，政府正在考虑引入新措施……加快对反犹袭击的判决，以形成更强有力的事实上的威慑。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "The terrorism threat level in the UK has been increased by the government from \"substantial\" to \"severe\" - meaning that a terrorist attack is considered highly likely in the next six months.", "start_ms": 0, "end_ms": 11952, "paragraph_index": 0}, {"index": 1, "text": "It comes after two Jewish men were stabbed in north London on Wednesday in an attack the Metropolitan Police is treating as a terrorist incident.", "start_ms": 11952, "end_ms": 21432, "paragraph_index": 1}, {"index": 2, "text": "The government said on Thursday evening that the increase in the threat level was not solely as a result of the Golders Green attack, but had also been \"driven by an increase in broader Islamist and extreme right-wing\" threats.", "start_ms": 21432, "end_ms": 35496, "paragraph_index": 2}, {"index": 3, "text": "Wednesday's attack is the latest in a string of incidents targeting the UK Jewish community.", "start_ms": 35496, "end_ms": 42144, "paragraph_index": 3}, {"index": 4, "text": "The last time the threat level was considered severe was in February 2022.", "start_ms": 42144, "end_ms": 48336, "paragraph_index": 4}, {"index": 5, "text": "Home Secretary Shabana Mahmood said the raising of the threat level \"will be a source of concern to many, particularly amongst our Jewish community, who have suffered so much\".", "start_ms": 48336, "end_ms": 59904, "paragraph_index": 5}, {"index": 6, "text": "But she insisted the government \"will do everything in our power to rid society of the evil of antisemitism\", noting an earlier announcement increasing funding for policing and security around Jewish sites.", "start_ms": 59904, "end_ms": 73560, "paragraph_index": 6}, {"index": 7, "text": "\"As the threat level rises, I urge everyone to be vigilant, as they go about their daily lives, and report any concerns they have to the police,\" Mahmood added.", "start_ms": 73560, "end_ms": 84864, "paragraph_index": 7}, {"index": 8, "text": "The head of the Met's counter-terrorism unit told reporters outside New Scotland Yard shortly after the level was raised that the UK had been \"experiencing a gradual terrorist threat for some time\".", "start_ms": 84864, "end_ms": 97776, "paragraph_index": 8}, {"index": 9, "text": "Assistant Commissioner Laurence Taylor said: \"Our casework is increasing across a number of ideologies, and within that, we are seeing an elevated threat to Jewish and Israeli individuals and institutions in the UK.", "start_ms": 97776, "end_ms": 112632, "paragraph_index": 9}, {"index": 10, "text": "\"We're also working against an unpredictable global situation that has consequences closer to home, including physical threats by state linked actors.\"", "start_ms": 112632, "end_ms": 123120, "paragraph_index": 10}, {"index": 11, "text": "Taylor said police will be reviewing \"all events across the country\".", "start_ms": 123120, "end_ms": 128064, "paragraph_index": 11}, {"index": 12, "text": "Essa Suleiman, 45, remains in police custody having been arrested on the suspicion of attempting to murder Shloime Rand, 34, and Moshe Shine, 76, in Wednesday's attack.", "start_ms": 128064, "end_ms": 142368, "paragraph_index": 12}, {"index": 13, "text": "The Metropolitan Police said he had been referred to Prevent - a key part of the UK's counter-terrorism strategy - in 2020 but the case was shelved later the same year.", "start_ms": 142368, "end_ms": 153600, "paragraph_index": 13}, {"index": 14, "text": "Police also believe the suspect may have been involved in an earlier incident in south-east London on Tuesday.", "start_ms": 153600, "end_ms": 161376, "paragraph_index": 14}, {"index": 15, "text": "It comes after a spate of incidents in recent months targeting the UK Jewish community.", "start_ms": 161376, "end_ms": 167832, "paragraph_index": 15}, {"index": 16, "text": "Two Jewish people were killed in October last year and three left in a serious condition after a car ramming and stabbing attack outside a synagogue in Manchester .", "start_ms": 167832, "end_ms": 178608, "paragraph_index": 16}, {"index": 17, "text": "One of the men was killed by a bullet fired by police.", "start_ms": 178608, "end_ms": 182976, "paragraph_index": 16}, {"index": 18, "text": "Earlier this year in March - near to the scene of Wednesday's stabbings - four Jewish charity-owned Hatzola ambulances were set on fire in the car park of a synagogue in Golders Green.", "start_ms": 182976, "end_ms": 194904, "paragraph_index": 17}, {"index": 19, "text": "In recent weeks the Finchley Reform Synagogue in north London was attacked and days later a bottle containing a type of accelerant was thrown through the window of Kenton United Synagogue .", "start_ms": 194904, "end_ms": 206640, "paragraph_index": 18}, {"index": 20, "text": "The decision to raise the threat level to the second-highest threat level was taken by security and intelligence experts from the Joint Terrorism Analysis Centre (JTAC) and independently of ministers, the government said.", "start_ms": 206640, "end_ms": 221616, "paragraph_index": 19}, {"index": 21, "text": "The UK was last placed on a \"severe\" terrorism threat level in November 2021 , after a bomb ignited outside Liverpool Women's Hospital and the murder of MP Sir David Amess the previous month.", "start_ms": 221616, "end_ms": 235680, "paragraph_index": 20}, {"index": 22, "text": "It was lowered to \"substantial\" in February 2022 .", "start_ms": 235680, "end_ms": 240240, "paragraph_index": 21}, {"index": 23, "text": "There are five terror threat levels in the UK:", "start_ms": 240240, "end_ms": 244104, "paragraph_index": 22}, {"index": 24, "text": "Security Minister Dan Jarvis said people should be \"alert and vigilant\" but not \"alarmed\".", "start_ms": 244104, "end_ms": 250704, "paragraph_index": 23}, {"index": 25, "text": "He said the public should be reassured that the intelligence services, the police and government were \"working round the clock to keep the public safe\".", "start_ms": 250704, "end_ms": 259968, "paragraph_index": 24}, {"index": 26, "text": "Meanwhile, London Mayor Sir Sadiq Khan said there will be extra police on the capital's streets - including armed officers.", "start_ms": 259968, "end_ms": 268656, "paragraph_index": 25}, {"index": 27, "text": "\"I want to reassure all Londoners and visitors that we are doing everything possible to protect our city and keep all of our communities safe,\" he sadi.", "start_ms": 268656, "end_ms": 278640, "paragraph_index": 26}, {"index": 28, "text": "The raised level also comes against a backdrop of \"increased state-linked physical threats which is encouraging acts of violence, including against the Jewish community\", the government added.", "start_ms": 278640, "end_ms": 291000, "paragraph_index": 27}, {"index": 29, "text": "Some of the prior incidents have been linked to groups with ties to foreign regimes.", "start_ms": 291000, "end_ms": 296808, "paragraph_index": 28}, {"index": 30, "text": "Police have not made any such links with Wednesday's attack.", "start_ms": 296808, "end_ms": 301320, "paragraph_index": 28}, {"index": 31, "text": "Met Police Commissioner Sir Mark Rowley referred to a rise in \"racist and antisemitic hate crime\" while speaking in Golders Green on Wednesday.", "start_ms": 301320, "end_ms": 311208, "paragraph_index": 29}, {"index": 32, "text": "He said police were aware that some people were being encouraged or paid to commit acts of violence by foreign organisations and hostile states - though he said he could not comment on any live investigations.", "start_ms": 311208, "end_ms": 324264, "paragraph_index": 30}, {"index": 33, "text": "Elsewhere on Thursday, angry protesters jeered and heckled Sir Keir Starmer when he visited Golders Green to meet Jewish volunteer organisations and first responders on Thursday.", "start_ms": 324264, "end_ms": 336840, "paragraph_index": 31}, {"index": 34, "text": "The prime minister said he understood the \"high levels of anxiety and concern\", adding: \"That anxiety has been there for a very long time, and the appalling terrorist attack yesterday made it worse.\"", "start_ms": 336840, "end_ms": 349848, "paragraph_index": 32}, {"index": 35, "text": "The government announced the extra \u00a325m in funding for increased police patrols and security in Jewish communities.", "start_ms": 349848, "end_ms": 359352, "paragraph_index": 33}, {"index": 36, "text": "Funding will also be used to put further protections in place around synagogues, schools and community centres.", "start_ms": 359352, "end_ms": 367368, "paragraph_index": 33}, {"index": 37, "text": "Sir Keir said the government was now considering introducing fresh measures, including stronger powers to \"shut down charities that promote antisemitism\" and \"prevent hate preachers from entering our country\", as well as speeding up sentencing on antisemitic attacks \"so there is stronger de facto deterrence\".", "start_ms": 367368, "end_ms": 387552, "paragraph_index": 34}, {"index": 38, "text": "\"We need stronger powers to tackle the malign threat posted by states like Iran,\" he said, vowing to fast-track legislation.", "start_ms": 387552, "end_ms": 396648, "paragraph_index": 35}, {"index": 39, "text": "But he also called on \"everyone decent in this country to open their eyes to Jewish pain, Jewish suffering and Jewish fear\", saying \"far too many people in this country diminish\" antisemitism.", "start_ms": 396648, "end_ms": 409536, "paragraph_index": 36}], "total_duration_ms": 409536};
+  const WORD_GLOSS = {"the": "这个", "in": "在", "to": "到", "and": "和", "of": "的", "jewish": "犹太人的", "said": "说", "on": "在", "police": "警方", "threat": "威胁", "was": "是", "level": "水平", "that": "那个", "he": "他", "been": "已经", "by": "被", "government": "政府", "attack": "袭击", "uk": "英国", "be": "是", "is": "是", "were": "是", "an": "一个", "as": "作为", "also": "也", "our": "我们的", "after": "之后", "but": "但是", "community": "社区", "will": "将", "have": "有", "sir": "爵士", "terrorist": "恐怖分子", "it": "它", "london": "伦敦", "not": "不", "golders": "戈尔德斯", "green": "绿色", "wednesday's": "周三的", "for": "为了", "security": "安全", "including": "包括", "country": "国家", "people": "人们", "synagogue": "犹太教堂", "there": "那里", "terrorism": "恐怖主义", "has": "有", "increased": "增加的", "from": "来自", "comes": "到来", "thursday": "星期四", "had": "有", "threats": "威胁", "incidents": "事件", "last": "最后", "time": "时间", "antisemitism": "反犹太主义", "earlier": "较早", "funding": "资金", "any": "任何", "outside": "外部", "some": "一些", "we": "我们", "are": "是", "against": "反对", "all": "所有", "year": "年", "this": "这个", "considered": "认为", "months": "月", "two": "两个", "men": "男人们", "north": "北部", "wednesday": "星期三", "metropolitan": "伦敦警察厅", "increase": "增加", "targeting": "针对", "february": "二月", "home": "家", "mahmood": "马哈茂德", "concern": "关切", "many": "许多", "so": "所以", "everything": "一切", "increasing": "增加", "around": "在...周围", "everyone": "每个人", "they": "它们", "their": "他们的", "added": "补充", "counter-terrorism": "反恐", "raised": "提出的", "commissioner": "专员", "taylor": "泰勒", "across": "跨越", "working": "工作", "linked": "关联的", "murder": "谋杀", "later": "后来", "recent": "最近", "killed": "杀死", "intelligence": "情报", "minister": "部长", "should": "应该", "public": "公众", "keep": "保持", "safe": "安全", "communities": "社区", "acts": "行为", "violence": "暴力", "with": "与", "foreign": "外交", "made": "做出", "antisemitic": "反犹太的", "hate": "仇恨", "organisations": "组织", "states": "国家", "keir": "基尔", "powers": "权力", "meaning": "意义", "highly": "高度", "likely": "可能", "next": "下一个", "stabbed": "被刺伤", "evening": "晚上", "result": "结果", "latest": "最新的", "string": "一连串", "secretary": "秘书", "shabana": "沙巴娜", "raising": "提出", "source": "来源", "who": "谁", "suffered": "遭受", "much": "许多", "she": "她", "insisted": "坚持", "do": "做", "power": "权力", "rid": "摆脱", "society": "社会", "noting": "指出", "announcement": "公告", "policing": "警务", "urge": "敦促", "go": "去", "about": "关于", "daily": "每日", "lives": "生命", "concerns": "担忧", "head": "前往", "told": "告诉", "reporters": "记者们", "new": "新的", "shortly": "不久", "assistant": "助理", "laurence": "劳伦斯", "number": "数量", "within": "在内部", "israeli": "以色列的", "individuals": "个人", "institutions": "机构", "we're": "我们是", "global": "全球", "situation": "局势", "consequences": "后果", "state": "国家", "actors": "行为者", "reviewing": "审查", "events": "事件", "remains": "仍然", "having": "拥有", "arrested": "被捕", "suspicion": "嫌疑", "attempting": "试图", "key": "关键", "part": "部分", "uk's": "英国的", "case": "案例", "same": "相同", "believe": "认为", "suspect": "嫌疑人", "may": "可能", "involved": "涉及的", "south-east": "东南部", "tuesday": "星期二", "spate": "一连串", "october": "十月", "three": "三个", "left": "离开", "serious": "严重的", "condition": "状况", "stabbing": "刺伤", "manchester": "曼彻斯特", "one": "一个", "bullet": "子弹", "fired": "发射", "near": "附近", "scene": "现场", "four": "四", "hatzola": "哈佐拉救援组织", "ambulances": "救护车", "set": "设定", "fire": "射击", "weeks": "周", "finchley": "芬奇利", "reform": "改革", "attacked": "袭击", "days": "天", "bottle": "瓶子", "thrown": "投掷", "through": "通过", "window": "窗户", "kenton": "肯顿", "united": "联合", "decision": "决定", "taken": "采取", "joint": "联合的", "analysis": "分析", "ministers": "部长", "bomb": "炸弹", "liverpool": "利物浦", "hospital": "医院", "mp": "议员", "previous": "先前", "month": "月份", "five": "五", "terror": "恐怖", "services": "服务", "round": "轮", "meanwhile": "与此同时", "mayor": "市长", "sadiq": "萨迪克", "khan": "汗", "armed": "武装的", "officers": "官员", "want": "想要", "doing": "做", "possible": "可能的", "protect": "保护", "city": "城市", "which": "哪个", "ties": "联系", "regimes": "政权", "such": "如此", "links": "联系", "met": "伦敦警察厅", "mark": "标志", "rowley": "罗利", "crime": "犯罪", "while": "而", "speaking": "发言", "aware": "意识到", "being": "正在", "encouraged": "鼓励", "or": "或者", "paid": "支付", "commit": "犯下", "hostile": "敌对的", "though": "尽管", "could": "可能", "comment": "评论", "live": "生活", "investigations": "调查", "elsewhere": "其他地方", "angry": "愤怒的", "heckled": "被起哄", "starmer": "斯塔默", "when": "当", "meet": "会见", "first": "第一轮", "responders": "响应者", "prime": "首相", "understood": "理解", "adding": "补充说", "very": "非常", "long": "长久", "announced": "宣布", "patrols": "巡逻", "used": "使用", "put": "提出", "further": "进一步的", "place": "地点", "now": "现在", "considering": "考虑", "measures": "措施", "shut": "关闭", "down": "下来", "promote": "促进", "well": "好", "up": "向上", "attacks": "袭击", "need": "需要", "malign": "恶意的", "posted": "发布", "iran": "伊朗", "legislation": "立法", "called": "称为", "decent": "体面的", "open": "开放", "fear": "恐惧", "saying": "说", "far": "远", "too": "太", "stronger": "更强", "physical": "身体的", "referred": "提及", "prevent": "防止", "car": "汽车", "levels": "水平", "extra": "额外的", "anxiety": "焦虑", "six": "六", "treating": "对待", "solely": "仅仅", "driven": "驱动", "broader": "更广泛的", "islamist": "伊斯兰主义者", "extreme": "极端的", "right-wing": "右翼", "particularly": "尤其", "amongst": "在…之中", "evil": "邪恶", "sites": "网站", "rises": "上升", "report": "报告", "met's": "伦敦警察厅的", "unit": "单位", "scotland": "苏格兰", "yard": "场", "experiencing": "经历", "gradual": "逐渐的", "casework": "个案工作", "ideologies": "意识形态", "seeing": "看到", "unpredictable": "不可预测的", "closer": "更近的", "essa": "埃萨", "suleiman": "苏莱曼", "shloime": "什洛莫", "rand": "兰德", "moshe": "摩西", "shine": "闪耀", "strategy": "策略", "shelved": "搁置", "ramming": "撞击", "march": "三月", "stabbings": "刺伤事件", "charity-owned": "慈善机构拥有的", "park": "公园", "containing": "包含", "type": "类型", "accelerant": "助燃剂", "raise": "提高", "second-highest": "第二高的", "experts": "专家", "centre": "中心", "jtac": "联合恐怖主义分析中心", "independently": "独立地", "placed": "放置", "november": "十一月", "ignited": "点燃", "women's": "女性的", "david": "大卫", "amess": "埃姆斯", "lowered": "降低", "dan": "丹", "jarvis": "贾维斯", "alert": "警报", "alarmed": "警觉的", "reassured": "使安心", "clock": "时钟", "capital's": "首都的", "streets": "街道", "reassure": "使安心", "londoners": "伦敦人", "visitors": "游客", "sadi": "萨迪", "backdrop": "背景", "state-linked": "与国家有关的", "encouraging": "鼓励", "prior": "先前的", "groups": "团体", "rise": "上升", "racist": "种族主义的", "protesters": "抗议者", "jeered": "嘲笑", "visited": "访问", "volunteer": "志愿者", "high": "高的", "appalling": "骇人听闻的", "yesterday": "昨天", "worse": "更糟", "protections": "保护措施", "synagogues": "犹太教堂", "schools": "学校", "centres": "中心", "introducing": "引入", "fresh": "新的", "charities": "慈善机构", "preachers": "传教士", "entering": "进入", "speeding": "超速", "sentencing": "判刑", "de": "实际上", "facto": "实际上", "tackle": "应对", "like": "像", "vowing": "发誓", "fast-track": "快速推进", "eyes": "关注", "pain": "痛苦", "suffering": "苦难", "diminish": "减少"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
