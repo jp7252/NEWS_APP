@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-05-01</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-05-01</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/news/1024/branded_news/a8dd/live/e72463a0-45a8-11f1-8b1d-7de6bec82bf2.jpg" alt="US to cut troop levels in Germany by 5,000 amid Trump spat with Merz" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>US to cut troop levels in Germany by 5,000 amid Trump spat with Merz</h1>
+      <p class="source">Source: <a href="https://www.bbc.com/news/articles/c0729d374mxo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://jp7252.github.io/NEWS_APP/audio/2026-05-01.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">The US Department of Defence plans to <span class="keyword" data-word="withdraw" data-phonetic="/wɪðˈdrɔː/" data-pos="v." data-def="撤回，撤离" data-def-en="to remove or take back troops or forces from a place">withdraw</span> 5,000 troops from Germany, amid a <span class="keyword" data-word="spat" data-phonetic="/spæt/" data-pos="n." data-def="口角，小争吵" data-def-en="a short, petty quarrel or disagreement">spat</span> between US President Donald Trump and German Chancellor Friedrich Merz over the war with Iran.</span></p>
+        <p class="cn">美国国防部计划从德国撤出5000名士兵，此时美国总统唐纳德·特朗普与德国总理弗里德里希·默茨正因伊朗战争发生争执。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">The decision comes a day after Trump criticised Merz, who suggested the US had been "humiliated" by Iranian negotiators.</span></p>
+        <p class="cn">这一决定是在特朗普批评默茨一天后做出的，默茨曾暗示美国被伊朗谈判代表“羞辱”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">In social media posts on Thursday, Trump said Merz was "doing a terrible job" and had "problems of all kinds", including on immigration and energy.</span> <span class="sentence" data-sentence-index="3">Trump has also suggested pulling US troops from Italy and Spain.</span></p>
+        <p class="cn">在周四的社交媒体帖子中，特朗普表示默茨“工作做得糟糕”，并且“存在各种问题”，包括移民和能源方面。特朗普还建议从意大利和西班牙撤出美军。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="4">The US has a significant military presence in Germany, with more than 36,000 active duty troops assigned to bases across the country as of last December.</span></p>
+        <p class="cn">美国在德国有大量军事存在，截至去年12月，有超过36000名现役士兵驻扎在德国各地的基地。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="5">In a statement, Pentagon spokesman Sean Parnell said the order had come from Secretary of Defence Pete Hegseth.</span></p>
+        <p class="cn">在一份声明中，五角大楼发言人肖恩·帕内尔表示，这一命令来自国防部长皮特·赫格塞斯。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="6">"This decision follows a thorough review of the Department's force <span class="keyword" data-word="posture" data-phonetic="/ˈpɒstʃər/" data-pos="n." data-def="姿态，立场" data-def-en="a particular position or attitude adopted in a situation">posture</span> in Europe and is in recognition of theater requirements and conditions on the ground," he said.</span></p>
+        <p class="cn">他说：“这一决定是在对国防部在欧洲的兵力态势进行彻底审查后做出的，并考虑到了战区需求和当地条件。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="7">"We expect the withdrawal to be completed over the next six to twelve months."</span></p>
+        <p class="cn">“我们预计撤军将在未来六到十二个月内完成。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="8">Trump, a longtime critic of the Nato alliance, has been lashing out at allies over their refusal to participate in operations to reopen the Strait of Hormuz.</span></p>
+        <p class="cn">特朗普长期以来一直批评北约联盟，他因盟友拒绝参与重新开放霍尔木兹海峡的行动而对他们进行猛烈抨击。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="9">Asked on Thursday whether he would also consider pulling US troops from Nato allies Italy and Spain, Trump responded: "I probably will - look, why shouldn't I?"</span></p>
+        <p class="cn">周四，当被问及是否也会考虑从北约盟友意大利和西班牙撤出美军时，特朗普回应道：“我可能会——看，我为什么不呢？”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="10">"Italy has not been of any help to us and Spain has been horrible," he added, criticising them for their response to the war in Iran.</span></p>
+        <p class="cn">他补充说：“意大利对我们没有任何帮助，西班牙也很糟糕”，批评他们对伊朗战争的回应。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">"In all cases they said, 'I don't want to get involved.'"</span></p>
+        <p class="cn">“在所有这些情况下，他们都说‘我不想卷入其中’。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">Merz told university students earlier this week that "the Americans clearly have no strategy" and he could not see "what strategic exit" they might choose.</span></p>
+        <p class="cn">默茨本周早些时候对大学生说：“美国人显然没有战略”，他看不出他们可能选择“什么战略退出”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="13">"The Iranians are obviously very skilled at negotiating, or rather, very skilful at not negotiating, letting the Americans travel to Islamabad and then leave again without any result," he said.</span></p>
+        <p class="cn">他说：“伊朗人显然非常擅长谈判，或者更确切地说，非常擅长不谈判，让美国人前往伊斯兰堡，然后毫无结果地离开。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="14">He added that the "entire nation" was being "humiliated" by the Iranian leadership.</span></p>
+        <p class="cn">他补充说，“整个国家”正在被伊朗领导层“羞辱”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="15">In response, Trump took to his platform Truth Social, where he said Merz thought it was "OK for Iran to have a Nuclear Weapon" and "doesn't know what he's talking about".</span></p>
+        <p class="cn">作为回应，特朗普在他的平台Truth Social上发帖称，默茨认为“伊朗拥有核武器是可以的”，并且“不知道自己在说什么”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="16">"No wonder Germany is doing so poorly, both Economically, and otherwise!" the post read.</span></p>
+        <p class="cn">帖子写道：“难怪德国在经济和其他方面都表现如此糟糕！”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="17">The BBC has contacted the German embassy in Washington for comment.</span></p>
+        <p class="cn">BBC已联系德国驻华盛顿大使馆寻求评论。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="18">The US military <span class="keyword" data-word="deployment" data-phonetic="/dɪˈplɔɪmənt/" data-pos="n." data-def="部署，调度" data-def-en="the arrangement or positioning of military forces or resources">deployment</span> in Germany is by far its biggest in Europe, with about 12,000 troops in Italy and a further 10,000 in the UK.</span></p>
+        <p class="cn">美国在德国的军事部署是其在欧洲最大的，在意大利约有12000名士兵，在英国另有10000名。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="19">Many are stationed at Ramstein Air Base outside the south-western German city of Kaiserslautern.</span></p>
+        <p class="cn">许多人驻扎在德国西南部城市凯泽斯劳滕郊外的拉姆施泰因空军基地。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="20">And while Trump has proposed US troop reductions in Germany before, they have so far not come in to effect.</span></p>
+        <p class="cn">尽管特朗普此前曾提议减少在德国的美军，但迄今为止尚未生效。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="21">Only Japan hosts a larger US troop presence.</span></p>
+        <p class="cn">只有日本驻扎的美军人数更多。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="22">In 2020, a proposal to move 12,000 US troops from Germany either to other Nato countries in Europe or back to the US was blocked by Congress and then reversed by President Joe Biden.</span></p>
+        <p class="cn">2020年，一项将12000名美军从德国转移到其他欧洲北约国家或返回美国的提案被国会阻止，随后被总统乔·拜登推翻。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="23">At the time, Trump had accused Germany of being "<span class="keyword" data-word="delinquent" data-phonetic="/dɪˈlɪŋkwənt/" data-pos="adj." data-def="失职的，拖欠的" data-def-en="failing to fulfill a duty or obligation">delinquent</span>" because its military spending was well below Nato's target of 2% of economic output (GDP).</span></p>
+        <p class="cn">当时，特朗普指责德国“拖欠”，因为其军费开支远低于北约设定的经济产出（GDP）2%的目标。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="24">But that has changed dramatically under the Merz government.</span></p>
+        <p class="cn">但在默茨政府领导下，情况发生了巨大变化。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="25">Germany is <span class="keyword" data-word="projected" data-phonetic="/prəˈdʒektɪd/" data-pos="adj." data-def="预计的，规划的" data-def-en="estimated or forecast for the future">projected</span> to spend €105.8bn (£91bn) in 2027 - with total defence expenditure next year set to reach 3.1% of GDP.</span></p>
+        <p class="cn">德国预计2027年将花费1058亿欧元（910亿英镑），明年的国防总支出将达到GDP的3.1%。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="26">Last year, the US decided to reduce its troop presence in Romania, as part of Trump's plan to shift the focus of US military commitment from Europe to the Indo-Pacific region.</span></p>
+        <p class="cn">去年，美国决定减少在罗马尼亚的军事存在，这是特朗普计划将美国军事承诺重点从欧洲转向印太地区的一部分。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="27">Romania's defence minister said the decision was made after Hegseth conveyed to the Romanians that they needed to pay more attention to their own defence.</span></p>
+        <p class="cn">罗马尼亚国防部长表示，这一决定是在赫格塞斯向罗马尼亚人传达他们需要更加关注自身防御之后做出的。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="28">The decision was met with disapproval from some of Trump's fellow Repubicans in Congress, and concern from other Eastern European countries wary of Russia.</span></p>
+        <p class="cn">这一决定遭到了国会中一些特朗普共和党同僚的反对，以及其他对俄罗斯保持警惕的东欧国家的担忧。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">withdraw</span>
+        <button class="kw-speak-btn" data-word="withdraw" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/wɪðˈdrɔː/ v.</span>
+      </div>
+      <p class="kw-def">撤回，撤离</p>
+      <p class="kw-def-en">to remove or take back troops or forces from a place</p>
+      <p class="kw-ctx">&ldquo;The US Department of Defence plans to withdraw 5,000 troops from Germany, amid a spat between US President Donald Trump and German Chancellor Friedrich Merz over the war with Iran.&rdquo;</p>
+      <p class="kw-ctx-cn">美国国防部计划从德国撤出5000名士兵，正值美国总统唐纳德·特朗普与德国总理弗里德里希·默茨就伊朗战争发生争执之际。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">spat</span>
+        <button class="kw-speak-btn" data-word="spat" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/spæt/ n.</span>
+      </div>
+      <p class="kw-def">口角，小争吵</p>
+      <p class="kw-def-en">a short, petty quarrel or disagreement</p>
+      <p class="kw-ctx">&ldquo;The US Department of Defence plans to withdraw 5,000 troops from Germany, amid a spat between US President Donald Trump and German Chancellor Friedrich Merz over the war with Iran.&rdquo;</p>
+      <p class="kw-ctx-cn">美国国防部计划从德国撤出5000名士兵，正值美国总统唐纳德·特朗普与德国总理弗里德里希·默茨就伊朗战争发生争执之际。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">humiliate</span>
+        <button class="kw-speak-btn" data-word="humiliate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/hjuːˈmɪlieɪt/ v.</span>
+      </div>
+      <p class="kw-def">羞辱，使丢脸</p>
+      <p class="kw-def-en">to make someone feel ashamed or foolish by injuring their dignity</p>
+      <p class="kw-ctx">&ldquo;He added that the 'entire nation' was being 'humiliated' by the Iranian leadership.&rdquo;</p>
+      <p class="kw-ctx-cn">他补充说，“整个国家”正被伊朗领导层“羞辱”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">deployment</span>
+        <button class="kw-speak-btn" data-word="deployment" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈplɔɪmənt/ n.</span>
+      </div>
+      <p class="kw-def">部署，调度</p>
+      <p class="kw-def-en">the arrangement or positioning of military forces or resources</p>
+      <p class="kw-ctx">&ldquo;The US military deployment in Germany is by far its biggest in Europe, with about 12,000 troops in Italy and a further 10,000 in the UK.&rdquo;</p>
+      <p class="kw-ctx-cn">美国在德国的军事部署是其在欧洲最大的，在意大利约有12000名士兵，在英国另有10000名。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">posture</span>
+        <button class="kw-speak-btn" data-word="posture" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈpɒstʃər/ n.</span>
+      </div>
+      <p class="kw-def">姿态，立场</p>
+      <p class="kw-def-en">a particular position or attitude adopted in a situation</p>
+      <p class="kw-ctx">&ldquo;"This decision follows a thorough review of the Department's force posture in Europe and is in recognition of theater requirements and conditions on the ground," he said.&rdquo;</p>
+      <p class="kw-ctx-cn">他说：“这一决定是在对国防部在欧洲的部队态势进行彻底审查后做出的，并考虑到战区需求和当地情况。”</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">lash out</span>
+        <button class="kw-speak-btn" data-word="lash out" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/læʃ aʊt/ phr. v.</span>
+      </div>
+      <p class="kw-def">猛烈抨击</p>
+      <p class="kw-def-en">to suddenly criticize someone or something angrily</p>
+      <p class="kw-ctx">&ldquo;Trump, a longtime critic of the Nato alliance, has been lashing out at allies over their refusal to participate in operations to reopen the Strait of Hormuz.&rdquo;</p>
+      <p class="kw-ctx-cn">长期以来一直批评北约联盟的特朗普，一直在猛烈抨击盟友拒绝参与重新开放霍尔木兹海峡的行动。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">delinquent</span>
+        <button class="kw-speak-btn" data-word="delinquent" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈlɪŋkwənt/ adj.</span>
+      </div>
+      <p class="kw-def">失职的，拖欠的</p>
+      <p class="kw-def-en">failing to fulfill a duty or obligation</p>
+      <p class="kw-ctx">&ldquo;At the time, Trump had accused Germany of being 'delinquent' because its military spending was well below Nato's target of 2% of economic output (GDP).&rdquo;</p>
+      <p class="kw-ctx-cn">当时，特朗普指责德国“失职”，因为其军费开支远低于北约设定的经济产出（GDP）2%的目标。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">projected</span>
+        <button class="kw-speak-btn" data-word="projected" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/prəˈdʒektɪd/ adj.</span>
+      </div>
+      <p class="kw-def">预计的，规划的</p>
+      <p class="kw-def-en">estimated or forecast for the future</p>
+      <p class="kw-ctx">&ldquo;Germany is projected to spend €105.8bn (£91bn) in 2027 - with total defence expenditure next year set to reach 3.1% of GDP.&rdquo;</p>
+      <p class="kw-ctx-cn">德国预计在2027年支出1058亿欧元（910亿英镑），明年的国防总支出将达到GDP的3.1%。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "The US Department of Defence plans to withdraw 5,000 troops from Germany, amid a spat between US President Donald Trump and German Chancellor Friedrich Merz over the war with Iran.", "start_ms": 0, "end_ms": 13152, "paragraph_index": 0}, {"index": 1, "text": "The decision comes a day after Trump criticised Merz, who suggested the US had been \"humiliated\" by Iranian negotiators.", "start_ms": 13152, "end_ms": 22344, "paragraph_index": 1}, {"index": 2, "text": "In social media posts on Thursday, Trump said Merz was \"doing a terrible job\" and had \"problems of all kinds\", including on immigration and energy.", "start_ms": 22344, "end_ms": 33312, "paragraph_index": 2}, {"index": 3, "text": "Trump has also suggested pulling US troops from Italy and Spain.", "start_ms": 33312, "end_ms": 38616, "paragraph_index": 2}, {"index": 4, "text": "The US has a significant military presence in Germany, with more than 36,000 active duty troops assigned to bases across the country as of last December.", "start_ms": 38616, "end_ms": 50040, "paragraph_index": 3}, {"index": 5, "text": "In a statement, Pentagon spokesman Sean Parnell said the order had come from Secretary of Defence Pete Hegseth.", "start_ms": 50040, "end_ms": 58344, "paragraph_index": 4}, {"index": 6, "text": "\"This decision follows a thorough review of the Department's force posture in Europe and is in recognition of theater requirements and conditions on the ground,\" he said.", "start_ms": 58344, "end_ms": 69144, "paragraph_index": 5}, {"index": 7, "text": "\"We expect the withdrawal to be completed over the next six to twelve months.\"", "start_ms": 69144, "end_ms": 74568, "paragraph_index": 6}, {"index": 8, "text": "Trump, a longtime critic of the Nato alliance, has been lashing out at allies over their refusal to participate in operations to reopen the Strait of Hormuz.", "start_ms": 74568, "end_ms": 85800, "paragraph_index": 7}, {"index": 9, "text": "Asked on Thursday whether he would also consider pulling US troops from Nato allies Italy and Spain, Trump responded: \"I probably will - look, why shouldn't I?\"", "start_ms": 85800, "end_ms": 97008, "paragraph_index": 8}, {"index": 10, "text": "\"Italy has not been of any help to us and Spain has been horrible,\" he added, criticising them for their response to the war in Iran.", "start_ms": 97008, "end_ms": 106032, "paragraph_index": 9}, {"index": 11, "text": "\"In all cases they said, 'I don't want to get involved.'\"", "start_ms": 106032, "end_ms": 110376, "paragraph_index": 10}, {"index": 12, "text": "Merz told university students earlier this week that \"the Americans clearly have no strategy\" and he could not see \"what strategic exit\" they might choose.", "start_ms": 110376, "end_ms": 120648, "paragraph_index": 11}, {"index": 13, "text": "\"The Iranians are obviously very skilled at negotiating, or rather, very skilful at not negotiating, letting the Americans travel to Islamabad and then leave again without any result,\" he said.", "start_ms": 120648, "end_ms": 134400, "paragraph_index": 12}, {"index": 14, "text": "He added that the \"entire nation\" was being \"humiliated\" by the Iranian leadership.", "start_ms": 134400, "end_ms": 140328, "paragraph_index": 13}, {"index": 15, "text": "In response, Trump took to his platform Truth Social, where he said Merz thought it was \"OK for Iran to have a Nuclear Weapon\" and \"doesn't know what he's talking about\".", "start_ms": 140328, "end_ms": 151584, "paragraph_index": 14}, {"index": 16, "text": "\"No wonder Germany is doing so poorly, both Economically, and otherwise!\" the post read.", "start_ms": 151584, "end_ms": 158712, "paragraph_index": 15}, {"index": 17, "text": "The BBC has contacted the German embassy in Washington for comment.", "start_ms": 158712, "end_ms": 164256, "paragraph_index": 16}, {"index": 18, "text": "The US military deployment in Germany is by far its biggest in Europe, with about 12,000 troops in Italy and a further 10,000 in the UK.", "start_ms": 164256, "end_ms": 174768, "paragraph_index": 17}, {"index": 19, "text": "Many are stationed at Ramstein Air Base outside the south-western German city of Kaiserslautern.", "start_ms": 174768, "end_ms": 181872, "paragraph_index": 18}, {"index": 20, "text": "And while Trump has proposed US troop reductions in Germany before, they have so far not come in to effect.", "start_ms": 181872, "end_ms": 189576, "paragraph_index": 19}, {"index": 21, "text": "Only Japan hosts a larger US troop presence.", "start_ms": 189576, "end_ms": 193896, "paragraph_index": 20}, {"index": 22, "text": "In 2020, a proposal to move 12,000 US troops from Germany either to other Nato countries in Europe or back to the US was blocked by Congress and then reversed by President Joe Biden.", "start_ms": 193896, "end_ms": 207240, "paragraph_index": 21}, {"index": 23, "text": "At the time, Trump had accused Germany of being \"delinquent\" because its military spending was well below Nato's target of 2% of economic output (GDP).", "start_ms": 207240, "end_ms": 218616, "paragraph_index": 22}, {"index": 24, "text": "But that has changed dramatically under the Merz government.", "start_ms": 218616, "end_ms": 223032, "paragraph_index": 23}, {"index": 25, "text": "Germany is projected to spend \u20ac105.8bn (\u00a391bn) in 2027 - with total defence expenditure next year set to reach 3.1% of GDP.", "start_ms": 223032, "end_ms": 237528, "paragraph_index": 24}, {"index": 26, "text": "Last year, the US decided to reduce its troop presence in Romania, as part of Trump's plan to shift the focus of US military commitment from Europe to the Indo-Pacific region.", "start_ms": 237528, "end_ms": 250152, "paragraph_index": 25}, {"index": 27, "text": "Romania's defence minister said the decision was made after Hegseth conveyed to the Romanians that they needed to pay more attention to their own defence.", "start_ms": 250152, "end_ms": 260040, "paragraph_index": 26}, {"index": 28, "text": "The decision was met with disapproval from some of Trump's fellow Repubicans in Congress, and concern from other Eastern European countries wary of Russia.", "start_ms": 260040, "end_ms": 270456, "paragraph_index": 27}], "total_duration_ms": 270456};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "in": "在", "of": "的", "and": "和", "us": "我们", "trump": "特朗普", "from": "来自", "has": "有", "said": "说", "was": "是", "he": "他", "defence": "国防", "with": "与", "by": "被", "at": "在", "decision": "决定", "had": "有", "been": "已经", "on": "在", "military": "军事", "europe": "欧洲", "is": "是", "not": "不", "they": "它们", "that": "那个", "over": "超过", "iran": "伊朗", "presence": "存在", "nato": "北约", "their": "他们的", "for": "为了", "have": "有", "its": "它的", "president": "总统", "war": "战争", "after": "之后", "suggested": "建议", "iranian": "伊朗的", "social": "社交的", "thursday": "星期四", "doing": "做", "all": "所有", "also": "也", "more": "更多", "as": "作为", "last": "最后", "come": "到来", "hegseth": "赫格塞斯", "this": "这个", "next": "下一个", "allies": "盟友", "any": "任何", "added": "补充", "response": "回应", "americans": "美国人", "no": "没有", "what": "什么", "are": "是", "very": "非常", "or": "或者", "then": "然后", "being": "正在", "about": "关于", "so": "所以", "far": "远", "other": "其他", "countries": "国家", "congress": "国会", "year": "年", "trump's": "特朗普的", "department": "部门", "plans": "计划", "between": "之间", "donald": "唐纳德", "comes": "到来", "day": "天", "criticised": "批评", "who": "谁", "media": "媒体", "job": "工作", "including": "包括", "immigration": "移民", "energy": "能源", "significant": "重大", "than": "比", "duty": "职责", "across": "跨越", "country": "国家", "december": "十二月", "statement": "声明", "spokesman": "发言人", "order": "命令", "secretary": "秘书", "pete": "皮特", "thorough": "彻底的", "review": "审查", "force": "力量", "ground": "地面", "we": "我们", "expect": "期望", "be": "是", "six": "六", "months": "月", "longtime": "长期的", "alliance": "联盟", "out": "出来", "operations": "行动", "reopen": "重新开放", "strait": "海峡", "hormuz": "霍尔木兹", "asked": "询问", "whether": "是否", "would": "将", "responded": "回应", "will": "将", "look": "看起来", "why": "为何", "help": "帮助", "them": "他们", "don't": "不要", "want": "想要", "get": "得到", "involved": "涉及的", "told": "告诉", "earlier": "较早", "week": "周", "clearly": "显然", "strategy": "策略", "could": "可能", "see": "看到", "might": "可能", "iranians": "伊朗人", "obviously": "显然", "rather": "宁愿", "travel": "旅行", "islamabad": "伊斯兰堡", "again": "再次", "without": "没有", "result": "结果", "entire": "整个", "nation": "国家", "leadership": "领导力", "took": "担任", "his": "他的", "platform": "平台", "truth": "真相", "where": "那里", "thought": "认为", "it": "它", "nuclear": "核的", "weapon": "武器", "doesn't": "不", "know": "知道", "he's": "他是", "talking": "谈论", "both": "两者", "post": "职位", "read": "阅读", "bbc": "英国广播公司", "embassy": "大使馆", "washington": "华盛顿", "comment": "评论", "biggest": "最大的", "further": "进一步的", "uk": "英国", "many": "许多", "air": "气氛", "outside": "外部", "city": "城市", "while": "而", "before": "之前", "effect": "效果", "only": "只有", "move": "行动", "either": "要么", "back": "后退", "blocked": "封锁", "time": "时间", "accused": "被指控", "well": "好", "below": "下方", "target": "目标", "but": "但是", "changed": "改变", "dramatically": "急剧地", "under": "在...之下", "government": "政府", "set": "设定", "reach": "达到", "decided": "决定", "part": "部分", "commitment": "承诺", "minister": "部长", "made": "做出", "conveyed": "传达", "needed": "需要", "own": "自己", "met": "伦敦警察厅", "some": "一些", "fellow": "同事", "concern": "关切", "european": "欧洲的", "russia": "俄罗斯", "germany": "德国", "troops": "部队", "merz": "默茨", "italy": "意大利", "german": "德国的", "spain": "西班牙", "troop": "部队", "humiliated": "羞辱", "pulling": "撤离", "negotiating": "谈判", "gdp": "国内生产总值", "amid": "在…中", "chancellor": "总理", "friedrich": "弗里德里希", "negotiators": "谈判代表", "posts": "岗位", "terrible": "糟糕的", "problems": "问题", "kinds": "种类", "active": "现役的", "assigned": "部署", "bases": "基地", "pentagon": "五角大楼", "sean": "肖恩", "parnell": "帕内尔", "follows": "遵循", "department's": "部门的", "recognition": "承认", "theater": "战区", "requirements": "要求", "conditions": "条件", "withdrawal": "撤军", "completed": "完成", "twelve": "十二", "critic": "批评者", "lashing": "猛烈抨击", "refusal": "拒绝", "participate": "参与", "consider": "考虑", "probably": "很可能", "shouldn't": "不应该", "horrible": "可怕的", "criticising": "批评", "cases": "情况", "university": "大学", "students": "学生", "strategic": "战略的", "exit": "退出", "choose": "选择", "skilled": "熟练的", "skilful": "熟练的", "letting": "允许", "leave": "离开", "ok": "好的", "wonder": "想知道", "poorly": "糟糕地", "economically": "经济上", "otherwise": "否则", "contacted": "联系", "stationed": "驻扎", "ramstein": "拉姆施泰因", "base": "基地", "south-western": "西南部的", "kaiserslautern": "凯泽斯劳滕", "proposed": "提议的", "reductions": "削减", "japan": "日本", "hosts": "驻扎", "larger": "更大的", "proposal": "提议", "reversed": "撤销", "joe": "乔", "biden": "拜登", "because": "因为", "spending": "支出", "nato's": "北约的", "economic": "经济的", "output": "产出", "spend": "花费", "total": "总体的", "expenditure": "支出", "reduce": "减少", "romania": "罗马尼亚", "plan": "计划", "shift": "转移", "focus": "重点", "indo-pacific": "印太", "region": "地区", "romania's": "罗马尼亚的", "romanians": "罗马尼亚人", "pay": "支付", "attention": "关注", "disapproval": "反对", "repubicans": "共和党人", "eastern": "东部的", "wary": "谨慎的"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
