@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-09-07</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-09-07</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/dbc9/live/51c266c0-aaea-11f1-a291-b542ee92de7c.jpg" alt="Minister condemns disorder at Portsmouth anti-migrant protest after police officers hurt" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Minister condemns disorder at Portsmouth anti-migrant protest after police officers hurt</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cqxv2335je1o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-09-07.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Around 200 people, some wearing masks, confronted police in riot gear at the protest</span></p>
+        <p class="cn">大约200人，其中一些人戴着口罩，在抗议活动中与身着防暴装备的警察对峙。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Police are seeking to identify protesters after several officers were injured and vehicles damaged in Portsmouth at a demonstration sparked by the arrival of 120 migrants in a single dinghy.</span></p>
+        <p class="cn">在朴茨茅斯，一艘小船载着120名移民抵达后引发示威，导致数名警察受伤、车辆受损，警方正在寻找抗议者。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Policing Minister Sarah Jones told the House of Commons the <span class="keyword" data-word="disorder" data-phonetic="/dɪsˈɔːrdər/" data-pos="n." data-def="混乱；骚乱" data-def-en="a state of confusion or violence caused by a large group of people">disorder</span> on Sunday night was "intimidating and thuggish" and warned "those who cross into illegality" would "face the full force of the law".</span></p>
+        <p class="cn">警务部长莎拉·琼斯向下议院表示，周日晚上发生的骚乱“具有恐吓性和暴徒性质”，并警告“那些越界违法的人”将“面临法律的严惩”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">The protests followed a large group of masked men holding a demonstration over small-boat crossings at the Port of Dover on Saturday, causing major <span class="keyword" data-word="disruption" data-phonetic="/dɪsˈrʌpʃn/" data-pos="n." data-def="中断；扰乱" data-def-en="a situation in which something is prevented from continuing in its normal way">disruption</span>.</span></p>
+        <p class="cn">此前，周六在多佛港，一大群蒙面男子就小船越境问题举行了示威，造成严重混乱。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Portsmouth City Council said the Home Office had "serious questions to answer" over the decision to bring the migrants, who had crossed the English Channel from France, to shore in the area.</span></p>
+        <p class="cn">朴茨茅斯市议会表示，内政部决定将这批从法国穿越英吉利海峡的移民带到该地区上岸，这一决定需要“严肃回答一些问题”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">What we know about anti-migrant protests and organiser Danny Thomas</span></p>
+        <p class="cn">关于反移民抗议活动和组织者丹尼尔·托马斯的已知信息</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">Watch: Anti-migrant protesters block roads in Portsmouth</span></p>
+        <p class="cn">观看：反移民抗议者封锁朴茨茅斯道路</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">Council leader Steve Pitt said the decision had caused "needless <span class="keyword" data-word="disruption" data-phonetic="/dɪsˈrʌpʃn/" data-pos="n." data-def="中断；扰乱" data-def-en="a situation in which something is prevented from continuing in its normal way">disruption</span>".</span></p>
+        <p class="cn">市议会领袖史蒂夫·皮特表示，这一决定造成了“不必要的混乱”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">Around 200 people, some wearing masks, confronted police in riot gear after they descended on the Eastney Landing ferry port area, where the migrants were landed.</span></p>
+        <p class="cn">大约200人（其中一些人戴着口罩）在移民登陆的伊斯尼码头渡轮港口地区聚集，与身着防暴装备的警察对峙。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">Police protected a number of coaches parked on a road leading away from Eastney Marina as protesters blocked traffic.</span> <span class="sentence" data-sentence-index="10">A <span class="keyword" data-word="dispersal" data-phonetic="/dɪˈspɜːrsl/" data-pos="n." data-def="驱散；疏散" data-def-en="the act of making a group of people move away from a place">dispersal</span> order was put in place, meaning anyone failing to comply with police could be arrested.</span></p>
+        <p class="cn">当抗议者封锁交通时，警察保护了停在通往伊斯尼码头道路上的几辆大巴。警方发布了驱散令，这意味着不服从警察命令的人可能会被逮捕。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">In a statement, Hampshire and Isle of Wight Constabulary said a handful of officers were treated at the scene for injuries, none of which were serious.</span></p>
+        <p class="cn">汉普郡和怀特岛警察局在一份声明中表示，有少数警察在现场接受了轻伤治疗，均无大碍。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">It said: "Violence and criminal damage have no part in peaceful protest.</span></p>
+        <p class="cn">声明称：“暴力和刑事破坏不属于和平抗议的一部分。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="13">"No arrests have been made at this time, however an investigation to identify offenders responsible for any assaults to officers, criminal damage to vehicles or other criminal offences has been launched."</span></p>
+        <p class="cn">“目前尚未逮捕任何人，但已展开调查，以确定对警察实施袭击、对车辆进行刑事破坏或其他犯罪行为的责任人。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="14">Spencer Wragg, chair of Hampshire Police Federation, said: "I've seen footage of officers being pushed off their motorbikes, I've seen pictures of police vehicles damaged.</span> <span class="sentence" data-sentence-index="15">It appears that the police last night became the target for some of the protest."</span></p>
+        <p class="cn">汉普郡警察联合会主席斯宾塞·拉格表示：“我看到了警察被推下摩托车的画面，也看到了警车受损的照片。看来昨晚警察成了部分抗议者的目标。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="16">Daniel Thomas, known as Danny Tommo - an associate of far-right activist Tommy Robinson - was livestreaming from the scene - where he called for his supporters to "get down to Eastney" and stop the migrants being transported.</span></p>
+        <p class="cn">丹尼尔·托马斯（别名丹尼·汤莫，极右翼活动人士汤米·罗宾逊的伙伴）在事发现场进行直播，他在直播中呼吁支持者“前往伊斯尼”，阻止移民被转移。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="17">The coaches carrying the migrants were able to leave in the early hours of Monday and the Border Force confirmed "individuals from the boat have been transported outside of Hampshire for processing".</span></p>
+        <p class="cn">载有移民的大巴于周一凌晨得以离开，边境部队确认“船上人员已被运出汉普郡进行后续处理”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="18">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="19">Watch: Anti-migrant protesters block roads in Portsmouth</span></p>
+        <p class="cn">观看：反移民抗议者封锁朴茨茅斯道路</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="20">Footage shared online appeared to show protesters following the <span class="keyword" data-word="convoy" data-phonetic="/ˈkɒnvɔɪ/" data-pos="n." data-def="车队；护航队" data-def-en="a group of vehicles traveling together, especially for protection">convoy</span> of coaches along a motorway after it had left.</span></p>
+        <p class="cn">网上分享的片段似乎显示，抗议者在大巴车队离开后，沿着高速公路尾随其后。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="21">Protesters said they were trying to stop authorities transporting the migrants to the Manston processing centre in Kent.</span></p>
+        <p class="cn">抗议者表示，他们试图阻止当局将移民送往肯特郡的曼斯顿处理中心。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="22">In a statement to the House of Commons on Monday, the policing minister said: "Peaceful protest is a fundamental part of our democracy and it must be defended But so too is the right of other citizens to go about their lives without undue interference â and there can be no excuse for threatening behavior or serious <span class="keyword" data-word="disruption" data-phonetic="/dɪsˈrʌpʃn/" data-pos="n." data-def="中断；扰乱" data-def-en="a situation in which something is prevented from continuing in its normal way">disruption</span>."</span></p>
+        <p class="cn">警务部长在周一向下议院发表的声明中说：“和平抗议是我们民主的基本组成部分，必须予以捍卫。但其他公民在不受不当干扰的情况下正常生活的权利也同样重要——任何威胁行为或严重混乱都是不可原谅的。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="23">Sarah Jones added: "Let me therefore make clear to the House and to the country that <span class="keyword" data-word="disorder" data-phonetic="/dɪsˈɔːrdər/" data-pos="n." data-def="混乱；骚乱" data-def-en="a state of confusion or violence caused by a large group of people">disorder</span> of any kind will never be tolerated and those who cross the line from peaceful protest into illegality will face the full force of the law."</span></p>
+        <p class="cn">莎拉·琼斯补充说：“因此，我要向议会和全国明确表示，任何形式的混乱都不会被容忍，那些从和平抗议越界到非法行为的人将面临法律的严惩。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="24">Responding, shadow home secretary Chris Philp condemned the violence in Portsmouth but added: "This should also be a wake-up call for the government because it's not just those protesters in Dover and Portsmouth who feel so angry about large-scale illegal immigration.</span></p>
+        <p class="cn">影子内政大臣克里斯·菲尔普在回应中谴责了朴茨茅斯的暴力事件，但补充说：“这也应该给政府敲响警钟，因为不仅仅是多佛和朴茨茅斯的抗议者对大规模非法移民感到愤怒。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="25">"It is millions and millions of people up and down this country who feel angry as well."</span></p>
+        <p class="cn">“全国各地有数以百万计的人也感到愤怒。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="26">Reform UK leader Nigel Farage said the country is on the edge of "serious civil disturbance" and called on protests to remain peaceful.</span></p>
+        <p class="cn">改革英国党领袖奈杰尔·法拉奇表示，英国正处于“严重社会动荡”的边缘，并呼吁抗议活动保持和平。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="27">In a video posted to social media, he said: "Peaceful protest: good.</span> <span class="sentence" data-sentence-index="28">Uniforms and masks: bad.</span> <span class="sentence" data-sentence-index="29">Voting is the only way we get a solution."</span></p>
+        <p class="cn">他在社交媒体上发布的一段视频中说：“和平抗议：好。制服和面具：坏。投票是我们获得解决方案的唯一途径。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="30">Between 1 January and 6 September 2026, a total of 17,138 people crossed the English Channel by small boat from France.</span> <span class="sentence" data-sentence-index="31">This was down by 43% on the same period the previous year.</span></p>
+        <p class="cn">2026年1月1日至9月6日期间，共有17,138人乘坐小船从法国穿越英吉利海峡。这比去年同期下降了43%。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="32">These crossings have become the most common way for people to be detected entering the UK illegally since 2020.</span></p>
+        <p class="cn">自2020年以来，这些越境行为已成为发现非法进入英国的最常见方式。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="33">Nearly all those who arrive by small boat claim <span class="keyword" data-word="asylum" data-phonetic="/əˈsaɪləm/" data-pos="n." data-def="庇护；政治避难" data-def-en="protection given by a government to someone who has left their own country for safety">asylum</span>.</span> <span class="sentence" data-sentence-index="34">Under international law, this means they are allowed to stay in the country while their <span class="keyword" data-word="asylum" data-phonetic="/əˈsaɪləm/" data-pos="n." data-def="庇护；政治避难" data-def-en="protection given by a government to someone who has left their own country for safety">asylum</span> application is considered.</span></p>
+        <p class="cn">几乎所有乘小船抵达的人都会申请庇护。根据国际法，这意味着他们可以在庇护申请审理期间留在英国。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="35">Small boat arrivals made up 40% of <span class="keyword" data-word="asylum" data-phonetic="/əˈsaɪləm/" data-pos="n." data-def="庇护；政治避难" data-def-en="protection given by a government to someone who has left their own country for safety">asylum</span> applications between July 2025 to June 2026.</span></p>
+        <p class="cn">2025年7月至2026年6月期间，小船抵达者占庇护申请总数的40%。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="36">Boats that arrived in the UK from 7 September 2025 to 6 September 2026 carried an average of 68 people.</span> <span class="sentence" data-sentence-index="37">This has more than doubled since 2021.</span></p>
+        <p class="cn">从2025年9月7日到2026年9月6日抵达英国的船只平均载有68人。自2021年以来，这一数字已增长了一倍多。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="38">Experts say overcrowding in boats makes crossings riskier .</span> <span class="sentence" data-sentence-index="39">At least 84 people died while attempting to cross the Channel in 2024, according to the United Nations (UN).</span></p>
+        <p class="cn">专家表示，船只过度拥挤使越境风险更高。根据联合国（UN）的数据，2024年至少有84人在试图穿越英吉利海峡时死亡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="40">When looking at the scale of small boats crossings, the number of these arrivals is about 5% of the size of total immigration into the UK from January 2025 to December 2025.</span></p>
+        <p class="cn">从小船越境的规模来看，这些抵达人数约占2025年1月至2025年12月英国总移民人数的5%。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="41">The government has pledged to âsmash the gangsâ behind these crossings in order to reduce the numbers.</span></p>
+        <p class="cn">政府承诺“打击”这些越境背后的“犯罪团伙”，以减少人数。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="42">People from Eritrea accounted for 18% of all arrivals from July 2025 to June 2026.</span></p>
+        <p class="cn">2025年7月至2026年6月期间，厄立特里亚人占所有抵达者的18%。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="43">In the latest figures covering January 2025 to December 2025, at least 2,335 people who arrived by small boat were found to be potential victims of human trafficking or other forms of modern slavery, according to the Home Office.</span></p>
+        <p class="cn">根据内政部的数据，在2025年1月至2025年12月的最新数据中，至少有2,335名乘小船抵达的人被发现是人口贩运或其他形式现代奴隶制的潜在受害者。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="44">Another 4,712 people were detected entering the UK without permission via other methods including hiding in vehicles, travelling on ferries or through airports from July 2025 to June 2026.</span> <span class="sentence" data-sentence-index="45">This was down by 17% on the same period the previous year.</span></p>
+        <p class="cn">从2025年7月到2026年6月，另有4,712人被发现在未经许可的情况下通过其他方式进入英国，包括藏在车辆中、乘坐渡轮或通过机场。这比去年同期下降了17%。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="46">There are also individuals who arrive legally, for example via a work or study visa, and then overstay their limit.</span></p>
+        <p class="cn">还有一些人合法抵达，例如通过工作或学习签证，然后逾期居留。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="38">
+        <p class="en"><span class="sentence" data-sentence-index="47">The total number of people who live in the UK illegally after arriving legally is not known.</span></p>
+        <p class="cn">合法抵达后非法居住在英国的总人数尚不清楚。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="39">
+        <p class="en"><span class="sentence" data-sentence-index="48">Conservative MP Dame Caroline Dinenage, who represents Gosport near Portsmouth, accused the Home Office of failing to provide local officials with details of Sunday's protest.</span></p>
+        <p class="cn">代表朴茨茅斯附近戈斯波特的保守党议员卡罗琳·迪内纳奇女爵士指责内政部未能向当地官员提供周日抗议活动的细节。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="40">
+        <p class="en"><span class="sentence" data-sentence-index="49">"As a result we weren't in a position to calm fear and tension," she said.</span></p>
+        <p class="cn">她说：“因此，我们无法平息恐惧和紧张情绪。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="41">
+        <p class="en"><span class="sentence" data-sentence-index="50">The Labour MP for Portsmouth North, Amanda Martin, said the "emergence" of the route across the Channel taken in Sunday's crossing was "deeply worrying for my city".</span></p>
+        <p class="cn">朴茨茅斯北区工党议员阿曼达·马丁表示，周日越境所走的英吉利海峡路线的“出现”让她的城市“深感担忧”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="42">
+        <p class="en"><span class="sentence" data-sentence-index="51">Some 625 migrants on eight boats were brought to shore at Dover and Portsmouth on Sunday, according to Home Office figures.</span></p>
+        <p class="cn">根据内政部的数据，周日共有625名移民乘坐8艘船在多佛和朴茨茅斯上岸。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="43">
+        <p class="en"><span class="sentence" data-sentence-index="52">A total of 16,513 people arrived in the UK in small boats in the year to 1 September - which is 43% lower than the same period the previous year.</span></p>
+        <p class="cn">截至9月1日的一年中，共有16,513人乘小船抵达英国，比去年同期下降了43%。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="44">
+        <p class="en"><span class="sentence" data-sentence-index="53">UK net migration has meanwhile dropped to its lowest level outside of the Covid pandemic since 2012.</span></p>
+        <p class="cn">与此同时，英国净移民人数已降至2012年以来除新冠疫情时期之外的最低水平。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="45">
+        <p class="en"><span class="sentence" data-sentence-index="54">This weekend's <span class="keyword" data-word="disruption" data-phonetic="/dɪsˈrʌpʃn/" data-pos="n." data-def="中断；扰乱" data-def-en="a situation in which something is prevented from continuing in its normal way">disruption</span> comes just days after Prime Minister Andy Burnham and French President Emmanuel Macron met to discuss how to "scale up" efforts to reduce small boat crossings.</span></p>
+        <p class="cn">本周末的混乱发生前几天，首相安迪·伯纳姆和法国总统埃马纽埃尔·马克龙刚刚会面，讨论如何“加大”减少小船越境的力度。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="46">
+        <p class="en"><span class="sentence" data-sentence-index="55">But while the number of boat crossings over summer months has dropped to its lowest since 2019, smugglers appear to have started loading more people onto fewer, larger vessels dubbed "mega dinghies".</span></p>
+        <p class="cn">但是，尽管夏季月份的船只越境数量已降至2019年以来的最低水平，但走私者似乎开始将更多人装载到更少、更大的被称为“超级小艇”的船只上。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="47">
+        <p class="en"><span class="sentence" data-sentence-index="56">In August, a single small boat carrying a record 230 people successfully crossed the Channel.</span></p>
+        <p class="cn">8月，一艘载有创纪录的230人的小船成功穿越英吉利海峡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="48">
+        <p class="en"><span class="sentence" data-sentence-index="57">It is thought the people smugglers organising the crossings have been forced to go to much greater lengths to avoid detection following more robust policing in the Calais area.</span></p>
+        <p class="cn">据信，组织越境的人口走私者由于加莱地区加强了警力，被迫采取更隐蔽的手段以避免被发现。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="49">
+        <p class="en"><span class="sentence" data-sentence-index="58">Channel smuggling gangs resort to 'mega-dinghies' as crackdown limits small boat supply</span></p>
+        <p class="cn">英吉利海峡走私团伙在打击行动限制小船供应后，转而使用“超级小艇”。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">confront</span>
+        <button class="kw-speak-btn" data-word="confront" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kənˈfrʌnt/ v.</span>
+      </div>
+      <p class="kw-def">面对；对抗</p>
+      <p class="kw-def-en">to face someone or something in a challenging way</p>
+      <p class="kw-ctx">&ldquo;Around 200 people, some wearing masks, confronted police in riot gear at the protest.&rdquo;</p>
+      <p class="kw-ctx-cn">大约200人，其中一些人戴着口罩，在抗议活动中与身着防暴装备的警察对峙。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">disorder</span>
+        <button class="kw-speak-btn" data-word="disorder" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪsˈɔːrdər/ n.</span>
+      </div>
+      <p class="kw-def">混乱；骚乱</p>
+      <p class="kw-def-en">a state of confusion or violence caused by a large group of people</p>
+      <p class="kw-ctx">&ldquo;Policing Minister Sarah Jones told the House of Commons the disorder on Sunday night was "intimidating and thuggish".&rdquo;</p>
+      <p class="kw-ctx-cn">警务部长莎拉·琼斯向下议院表示，周日晚上的骚乱是“恐吓性和暴徒式的”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">disruption</span>
+        <button class="kw-speak-btn" data-word="disruption" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪsˈrʌpʃn/ n.</span>
+      </div>
+      <p class="kw-def">中断；扰乱</p>
+      <p class="kw-def-en">a situation in which something is prevented from continuing in its normal way</p>
+      <p class="kw-ctx">&ldquo;The protests followed a large group of masked men holding a demonstration over small-boat crossings at the Port of Dover on Saturday, causing major disruption.&rdquo;</p>
+      <p class="kw-ctx-cn">此前，周六在多佛港，一大群蒙面男子就小船偷渡问题举行示威，造成了严重混乱。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">dispersal</span>
+        <button class="kw-speak-btn" data-word="dispersal" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈspɜːrsl/ n.</span>
+      </div>
+      <p class="kw-def">驱散；疏散</p>
+      <p class="kw-def-en">the act of making a group of people move away from a place</p>
+      <p class="kw-ctx">&ldquo;A dispersal order was put in place, meaning anyone failing to comply with police could be arrested.&rdquo;</p>
+      <p class="kw-ctx-cn">警方发布了驱散令，这意味着任何不遵守警方指令的人都可能被逮捕。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">assault</span>
+        <button class="kw-speak-btn" data-word="assault" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈsɔːlt/ n.</span>
+      </div>
+      <p class="kw-def">袭击；攻击</p>
+      <p class="kw-def-en">a violent attack on someone</p>
+      <p class="kw-ctx">&ldquo;an investigation to identify offenders responsible for any assaults to officers, criminal damage to vehicles or other criminal offences has been launched.&rdquo;</p>
+      <p class="kw-ctx-cn">已展开调查，以查明对警察实施袭击、对车辆造成刑事损害或其他刑事犯罪的肇事者。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">livestream</span>
+        <button class="kw-speak-btn" data-word="livestream" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈlaɪvstriːm/ v.</span>
+      </div>
+      <p class="kw-def">直播</p>
+      <p class="kw-def-en">to broadcast video of an event over the internet in real time</p>
+      <p class="kw-ctx">&ldquo;Daniel Thomas, known as Danny Tommo - an associate of far-right activist Tommy Robinson - was livestreaming from the scene.&rdquo;</p>
+      <p class="kw-ctx-cn">丹尼尔·托马斯，人称丹尼·托莫，是极右翼活动家汤米·罗宾逊的同伙，他在现场进行了直播。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">convoy</span>
+        <button class="kw-speak-btn" data-word="convoy" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈkɒnvɔɪ/ n.</span>
+      </div>
+      <p class="kw-def">车队；护航队</p>
+      <p class="kw-def-en">a group of vehicles traveling together, especially for protection</p>
+      <p class="kw-ctx">&ldquo;Footage shared online appeared to show protesters following the convoy of coaches along a motorway after it had left.&rdquo;</p>
+      <p class="kw-ctx-cn">网上分享的视频似乎显示，抗议者在车队离开后，沿着高速公路跟随大巴车队。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">asylum</span>
+        <button class="kw-speak-btn" data-word="asylum" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈsaɪləm/ n.</span>
+      </div>
+      <p class="kw-def">庇护；政治避难</p>
+      <p class="kw-def-en">protection given by a government to someone who has left their own country for safety</p>
+      <p class="kw-ctx">&ldquo;Nearly all those who arrive by small boat claim asylum.&rdquo;</p>
+      <p class="kw-ctx-cn">几乎所有乘坐小船抵达的人都会申请庇护。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Around 200 people, some wearing masks, confronted police in riot gear at the protest", "start_ms": 0, "end_ms": 7056, "paragraph_index": 0}, {"index": 1, "text": "Police are seeking to identify protesters after several officers were injured and vehicles damaged in Portsmouth at a demonstration sparked by the arrival of 120 migrants in a single dinghy.", "start_ms": 7056, "end_ms": 20304, "paragraph_index": 1}, {"index": 2, "text": "Policing Minister Sarah Jones told the House of Commons the disorder on Sunday night was \"intimidating and thuggish\" and warned \"those who cross into illegality\" would \"face the full force of the law\".", "start_ms": 20304, "end_ms": 32664, "paragraph_index": 2}, {"index": 3, "text": "The protests followed a large group of masked men holding a demonstration over small-boat crossings at the Port of Dover on Saturday, causing major disruption.", "start_ms": 32664, "end_ms": 43488, "paragraph_index": 3}, {"index": 4, "text": "Portsmouth City Council said the Home Office had \"serious questions to answer\" over the decision to bring the migrants, who had crossed the English Channel from France, to shore in the area.", "start_ms": 43488, "end_ms": 55776, "paragraph_index": 4}, {"index": 5, "text": "What we know about anti-migrant protests and organiser Danny Thomas", "start_ms": 55776, "end_ms": 61416, "paragraph_index": 5}, {"index": 6, "text": "Watch: Anti-migrant protesters block roads in Portsmouth", "start_ms": 61416, "end_ms": 66384, "paragraph_index": 6}, {"index": 7, "text": "Council leader Steve Pitt said the decision had caused \"needless disruption\".", "start_ms": 66384, "end_ms": 72000, "paragraph_index": 7}, {"index": 8, "text": "Around 200 people, some wearing masks, confronted police in riot gear after they descended on the Eastney Landing ferry port area, where the migrants were landed.", "start_ms": 72000, "end_ms": 83568, "paragraph_index": 8}, {"index": 9, "text": "Police protected a number of coaches parked on a road leading away from Eastney Marina as protesters blocked traffic.", "start_ms": 83568, "end_ms": 91728, "paragraph_index": 9}, {"index": 10, "text": "A dispersal order was put in place, meaning anyone failing to comply with police could be arrested.", "start_ms": 91728, "end_ms": 99072, "paragraph_index": 9}, {"index": 11, "text": "In a statement, Hampshire and Isle of Wight Constabulary said a handful of officers were treated at the scene for injuries, none of which were serious.", "start_ms": 99072, "end_ms": 109416, "paragraph_index": 10}, {"index": 12, "text": "It said: \"Violence and criminal damage have no part in peaceful protest.", "start_ms": 109416, "end_ms": 115176, "paragraph_index": 11}, {"index": 13, "text": "\"No arrests have been made at this time, however an investigation to identify offenders responsible for any assaults to officers, criminal damage to vehicles or other criminal offences has been launched.\"", "start_ms": 115176, "end_ms": 129312, "paragraph_index": 12}, {"index": 14, "text": "Spencer Wragg, chair of Hampshire Police Federation, said: \"I've seen footage of officers being pushed off their motorbikes, I've seen pictures of police vehicles damaged.", "start_ms": 129312, "end_ms": 140808, "paragraph_index": 13}, {"index": 15, "text": "It appears that the police last night became the target for some of the protest.\"", "start_ms": 140808, "end_ms": 146448, "paragraph_index": 13}, {"index": 16, "text": "Daniel Thomas, known as Danny Tommo - an associate of far-right activist Tommy Robinson - was livestreaming from the scene - where he called for his supporters to \"get down to Eastney\" and stop the migrants being transported.", "start_ms": 146448, "end_ms": 161016, "paragraph_index": 14}, {"index": 17, "text": "The coaches carrying the migrants were able to leave in the early hours of Monday and the Border Force confirmed \"individuals from the boat have been transported outside of Hampshire for processing\".", "start_ms": 161016, "end_ms": 172968, "paragraph_index": 15}, {"index": 18, "text": "This video can not be played", "start_ms": 172968, "end_ms": 175968, "paragraph_index": 16}, {"index": 19, "text": "Watch: Anti-migrant protesters block roads in Portsmouth", "start_ms": 175968, "end_ms": 180936, "paragraph_index": 17}, {"index": 20, "text": "Footage shared online appeared to show protesters following the convoy of coaches along a motorway after it had left.", "start_ms": 180936, "end_ms": 189144, "paragraph_index": 18}, {"index": 21, "text": "Protesters said they were trying to stop authorities transporting the migrants to the Manston processing centre in Kent.", "start_ms": 189144, "end_ms": 197016, "paragraph_index": 19}, {"index": 22, "text": "In a statement to the House of Commons on Monday, the policing minister said: \"Peaceful protest is a fundamental part of our democracy and it must be defended But so too is the right of other citizens to go about their lives without undue interference \u00e2\u0080\u0093 and there can be no excuse for threatening behavior or serious disruption.\"", "start_ms": 197016, "end_ms": 217608, "paragraph_index": 20}, {"index": 23, "text": "Sarah Jones added: \"Let me therefore make clear to the House and to the country that disorder of any kind will never be tolerated and those who cross the line from peaceful protest into illegality will face the full force of the law.\"", "start_ms": 217608, "end_ms": 232056, "paragraph_index": 21}, {"index": 24, "text": "Responding, shadow home secretary Chris Philp condemned the violence in Portsmouth but added: \"This should also be a wake-up call for the government because it's not just those protesters in Dover and Portsmouth who feel so angry about large-scale illegal immigration.", "start_ms": 232056, "end_ms": 248760, "paragraph_index": 22}, {"index": 25, "text": "\"It is millions and millions of people up and down this country who feel angry as well.\"", "start_ms": 248760, "end_ms": 254664, "paragraph_index": 23}, {"index": 26, "text": "Reform UK leader Nigel Farage said the country is on the edge of \"serious civil disturbance\" and called on protests to remain peaceful.", "start_ms": 254664, "end_ms": 264192, "paragraph_index": 24}, {"index": 27, "text": "In a video posted to social media, he said: \"Peaceful protest: good.", "start_ms": 264192, "end_ms": 270240, "paragraph_index": 25}, {"index": 28, "text": "Uniforms and masks: bad.", "start_ms": 270240, "end_ms": 273552, "paragraph_index": 25}, {"index": 29, "text": "Voting is the only way we get a solution.\"", "start_ms": 273552, "end_ms": 277176, "paragraph_index": 25}, {"index": 30, "text": "Between 1 January and 6 September 2026, a total of 17,138 people crossed the English Channel by small boat from France.", "start_ms": 277176, "end_ms": 289296, "paragraph_index": 26}, {"index": 31, "text": "This was down by 43% on the same period the previous year.", "start_ms": 289296, "end_ms": 294696, "paragraph_index": 26}, {"index": 32, "text": "These crossings have become the most common way for people to be detected entering the UK illegally since 2020.", "start_ms": 294696, "end_ms": 302928, "paragraph_index": 27}, {"index": 33, "text": "Nearly all those who arrive by small boat claim asylum.", "start_ms": 302928, "end_ms": 307344, "paragraph_index": 28}, {"index": 34, "text": "Under international law, this means they are allowed to stay in the country while their asylum application is considered.", "start_ms": 307344, "end_ms": 315360, "paragraph_index": 28}, {"index": 35, "text": "Small boat arrivals made up 40% of asylum applications between July 2025 to June 2026.", "start_ms": 315360, "end_ms": 324384, "paragraph_index": 29}, {"index": 36, "text": "Boats that arrived in the UK from 7 September 2025 to 6 September 2026 carried an average of 68 people.", "start_ms": 324384, "end_ms": 334824, "paragraph_index": 30}, {"index": 37, "text": "This has more than doubled since 2021.", "start_ms": 334824, "end_ms": 338736, "paragraph_index": 30}, {"index": 38, "text": "Experts say overcrowding in boats makes crossings riskier .", "start_ms": 338736, "end_ms": 343608, "paragraph_index": 31}, {"index": 39, "text": "At least 84 people died while attempting to cross the Channel in 2024, according to the United Nations (UN).", "start_ms": 343608, "end_ms": 352464, "paragraph_index": 31}, {"index": 40, "text": "When looking at the scale of small boats crossings, the number of these arrivals is about 5% of the size of total immigration into the UK from January 2025 to December 2025.", "start_ms": 352464, "end_ms": 366168, "paragraph_index": 32}, {"index": 41, "text": "The government has pledged to \u00e2\u0080\u009csmash the gangs\u00e2\u0080\u009d behind these crossings in order to reduce the numbers.", "start_ms": 366168, "end_ms": 373296, "paragraph_index": 33}, {"index": 42, "text": "People from Eritrea accounted for 18% of all arrivals from July 2025 to June 2026.", "start_ms": 373296, "end_ms": 382128, "paragraph_index": 34}, {"index": 43, "text": "In the latest figures covering January 2025 to December 2025, at least 2,335 people who arrived by small boat were found to be potential victims of human trafficking or other forms of modern slavery, according to the Home Office.", "start_ms": 382128, "end_ms": 400608, "paragraph_index": 35}, {"index": 44, "text": "Another 4,712 people were detected entering the UK without permission via other methods including hiding in vehicles, travelling on ferries or through airports from July 2025 to June 2026.", "start_ms": 400608, "end_ms": 416568, "paragraph_index": 36}, {"index": 45, "text": "This was down by 17% on the same period the previous year.", "start_ms": 416568, "end_ms": 421896, "paragraph_index": 36}, {"index": 46, "text": "There are also individuals who arrive legally, for example via a work or study visa, and then overstay their limit.", "start_ms": 421896, "end_ms": 430728, "paragraph_index": 37}, {"index": 47, "text": "The total number of people who live in the UK illegally after arriving legally is not known.", "start_ms": 430728, "end_ms": 437328, "paragraph_index": 38}, {"index": 48, "text": "Conservative MP Dame Caroline Dinenage, who represents Gosport near Portsmouth, accused the Home Office of failing to provide local officials with details of Sunday's protest.", "start_ms": 437328, "end_ms": 450024, "paragraph_index": 39}, {"index": 49, "text": "\"As a result we weren't in a position to calm fear and tension,\" she said.", "start_ms": 450024, "end_ms": 455496, "paragraph_index": 40}, {"index": 50, "text": "The Labour MP for Portsmouth North, Amanda Martin, said the \"emergence\" of the route across the Channel taken in Sunday's crossing was \"deeply worrying for my city\".", "start_ms": 455496, "end_ms": 466368, "paragraph_index": 41}, {"index": 51, "text": "Some 625 migrants on eight boats were brought to shore at Dover and Portsmouth on Sunday, according to Home Office figures.", "start_ms": 466368, "end_ms": 475968, "paragraph_index": 42}, {"index": 52, "text": "A total of 16,513 people arrived in the UK in small boats in the year to 1 September - which is 43% lower than the same period the previous year.", "start_ms": 475968, "end_ms": 488304, "paragraph_index": 43}, {"index": 53, "text": "UK net migration has meanwhile dropped to its lowest level outside of the Covid pandemic since 2012.", "start_ms": 488304, "end_ms": 496512, "paragraph_index": 44}, {"index": 54, "text": "This weekend's disruption comes just days after Prime Minister Andy Burnham and French President Emmanuel Macron met to discuss how to \"scale up\" efforts to reduce small boat crossings.", "start_ms": 496512, "end_ms": 508824, "paragraph_index": 45}, {"index": 55, "text": "But while the number of boat crossings over summer months has dropped to its lowest since 2019, smugglers appear to have started loading more people onto fewer, larger vessels dubbed \"mega dinghies\".", "start_ms": 508824, "end_ms": 522360, "paragraph_index": 46}, {"index": 56, "text": "In August, a single small boat carrying a record 230 people successfully crossed the Channel.", "start_ms": 522360, "end_ms": 529944, "paragraph_index": 47}, {"index": 57, "text": "It is thought the people smugglers organising the crossings have been forced to go to much greater lengths to avoid detection following more robust policing in the Calais area.", "start_ms": 529944, "end_ms": 541008, "paragraph_index": 48}, {"index": 58, "text": "Channel smuggling gangs resort to 'mega-dinghies' as crackdown limits small boat supply", "start_ms": 541008, "end_ms": 547392, "paragraph_index": 49}], "total_duration_ms": 547392};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "of": "的", "in": "在", "and": "和", "people": "人们", "on": "在", "for": "为了", "said": "说", "from": "来自", "who": "谁", "is": "是", "at": "在", "were": "是", "portsmouth": "朴茨茅斯", "this": "这个", "boat": "船", "small": "小的", "police": "警方", "crossings": "过境", "be": "是", "uk": "英国", "protest": "抗议", "protesters": "抗议者", "migrants": "移民", "by": "被", "was": "是", "channel": "航道", "it": "它", "have": "有", "after": "之后", "home": "家", "as": "作为", "peaceful": "和平的", "or": "或者", "has": "有", "boats": "船只", "some": "一些", "officers": "官员", "vehicles": "车辆", "those": "那些", "office": "办公室", "had": "有", "serious": "严重的", "about": "关于", "number": "数量", "been": "已经", "other": "其他", "their": "他们的", "down": "下来", "country": "国家", "september": "九月", "total": "总体的", "year": "年", "since": "自从", "are": "是", "policing": "警务", "minister": "部长", "house": "议院", "cross": "穿越", "into": "进入", "force": "力量", "law": "法律", "protests": "抗议活动", "over": "超过", "dover": "多佛", "crossed": "穿过", "area": "区域", "we": "我们", "they": "它们", "hampshire": "汉普郡", "criminal": "犯罪的", "no": "没有", "an": "一个", "that": "那个", "not": "不", "but": "但是", "up": "向上", "january": "一月", "same": "相同", "period": "时期", "previous": "先前", "these": "这些", "while": "而", "arrivals": "到达", "july": "七月", "june": "六月", "arrived": "抵达", "more": "更多", "according": "根据", "around": "在...周围", "wearing": "穿着", "riot": "骚乱", "gear": "装备", "identify": "识别", "damaged": "受损", "single": "单一的", "sarah": "莎拉", "jones": "琼斯", "commons": "下议院", "sunday": "星期日", "night": "晚上", "face": "面临", "full": "完整", "port": "港口", "city": "城市", "council": "委员会", "decision": "决定", "english": "英格兰的", "france": "法国", "shore": "支持", "thomas": "托马斯", "watch": "观看", "block": "阻止", "roads": "道路", "leader": "领导人", "where": "那里", "order": "命令", "failing": "失败", "with": "与", "statement": "声明", "scene": "现场", "which": "哪个", "violence": "暴力", "damage": "损坏", "part": "部分", "made": "做出", "any": "任何", "i've": "我已经", "seen": "被视为", "footage": "视频片段", "being": "正在", "known": "已知", "he": "他", "called": "称为", "get": "得到", "stop": "停止", "transported": "运输", "carrying": "携带", "monday": "星期一", "individuals": "个人", "outside": "外部", "video": "视频", "can": "可以", "following": "随后", "so": "所以", "go": "去", "without": "没有", "there": "那里", "added": "补充", "will": "将", "also": "也", "government": "政府", "just": "只是", "feel": "感觉", "angry": "愤怒的", "immigration": "移民", "millions": "数百万", "way": "方式", "between": "之间", "detected": "检测到", "entering": "进入", "illegally": "非法地", "all": "所有", "arrive": "抵达", "than": "比", "least": "至少", "scale": "规模", "december": "十二月", "reduce": "减少", "figures": "人物", "via": "通过", "legally": "法律上", "mp": "议员", "sunday's": "周日的", "dropped": "下降", "its": "它的", "lowest": "最低的", "seeking": "寻求", "several": "数个", "injured": "受伤", "sparked": "引发", "arrival": "到达", "told": "告诉", "warned": "警告", "would": "将", "followed": "遵循", "large": "大的", "group": "团体", "masked": "蒙面的", "men": "男人们", "holding": "拿着", "saturday": "星期六", "causing": "导致", "major": "重大的", "questions": "问题", "answer": "回答", "bring": "带来", "what": "什么", "know": "知道", "organiser": "组织者", "steve": "史蒂夫", "caused": "导致", "landing": "着陆", "landed": "降落", "protected": "保护", "parked": "停放", "road": "道路", "leading": "领导", "away": "离开", "marina": "玛丽娜", "blocked": "封锁", "traffic": "交通", "put": "提出", "place": "地点", "meaning": "意义", "anyone": "任何人", "comply": "遵守", "could": "可能", "arrested": "被捕", "isle": "岛", "wight": "怀特岛", "constabulary": "警察部队", "handful": "少数", "treated": "接受治疗", "injuries": "受伤", "none": "没有一个", "arrests": "逮捕", "time": "时间", "however": "然而", "investigation": "调查", "offenders": "罪犯", "responsible": "负责的", "assaults": "袭击", "offences": "罪行", "launched": "发起", "spencer": "斯宾塞", "chair": "主席", "federation": "联合会", "pushed": "推动", "off": "离开", "pictures": "照片", "appears": "似乎", "last": "最后", "became": "成为", "target": "目标", "daniel": "丹尼尔", "associate": "关联", "far-right": "极右翼", "activist": "活动人士", "tommy": "汤米", "robinson": "罗宾逊", "his": "他的", "supporters": "支持者", "able": "能够", "leave": "离开", "early": "早期的", "hours": "小时", "border": "边界", "confirmed": "确认", "played": "比赛", "shared": "分享", "online": "在线", "appeared": "出现", "show": "显示", "along": "一起", "motorway": "高速公路", "left": "离开", "trying": "尝试", "authorities": "当局", "centre": "中心", "kent": "肯特", "fundamental": "根本的", "our": "我们的", "democracy": "民主", "must": "必须", "defended": "辩护", "too": "太", "right": "正确", "citizens": "公民", "lives": "生命", "interference": "干涉", "threatening": "威胁性的", "behavior": "行为", "let": "让", "me": "我", "therefore": "因此", "make": "使", "clear": "明确", "kind": "种类", "never": "从未", "tolerated": "容忍", "line": "界限", "responding": "回应", "shadow": "阴影", "secretary": "秘书", "chris": "克里斯", "philp": "菲尔普", "condemned": "谴责", "should": "应该", "call": "呼吁", "because": "因为", "it's": "它是", "large-scale": "大规模", "illegal": "非法的", "well": "好", "reform": "改革", "nigel": "奈杰尔", "farage": "法拉奇", "civil": "民事的", "remain": "仍然", "posted": "发布", "social": "社交的", "media": "媒体", "good": "良好", "uniforms": "制服", "bad": "糟糕", "voting": "投票", "only": "只有", "solution": "解决方案", "become": "成为", "most": "最", "common": "共同的", "nearly": "几乎", "claim": "声称", "under": "在...之下", "international": "国际", "means": "意味着", "allowed": "允许", "stay": "保持", "application": "申请", "considered": "认为", "applications": "申请", "carried": "进行", "average": "平均", "doubled": "加倍", "experts": "专家", "say": "说", "makes": "使得", "riskier": "风险更大的", "died": "死亡", "attempting": "试图", "united": "联合", "nations": "国家（复数）", "un": "联合国", "when": "当", "looking": "寻找", "size": "大小", "pledged": "承诺", "behind": "在...后面", "numbers": "数字", "latest": "最新的", "covering": "涵盖", "found": "发现", "potential": "潜在", "victims": "受害者", "human": "人类", "trafficking": "贩运", "forms": "形式", "modern": "现代", "another": "另一个", "permission": "许可", "methods": "方法", "including": "包括", "hiding": "躲藏", "travelling": "旅行", "through": "通过", "airports": "机场", "example": "例子", "work": "工作", "study": "研究", "then": "然后", "limit": "限制", "live": "生活", "arriving": "到达", "conservative": "保守党", "dame": "女爵士", "represents": "代表", "gosport": "戈斯波特", "near": "附近", "accused": "被指控", "provide": "提供", "local": "当地", "officials": "官员", "details": "细节", "result": "结果", "weren't": "不是", "position": "立场", "calm": "平静的", "fear": "恐惧", "tension": "紧张", "she": "她", "labour": "工党", "north": "北部", "martin": "马丁", "route": "航线", "across": "跨越", "taken": "采取", "crossing": "越境", "deeply": "深深地", "worrying": "令人担忧的", "my": "我的", "eight": "八", "brought": "带来", "lower": "较低的", "net": "球网", "migration": "迁移", "meanwhile": "与此同时", "level": "水平", "covid": "新冠肺炎", "pandemic": "大流行", "comes": "到来", "days": "天", "prime": "首相", "andy": "安迪", "burnham": "伯纳姆", "french": "法国的", "president": "总统", "emmanuel": "埃马纽埃尔", "macron": "马克龙", "met": "伦敦警察厅", "discuss": "讨论", "how": "如何", "efforts": "努力", "summer": "夏天", "months": "月", "appear": "出现", "started": "开始", "onto": "到...上", "fewer": "更少", "larger": "更大的", "vessels": "船只", "august": "八月", "record": "记录", "successfully": "成功地", "thought": "认为", "organising": "组织", "forced": "被迫", "much": "许多", "greater": "更大的", "avoid": "避免", "robust": "强劲的", "gangs": "团伙", "resort": "度假胜地", "limits": "限制", "supply": "供应", "masks": "口罩", "anti-migrant": "反移民的", "eastney": "伊斯尼", "coaches": "大巴", "confronted": "面对", "demonstration": "示威", "illegality": "非法性", "danny": "丹尼", "processing": "处理", "smugglers": "走私者", "dinghy": "小艇", "intimidating": "恐吓的", "thuggish": "暴徒般的", "small-boat": "小船", "pitt": "皮特", "needless": "不必要的", "descended": "涌来", "ferry": "渡轮", "wragg": "拉格", "motorbikes": "摩托车", "tommo": "托莫", "livestreaming": "直播", "transporting": "运送", "manston": "曼斯顿", "undue": "过度的", "excuse": "借口", "wake-up": "警醒", "edge": "边缘", "disturbance": "骚乱", "overcrowding": "过度拥挤", "smash": "砸碎", "eritrea": "厄立特里亚", "accounted": "占", "slavery": "奴役", "ferries": "渡轮", "visa": "签证", "overstay": "逾期居留", "caroline": "卡罗琳", "dinenage": "迪内纳奇", "amanda": "阿曼达", "emergence": "出现", "weekend's": "周末的", "loading": "装载", "dubbed": "被称为", "mega": "大型", "dinghies": "小艇", "lengths": "长度", "detection": "侦测", "calais": "加来", "smuggling": "走私", "mega-dinghies": "大型小艇", "crackdown": "打击"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
