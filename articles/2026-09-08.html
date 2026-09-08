@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-09-08</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-09-08</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/6cd1/live/8d1d81e0-aba9-11f1-b109-879e35c24276.jpg" alt="UK announces sanctions on West Bank settlements prompting furious Israeli response" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>UK announces sanctions on West Bank settlements prompting furious Israeli response</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/c4g7zen0vveo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-09-08.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Watch: There is <span class="keyword" data-word="ethnic cleansing" data-phonetic="/ˈeθnɪk ˈklenzɪŋ/" data-pos="n." data-def="种族清洗" data-def-en="The deliberate removal of an ethnic or religious group from a certain area by force.">ethnic cleansing</span> in areas of the West Bank, says Miliband</span></p>
+        <p class="cn">观看：米利班德称约旦河西岸部分地区存在种族清洗</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">The UK has announced sanctions on illegal Israeli settlements in the occupied West Bank, accusing Israel's government of turning a blind eye to the "<span class="keyword" data-word="ethnic cleansing" data-phonetic="/ˈeθnɪk ˈklenzɪŋ/" data-pos="n." data-def="种族清洗" data-def-en="The deliberate removal of an ethnic or religious group from a certain area by force.">ethnic cleansing</span>" of Palestinians by settlers.</span></p>
+        <p class="cn">英国宣布对以色列在被占领的约旦河西岸的非法定居点实施制裁，指责以色列政府对定居者对巴勒斯坦人的“种族清洗”视而不见。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Foreign Secretary Ed Miliband said the move marked the "beginning of a new approach" to the Israeli-Palestinian conflict, which "not only calls out injustice and suffering but acts".</span></p>
+        <p class="cn">外交大臣埃德·米利班德表示，此举标志着对以巴冲突“新方法的开始”，这种方法“不仅指出不公正和苦难，而且采取行动”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Israel's Foreign Minister Gideon Saar responded by accusing him of spreading an "outrageous lie" and announced counter-measures including shutting the UK's consulate in East Jerusalem.</span></p>
+        <p class="cn">以色列外交部长吉迪恩·萨尔回应称，他散布“无耻谎言”，并宣布反制措施，包括关闭英国在耶路撒冷的领事馆。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">The UK sanctions will ban <span class="keyword" data-word="settlement" data-phonetic="/ˈsetlmənt/" data-pos="n." data-def="定居点；解决" data-def-en="A place where people have come to live, or an official agreement to end a dispute.">settlement</span> goods but also act against companies and individuals providing services for settlement <span class="keyword" data-word="expansion" data-phonetic="/ɪkˈspænʃn/" data-pos="n." data-def="扩张；扩展" data-def-en="The act of becoming larger or more extensive.">expansion</span>.</span></p>
+        <p class="cn">英国制裁将禁止定居点商品，但也会对为定居点扩张提供服务的公司和个人采取行动。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">In West Bank, date farmers weigh impact of UK sanctions on Israeli settlers</span></p>
+        <p class="cn">在约旦河西岸，椰枣种植者评估英国制裁对以色列定居者的影响</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">How Israel is expanding settlements in drive to reshape West Bank</span></p>
+        <p class="cn">以色列如何扩大定居点以重塑约旦河西岸</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">The sanctions were launched alongside France and Canada, which in a joint statement with the UK said the action "marks a further turning point in our approach to protecting the two-state solution".</span></p>
+        <p class="cn">这些制裁与法国和加拿大一同推出，它们在联合声明中表示，此举“标志着我们在保护两国方案方面的方法又向前迈出了一步”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">Settlements are illegal under international law, and there has been a rise in violence towards Palestinians in the West Bank by settlers in recent months.</span></p>
+        <p class="cn">根据国际法，定居点是非法的，近几个月来，定居者对约旦河西岸巴勒斯坦人的暴力行为有所增加。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">In a statement to MPs, Miliband said: "The British government agrees that there is <span class="keyword" data-word="ethnic cleansing" data-phonetic="/ˈeθnɪk ˈklenzɪŋ/" data-pos="n." data-def="种族清洗" data-def-en="The deliberate removal of an ethnic or religious group from a certain area by force.">ethnic cleansing</span> of Palestinians in areas of the West Bank, perpetrated by settler terrorists.</span></p>
+        <p class="cn">米利班德在向议员们发表的声明中说：“英国政府同意，定居者恐怖分子在约旦河西岸部分地区对巴勒斯坦人实施了种族清洗。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">"And all too often the Israeli government has turned a blind eye to this and worse, members of it have made statements and taken actions to support the forced <span class="keyword" data-word="displacement" data-phonetic="/dɪsˈpleɪsmənt/" data-pos="n." data-def="被迫迁移；取代" data-def-en="The forced movement of people from their home area.">displacement</span> of Palestinians."</span></p>
+        <p class="cn">“而以色列政府常常对此视而不见，更糟糕的是，其成员发表声明并采取行动支持强迫驱逐巴勒斯坦人。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="12">He said <span class="keyword" data-word="ethnic cleansing" data-phonetic="/ˈeθnɪk ˈklenzɪŋ/" data-pos="n." data-def="种族清洗" data-def-en="The deliberate removal of an ethnic or religious group from a certain area by force.">ethnic cleansing</span> was defined by the UN as a "purposeful policy designed by one ethnic or religious group to remove by violent means another ethnic or religious group from certain areas".</span></p>
+        <p class="cn">他说，联合国将种族清洗定义为“一个民族或宗教群体旨在通过暴力手段将另一个民族或宗教群体从某些地区清除的有目的的政策”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="13">Miliband said the official view of the government was that the Israeli <span class="keyword" data-word="occupation" data-phonetic="/ˌɒkjuˈpeɪʃn/" data-pos="n." data-def="占领；职业" data-def-en="The act of taking control of a place by military force, or a job.">occupation</span> of the West Bank was <span class="keyword" data-word="unlawful" data-phonetic="/ʌnˈlɔːfl/" data-pos="adj." data-def="非法的" data-def-en="Not allowed by law; illegal.">unlawful</span> because of the "entrenchment of its control, its intention to extend permanent sovereignty, and its expansionist agenda via illegal settlements".</span></p>
+        <p class="cn">米利班德表示，政府的官方观点是，以色列对约旦河西岸的占领是非法的，因为其“控制根深蒂固、意图延长永久主权，并通过非法定居点推行扩张主义议程”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="14">He said this position, which is in line with a 2024 advisory opinion from the International Court of Justice, should be reflected in the UK's "economic relationship" with the occupied West Bank.</span></p>
+        <p class="cn">他说，这一立场与国际法院2024年的咨询意见一致，应反映在英国与被占领的约旦河西岸的“经济关系”中。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="15">As a result, over the next six to nine months, the UK will introduce "a new comprehensive sanctions regime", he said.</span></p>
+        <p class="cn">因此，在未来六到九个月内，英国将推出“一套新的全面制裁制度”，他说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="16">The foreign secretary also announced a ban on advertising illegal West Bank settlements in the UK.</span></p>
+        <p class="cn">外交大臣还宣布禁止在英国为非法约旦河西岸定居点做广告。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="17">"The sanctions regime will target illegal settlements and <span class="keyword" data-word="settlement" data-phonetic="/ˈsetlmənt/" data-pos="n." data-def="定居点；解决" data-def-en="A place where people have come to live, or an official agreement to end a dispute.">settlement</span> <span class="keyword" data-word="expansion" data-phonetic="/ɪkˈspænʃn/" data-pos="n." data-def="扩张；扩展" data-def-en="The act of becoming larger or more extensive.">expansion</span>, not Israel," Miliband added.</span></p>
+        <p class="cn">“制裁制度将针对非法定居点和定居点扩张，而不是针对以色列，”米利班德补充道。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="18">Later on Tuesday, Prime Minister Andy Burnham said the targeted measures were "aimed not at the Israeli people, but in support of the two-state solution".</span></p>
+        <p class="cn">周二晚些时候，首相安迪·伯纳姆表示，这些有针对性的措施“并非针对以色列人民，而是支持两国方案”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="19">Announcing the closure of the consulate - which represents the UK government in Jerusalem, the West Bank and Gaza - Israel's Foreign Minister Saar said at a press conference: "We know that we have many friends in Britain.</span></p>
+        <p class="cn">以色列外交部长萨尔在宣布关闭领事馆（该领事馆代表英国政府在耶路撒冷、约旦河西岸和加沙的利益）时，在新闻发布会上说：“我们知道我们在英国有很多朋友。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="20">"Unfortunately, we have a hostile Labour government that is consistently operating against the State of Israel, and it has left us no choice but to respond to its hostile actions."</span></p>
+        <p class="cn">“不幸的是，我们有一个敌对的工党政府，它一直反对以色列国，这让我们别无选择，只能对其敌对行动作出回应。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="21">He added that 11 UK MPs, including Jeremy Corbyn, Diane Abbott and all five sitting Green Party MPs, would be banned from entering Israel, accusing them of "antisemitic and anti-Israel activity".</span></p>
+        <p class="cn">他补充说，包括杰里米·科尔宾、黛安·阿博特和所有五位现任绿党议员在内的11名英国议员将被禁止进入以色列，指责他们从事“反犹太和反以色列活动”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="22">The UK also issued a joint statement with 11 other countries; France, Canada, Denmark, Spain, Finland, Ireland, Iceland, Norway, Poland, Portugal and Sweden.</span></p>
+        <p class="cn">英国还与法国、加拿大、丹麦、西班牙、芬兰、爱尔兰、冰岛、挪威、波兰、葡萄牙和瑞典等11个国家发表了联合声明。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="23">It said the group was unequivocally committed to the two-state solution and would introduce national measures or support European restrictions on trading goods with West Bank settlements.</span></p>
+        <p class="cn">声明称，该集团明确致力于两国方案，并将采取国家措施或支持欧洲对与约旦河西岸定居点贸易的限制。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="24">Foreign Secretary Ed Miliband announced the measures on Tuesday</span></p>
+        <p class="cn">外交大臣埃德·米利班德于周二宣布了这些措施</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="25">The UK announcement comes after Israel opened up tenders for the construction of some 1,200 <span class="keyword" data-word="settlement" data-phonetic="/ˈsetlmənt/" data-pos="n." data-def="定居点；解决" data-def-en="A place where people have come to live, or an official agreement to end a dispute.">settlement</span> homes in the so-called E1 area - a strategically important area east of Jerusalem.</span> <span class="sentence" data-sentence-index="26">The plans have drawn widespread international condemnation.</span> <span class="sentence" data-sentence-index="27">Israel has held off on plans to build in the area for decades under global pressure.</span></p>
+        <p class="cn">英国宣布这一决定之前，以色列开放了在所谓的E1地区（耶路撒冷以东具有战略意义的地区）建造约1200套定居点住房的招标。这些计划引起了国际社会的广泛谴责。几十年来，在全球压力下，以色列一直搁置在该地区建设的计划。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="28">Miliband told the Commons the UK's "new approach" was necessary because plans for the E1 development in the West Bank would render a two-state solution "unviable" by "cutting through the heart of Palestine".</span></p>
+        <p class="cn">米利班德告诉下议院，英国有必要采取“新方法”，因为约旦河西岸E1开发计划将“贯穿巴勒斯坦的心脏”，使两国方案“不可行”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="29">Elsewhere, he said the Hamas-led attack on southern Israel on 7 October 2023, which triggered the Gaza war, carried "terrible echoes of the centuries of persecution of the Jewish people" and stressed Israel had "the right to protect its people and defend its territory".</span></p>
+        <p class="cn">在其他方面，他说，哈马斯领导的2023年10月7日对以色列南部的袭击引发了加沙战争，带有“几个世纪以来对犹太人迫害的可怕回声”，并强调以色列“有权保护其人民和保卫其领土”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="30">However, he added, "that cannot justify what has happened in Gaza".</span></p>
+        <p class="cn">然而，他补充说，“这不能为加沙发生的事情辩护”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="31">He said: "International humanitarian law imposes clear rules for states fighting wars, including to ensure access to food and medical supplies, to avoid mass <span class="keyword" data-word="displacement" data-phonetic="/dɪsˈpleɪsmənt/" data-pos="n." data-def="被迫迁移；取代" data-def-en="The forced movement of people from their home area.">displacement</span> of civilians, and to avoid the targeting of civilians.</span> <span class="sentence" data-sentence-index="32">Serious and international violations of this law, if proven, amount to war crimes.</span></p>
+        <p class="cn">他说：“国际人道法为交战国规定了明确的规则，包括确保获得食品和医疗用品，避免平民大规模流离失所，以及避免以平民为目标。严重和系统地违反这些法律，如果得到证实，就构成战争罪。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="33">"What has occurred, including the actions of the IDF (Israel Defense Forces), have been examined in depth by a number of organisations, including the UN Independent International Commission of Inquiry.</span></p>
+        <p class="cn">“所发生的事情，包括以色列国防军（IDF）的行动，已经由包括联合国独立国际调查委员会在内的多个组织深入审查。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="34">"The conclusions of these reports represent increasing evidence that war crimes appear to have been committed, and we support legal processes to determine this."</span></p>
+        <p class="cn">“这些报告的结论提供了越来越多的证据，表明似乎犯下了战争罪，我们支持通过法律程序来确定这一点。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="35">He added it was up to international courts to determine if Israel had committed <span class="keyword" data-word="genocide" data-phonetic="/ˈdʒenəsaɪd/" data-pos="n." data-def="种族灭绝" data-def-en="The deliberate killing of a large group of people, especially those of a particular ethnic group or nation.">genocide</span> in Gaza.</span></p>
+        <p class="cn">他补充说，以色列是否在加沙犯下种族灭绝罪，应由国际法院决定。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="36">Israel's leaders have consistently rejected allegations of <span class="keyword" data-word="genocide" data-phonetic="/ˈdʒenəsaɪd/" data-pos="n." data-def="种族灭绝" data-def-en="The deliberate killing of a large group of people, especially those of a particular ethnic group or nation.">genocide</span>, crimes against humanity and war crimes.</span> <span class="sentence" data-sentence-index="37">They have insisted that Israeli forces have operated in accordance with international law.</span></p>
+        <p class="cn">以色列领导人一贯否认种族灭绝、反人类罪和战争罪的指控。他们坚称以色列军队的行动符合国际法。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="38">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="39">Why is the UK against Israel's proposed West Bank E1 <span class="keyword" data-word="settlement" data-phonetic="/ˈsetlmənt/" data-pos="n." data-def="定居点；解决" data-def-en="A place where people have come to live, or an official agreement to end a dispute.">settlement</span>?</span></p>
+        <p class="cn">为什么英国反对以色列提议的约旦河西岸E1定居点？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="40">Miliband began his statement to the Commons by referring to his Jewish roots and childhood experiences of visiting Israel, as well as recent antisemitic attacks in the UK.</span></p>
+        <p class="cn">米利班德在向下议院发表的声明开头提到了他的犹太血统和童年访问以色列的经历，以及英国最近发生的反犹太袭击事件。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="41">He described himself as "a proud British Jew" and outlined his steadfast support for the state of Israel.</span></p>
+        <p class="cn">他称自己是“一个自豪的英国犹太人”，并概述了他对以色列国的坚定支持。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="38">
+        <p class="en"><span class="sentence" data-sentence-index="42">He said: "My personal story and that of thousands of British Jews is one of the many reasons why I say to anyone here or around the world who questions Israel's right to exist as a homeland for the Jewish people - you are wrong, and we will call you out whenever you engage in this attempt at the erasure of Israel."</span></p>
+        <p class="cn">他说：“我个人的故事和数千名英国犹太人的故事是众多原因之一，让我对这里或世界各地任何质疑以色列作为犹太人家园生存权的人说——你们错了，只要你们试图抹去以色列，我们就会指出来。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="39">
+        <p class="en"><span class="sentence" data-sentence-index="43">But the UK's Chief Rabbi Sir Ephraim Mirvis said it was a "truly a dark day for British Jews", saying the sanctions were "little more than political flag bearing for mendacious anti-Israel rhetoric" that would embolden people who "use hatred as a weapon against Jews".</span></p>
+        <p class="cn">但英国首席拉比埃弗拉伊姆·米尔维斯爵士表示，这是“英国犹太人真正黑暗的一天”，称制裁“不过是为虚伪的反以色列言论打政治旗号”，这将助长那些“以仇恨为武器对抗犹太人”的人的气焰。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="40">
+        <p class="en"><span class="sentence" data-sentence-index="44">The Board of Deputies of British Jews expressed "deep regret" over Tuesday's announcement, and urged both the UK and Israeli governments to "avoid pursuing what appear to be party interests over national interests".</span></p>
+        <p class="cn">英国犹太人代表委员会对周二的宣布表示“深切遗憾”，并敦促英以两国政府“避免追求似乎是党派利益而非国家利益的做法”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="41">
+        <p class="en"><span class="sentence" data-sentence-index="45">Responding in the Commons, Conservative shadow foreign secretary Tom Tugendhat claimed ministers were "enacting policies that the Foreign Office knows won't work".</span></p>
+        <p class="cn">在下议院回应时，保守党影子外交大臣汤姆·图根哈特声称，部长们“正在实施外交部知道行不通的政策”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="42">
+        <p class="en"><span class="sentence" data-sentence-index="46">He agreed that illegal settlements were wrong and "some Israeli ministers have indulged in hateful propaganda and incitement" but added "this isn't about Israel alone and it certainly isn't about reducing the complexity of the region to a single sentence.</span> <span class="sentence" data-sentence-index="47">Sadly, the government is in the process of doing just that".</span></p>
+        <p class="cn">他同意非法定居点是错误的，并且“一些以色列部长沉迷于可恶的宣传和煽动”，但他补充说，“这不仅仅是关于以色列，当然也不是把该地区的复杂性简化为一句话。可悲的是，政府正在这样做”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="43">
+        <p class="en"><span class="sentence" data-sentence-index="48">Israel's foreign minister Saar said on Tuesday evening he had spoken with Tugendhat and Tory leader Kemi Badenoch, thanking them "for their firm opposition to the hostile Labour government's announcement today and its series of anti-Israel policies since taking office".</span></p>
+        <p class="cn">以色列外交部长萨尔周二晚间表示，他已与图根哈特和保守党领袖凯米·巴德诺克通话，感谢他们“坚决反对敌对的工党政府今天的宣布及其自上任以来的一系列反以色列政策”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="44">
+        <p class="en"><span class="sentence" data-sentence-index="49">He also said British representatives from the International Gaza Support Center in Kiryat Gat in southern Israel would be removed, and UK activities to train Palestinian Authority forces in Judea and Samaria - how the Israeli government refers to the West Bank - would be terminated.</span></p>
+        <p class="cn">他还表示，来自以色列南部基里亚特加特的国际加沙支持中心的英国代表将被撤除，英国在朱迪亚和撒马利亚（以色列政府对约旦河西岸的称呼）训练巴勒斯坦权力机构部队的活动将被终止。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="45">
+        <p class="en"><span class="sentence" data-sentence-index="50">Speaking earlier on Tuesday, the country's President Isaac Herzog said the decision would "fall on the wrong side of history", adding: "In the current context, it would be a gross interference in the democratic elections of a sovereign nation."</span></p>
+        <p class="cn">周二早些时候，以色列总统艾萨克·赫尔佐格表示，这一决定将“站在历史的错误一边”，并补充说：“在目前的情况下，这将是对一个主权国家民主选举的粗暴干涉。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="46">
+        <p class="en"><span class="sentence" data-sentence-index="51">Herzog said the move would directly harm Palestinians and urged foreign governments to turn towards "constructive dialogue" and cooperation, adding "sanctions are not a solution".</span></p>
+        <p class="cn">赫尔佐格表示，此举将直接伤害巴勒斯坦人，并敦促外国政府转向“建设性对话”与合作，并补充说“制裁不是解决办法”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="47">
+        <p class="en"><span class="sentence" data-sentence-index="52">US Secretary of State Marco Rubio told reporters the White House had no comment on the joint action, adding that "obviously we're not going to do what the UK did".</span></p>
+        <p class="cn">美国国务卿马尔科·卢比奥告诉记者，白宫对联合行动没有评论，并补充说“显然我们不会做英国所做的事情”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="48">
+        <p class="en"><span class="sentence" data-sentence-index="53">Earlier, Donald Trump's ambassador to Israel Mike Huckabee earlier told the BBC that the US - Israel's most powerful ally - would "without a doubt" respond to the expected sanctions, warning of a "huge economic impact on British businesses".</span></p>
+        <p class="cn">早些时候，唐纳德·特朗普驻以色列大使迈克·赫卡比告诉BBC，美国——以色列最强大的盟友——“毫无疑问”会对预期的制裁作出回应，并警告“对英国企业产生巨大的经济影响”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="49">
+        <p class="en"><span class="sentence" data-sentence-index="54">He suggested action could be taken by individual US states as well as at a central, federal level.</span></p>
+        <p class="cn">他建议美国各州以及中央联邦层面都可以采取行动。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="50">
+        <p class="en"><span class="sentence" data-sentence-index="55">The Palestinian presidency welcomed the UK's decision, saying it was "an important step towards confronting Israel's colonial system and its violations against the Palestinian people".</span></p>
+        <p class="cn">巴勒斯坦总统府对英国的决定表示欢迎，称这是“朝着对抗以色列殖民体系及其对巴勒斯坦人民侵犯迈出的重要一步”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="51">
+        <p class="en"><span class="sentence" data-sentence-index="56">As part of the UK announcement, Miliband also announced sanctions on the financing wing of Lebanon's Hezbollah, the Iran-backed armed group.</span></p>
+        <p class="cn">作为英国宣布的一部分，米利班德还宣布对黎巴嫩真主党（伊朗支持的武装组织）的金融部门实施制裁。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="52">
+        <p class="en"><span class="sentence" data-sentence-index="57">New sanctions in line with the US and European Union were also announced on Iran.</span></p>
+        <p class="cn">还宣布了与美国和欧盟一致的对伊朗的新制裁。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="53">
+        <p class="en"><span class="sentence" data-sentence-index="58">The intervention comes almost a year after Sir Keir Starmer's government recognised a state of Palestine, and said the UK had a moral responsibility to support a peaceful future for Israelis and Palestinians.</span></p>
+        <p class="cn">这一干预是在基尔·斯塔默爵士政府承认巴勒斯坦国近一年后进行的，并表示英国有道义责任支持以色列人和巴勒斯坦人的和平未来。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="54">
+        <p class="en"><span class="sentence" data-sentence-index="59">Israel rejects a two-state solution.</span> <span class="sentence" data-sentence-index="60">It says any final <span class="keyword" data-word="settlement" data-phonetic="/ˈsetlmənt/" data-pos="n." data-def="定居点；解决" data-def-en="A place where people have come to live, or an official agreement to end a dispute.">settlement</span> must be the result of negotiations with the Palestinians, and statehood should not be a precondition.</span></p>
+        <p class="cn">以色列拒绝两国方案。它表示，任何最终解决方案都必须是与巴勒斯坦人谈判的结果，建国不应成为先决条件。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="55">
+        <p class="en"><span class="sentence" data-sentence-index="61">The Palestinian Authority backs a two-state solution but Palestinian armed group Hamas does not because it is opposed to the existence of Israel.</span></p>
+        <p class="cn">巴勒斯坦权力机构支持两国方案，但巴勒斯坦武装组织哈马斯不支持，因为它反对以色列的存在。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="56">
+        <p class="en"><span class="sentence" data-sentence-index="62">Hamas says that it could accept an interim Palestinian state based on 1967 de facto borders, without officially recognising Israel, if refugees were given the right to return.</span></p>
+        <p class="cn">哈马斯表示，如果难民获得返回权，它可以接受基于1967年实际边界线的临时巴勒斯坦国，但不正式承认以色列。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="57">
+        <p class="en"><span class="sentence" data-sentence-index="63">Israel has built about 160 settlements housing 700,000 Jews since it occupied the West Bank and East Jerusalem during the 1967 Middle East war.</span> <span class="sentence" data-sentence-index="64">An estimated 3.3 million Palestinians live alongside them.</span></p>
+        <p class="cn">自1967年中东战争期间以色列占领约旦河西岸和东耶路撒冷以来，以色列已建造了约160个定居点，安置了70万犹太人。据估计，有330万巴勒斯坦人与他们毗邻而居。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="58">
+        <p class="en"><span class="sentence" data-sentence-index="65">There has been a surge in attacks by settlers on Palestinians and their property in the West Bank since the start of the Gaza war, which was triggered by the Hamas-led attack on Israel on 7 October 2023.</span></p>
+        <p class="cn">自2023年10月7日哈马斯领导的袭击以色列引发加沙战争以来，定居者对约旦河西岸巴勒斯坦人及其财产的攻击激增。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="59">
+        <p class="en"><span class="sentence" data-sentence-index="66">'Israeli settlers laid siege to our home': Inside a Palestinian village under weekly attack</span></p>
+        <p class="cn">“以色列定居者包围了我们的家”：走进一个每周都遭袭击的巴勒斯坦村庄</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="60">
+        <p class="en"><span class="sentence" data-sentence-index="67">Palestinian parents fear for children's lives at school as settler attacks grow</span></p>
+        <p class="cn">随着定居者袭击增多，巴勒斯坦父母担心孩子在学校的安全</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">sanction</span>
+        <button class="kw-speak-btn" data-word="sanction" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈsæŋkʃn/ n./v.</span>
+      </div>
+      <p class="kw-def">制裁；批准</p>
+      <p class="kw-def-en">An official order to restrict trade or other activities, or to approve something.</p>
+      <p class="kw-ctx">&ldquo;The UK has announced sanctions on illegal Israeli settlements in the occupied West Bank.&rdquo;</p>
+      <p class="kw-ctx-cn">英国宣布对约旦河西岸被占领土上的非法以色列定居点实施制裁。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">ethnic cleansing</span>
+        <button class="kw-speak-btn" data-word="ethnic cleansing" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈeθnɪk ˈklenzɪŋ/ n.</span>
+      </div>
+      <p class="kw-def">种族清洗</p>
+      <p class="kw-def-en">The deliberate removal of an ethnic or religious group from a certain area by force.</p>
+      <p class="kw-ctx">&ldquo;There is ethnic cleansing in areas of the West Bank, says Miliband.&rdquo;</p>
+      <p class="kw-ctx-cn">米利班德表示，约旦河西岸部分地区存在种族清洗现象。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">settlement</span>
+        <button class="kw-speak-btn" data-word="settlement" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈsetlmənt/ n.</span>
+      </div>
+      <p class="kw-def">定居点；解决</p>
+      <p class="kw-def-en">A place where people have come to live, or an official agreement to end a dispute.</p>
+      <p class="kw-ctx">&ldquo;The UK sanctions will ban settlement goods but also act against companies and individuals providing services for settlement expansion.&rdquo;</p>
+      <p class="kw-ctx-cn">英国的制裁将禁止定居点商品，同时也会针对为定居点扩张提供服务的公司和个人。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">occupation</span>
+        <button class="kw-speak-btn" data-word="occupation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌɒkjuˈpeɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">占领；职业</p>
+      <p class="kw-def-en">The act of taking control of a place by military force, or a job.</p>
+      <p class="kw-ctx">&ldquo;Miliband said the official view of the government was that the Israeli occupation of the West Bank was unlawful.&rdquo;</p>
+      <p class="kw-ctx-cn">米利班德表示，政府的官方观点是以色列对约旦河西岸的占领是非法的。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">unlawful</span>
+        <button class="kw-speak-btn" data-word="unlawful" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ʌnˈlɔːfl/ adj.</span>
+      </div>
+      <p class="kw-def">非法的</p>
+      <p class="kw-def-en">Not allowed by law; illegal.</p>
+      <p class="kw-ctx">&ldquo;Miliband said the official view of the government was that the Israeli occupation of the West Bank was unlawful.&rdquo;</p>
+      <p class="kw-ctx-cn">米利班德表示，政府的官方观点是以色列对约旦河西岸的占领是非法的。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">expansion</span>
+        <button class="kw-speak-btn" data-word="expansion" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪkˈspænʃn/ n.</span>
+      </div>
+      <p class="kw-def">扩张；扩展</p>
+      <p class="kw-def-en">The act of becoming larger or more extensive.</p>
+      <p class="kw-ctx">&ldquo;The sanctions will target illegal settlements and settlement expansion, not Israel.&rdquo;</p>
+      <p class="kw-ctx-cn">制裁将针对非法定居点和定居点扩张，而不是以色列。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">displacement</span>
+        <button class="kw-speak-btn" data-word="displacement" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪsˈpleɪsmənt/ n.</span>
+      </div>
+      <p class="kw-def">被迫迁移；取代</p>
+      <p class="kw-def-en">The forced movement of people from their home area.</p>
+      <p class="kw-ctx">&ldquo;Members of it have made statements and taken actions to support the forced displacement of Palestinians.&rdquo;</p>
+      <p class="kw-ctx-cn">其成员发表声明并采取行动支持对巴勒斯坦人的强制迁移。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">genocide</span>
+        <button class="kw-speak-btn" data-word="genocide" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈdʒenəsaɪd/ n.</span>
+      </div>
+      <p class="kw-def">种族灭绝</p>
+      <p class="kw-def-en">The deliberate killing of a large group of people, especially those of a particular ethnic group or nation.</p>
+      <p class="kw-ctx">&ldquo;He added it was up to international courts to determine if Israel had committed genocide in Gaza.&rdquo;</p>
+      <p class="kw-ctx-cn">他补充说，由国际法院来决定以色列是否在加沙犯下种族灭绝罪。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "Watch: There is ethnic cleansing in areas of the West Bank, says Miliband", "start_ms": 3000, "end_ms": 8928, "paragraph_index": 1}, {"index": 2, "text": "The UK has announced sanctions on illegal Israeli settlements in the occupied West Bank, accusing Israel's government of turning a blind eye to the \"ethnic cleansing\" of Palestinians by settlers.", "start_ms": 8928, "end_ms": 22560, "paragraph_index": 2}, {"index": 3, "text": "Foreign Secretary Ed Miliband said the move marked the \"beginning of a new approach\" to the Israeli-Palestinian conflict, which \"not only calls out injustice and suffering but acts\".", "start_ms": 22560, "end_ms": 34728, "paragraph_index": 3}, {"index": 4, "text": "Israel's Foreign Minister Gideon Saar responded by accusing him of spreading an \"outrageous lie\" and announced counter-measures including shutting the UK's consulate in East Jerusalem.", "start_ms": 34728, "end_ms": 47088, "paragraph_index": 4}, {"index": 5, "text": "The UK sanctions will ban settlement goods but also act against companies and individuals providing services for settlement expansion.", "start_ms": 47088, "end_ms": 56664, "paragraph_index": 5}, {"index": 6, "text": "In West Bank, date farmers weigh impact of UK sanctions on Israeli settlers", "start_ms": 56664, "end_ms": 63216, "paragraph_index": 6}, {"index": 7, "text": "How Israel is expanding settlements in drive to reshape West Bank", "start_ms": 63216, "end_ms": 68640, "paragraph_index": 7}, {"index": 8, "text": "The sanctions were launched alongside France and Canada, which in a joint statement with the UK said the action \"marks a further turning point in our approach to protecting the two-state solution\".", "start_ms": 68640, "end_ms": 81144, "paragraph_index": 8}, {"index": 9, "text": "Settlements are illegal under international law, and there has been a rise in violence towards Palestinians in the West Bank by settlers in recent months.", "start_ms": 81144, "end_ms": 91584, "paragraph_index": 9}, {"index": 10, "text": "In a statement to MPs, Miliband said: \"The British government agrees that there is ethnic cleansing of Palestinians in areas of the West Bank, perpetrated by settler terrorists.", "start_ms": 91584, "end_ms": 104208, "paragraph_index": 10}, {"index": 11, "text": "\"And all too often the Israeli government has turned a blind eye to this and worse, members of it have made statements and taken actions to support the forced displacement of Palestinians.\"", "start_ms": 104208, "end_ms": 116424, "paragraph_index": 11}, {"index": 12, "text": "He said ethnic cleansing was defined by the UN as a \"purposeful policy designed by one ethnic or religious group to remove by violent means another ethnic or religious group from certain areas\".", "start_ms": 116424, "end_ms": 129600, "paragraph_index": 12}, {"index": 13, "text": "Miliband said the official view of the government was that the Israeli occupation of the West Bank was unlawful because of the \"entrenchment of its control, its intention to extend permanent sovereignty, and its expansionist agenda via illegal settlements\".", "start_ms": 129600, "end_ms": 146016, "paragraph_index": 13}, {"index": 14, "text": "He said this position, which is in line with a 2024 advisory opinion from the International Court of Justice, should be reflected in the UK's \"economic relationship\" with the occupied West Bank.", "start_ms": 146016, "end_ms": 159504, "paragraph_index": 14}, {"index": 15, "text": "As a result, over the next six to nine months, the UK will introduce \"a new comprehensive sanctions regime\", he said.", "start_ms": 159504, "end_ms": 168600, "paragraph_index": 15}, {"index": 16, "text": "The foreign secretary also announced a ban on advertising illegal West Bank settlements in the UK.", "start_ms": 168600, "end_ms": 176184, "paragraph_index": 16}, {"index": 17, "text": "\"The sanctions regime will target illegal settlements and settlement expansion, not Israel,\" Miliband added.", "start_ms": 176184, "end_ms": 184272, "paragraph_index": 17}, {"index": 18, "text": "Later on Tuesday, Prime Minister Andy Burnham said the targeted measures were \"aimed not at the Israeli people, but in support of the two-state solution\".", "start_ms": 184272, "end_ms": 194544, "paragraph_index": 18}, {"index": 19, "text": "Announcing the closure of the consulate - which represents the UK government in Jerusalem, the West Bank and Gaza - Israel's Foreign Minister Saar said at a press conference: \"We know that we have many friends in Britain.", "start_ms": 194544, "end_ms": 208536, "paragraph_index": 19}, {"index": 20, "text": "\"Unfortunately, we have a hostile Labour government that is consistently operating against the State of Israel, and it has left us no choice but to respond to its hostile actions.\"", "start_ms": 208536, "end_ms": 220488, "paragraph_index": 20}, {"index": 21, "text": "He added that 11 UK MPs, including Jeremy Corbyn, Diane Abbott and all five sitting Green Party MPs, would be banned from entering Israel, accusing them of \"antisemitic and anti-Israel activity\".", "start_ms": 220488, "end_ms": 235824, "paragraph_index": 21}, {"index": 22, "text": "The UK also issued a joint statement with 11 other countries; France, Canada, Denmark, Spain, Finland, Ireland, Iceland, Norway, Poland, Portugal and Sweden.", "start_ms": 235824, "end_ms": 249408, "paragraph_index": 22}, {"index": 23, "text": "It said the group was unequivocally committed to the two-state solution and would introduce national measures or support European restrictions on trading goods with West Bank settlements.", "start_ms": 249408, "end_ms": 261168, "paragraph_index": 23}, {"index": 24, "text": "Foreign Secretary Ed Miliband announced the measures on Tuesday", "start_ms": 261168, "end_ms": 266328, "paragraph_index": 24}, {"index": 25, "text": "The UK announcement comes after Israel opened up tenders for the construction of some 1,200 settlement homes in the so-called E1 area - a strategically important area east of Jerusalem.", "start_ms": 266328, "end_ms": 279672, "paragraph_index": 25}, {"index": 26, "text": "The plans have drawn widespread international condemnation.", "start_ms": 279672, "end_ms": 284424, "paragraph_index": 25}, {"index": 27, "text": "Israel has held off on plans to build in the area for decades under global pressure.", "start_ms": 284424, "end_ms": 290664, "paragraph_index": 25}, {"index": 28, "text": "Miliband told the Commons the UK's \"new approach\" was necessary because plans for the E1 development in the West Bank would render a two-state solution \"unviable\" by \"cutting through the heart of Palestine\".", "start_ms": 290664, "end_ms": 303792, "paragraph_index": 26}, {"index": 29, "text": "Elsewhere, he said the Hamas-led attack on southern Israel on 7 October 2023, which triggered the Gaza war, carried \"terrible echoes of the centuries of persecution of the Jewish people\" and stressed Israel had \"the right to protect its people and defend its territory\".", "start_ms": 303792, "end_ms": 322608, "paragraph_index": 27}, {"index": 30, "text": "However, he added, \"that cannot justify what has happened in Gaza\".", "start_ms": 322608, "end_ms": 327984, "paragraph_index": 28}, {"index": 31, "text": "He said: \"International humanitarian law imposes clear rules for states fighting wars, including to ensure access to food and medical supplies, to avoid mass displacement of civilians, and to avoid the targeting of civilians.", "start_ms": 327984, "end_ms": 344424, "paragraph_index": 29}, {"index": 32, "text": "Serious and international violations of this law, if proven, amount to war crimes.", "start_ms": 344424, "end_ms": 351120, "paragraph_index": 29}, {"index": 33, "text": "\"What has occurred, including the actions of the IDF (Israel Defense Forces), have been examined in depth by a number of organisations, including the UN Independent International Commission of Inquiry.", "start_ms": 351120, "end_ms": 365688, "paragraph_index": 30}, {"index": 34, "text": "\"The conclusions of these reports represent increasing evidence that war crimes appear to have been committed, and we support legal processes to determine this.\"", "start_ms": 365688, "end_ms": 376224, "paragraph_index": 31}, {"index": 35, "text": "He added it was up to international courts to determine if Israel had committed genocide in Gaza.", "start_ms": 376224, "end_ms": 383280, "paragraph_index": 32}, {"index": 36, "text": "Israel's leaders have consistently rejected allegations of genocide, crimes against humanity and war crimes.", "start_ms": 383280, "end_ms": 391752, "paragraph_index": 33}, {"index": 37, "text": "They have insisted that Israeli forces have operated in accordance with international law.", "start_ms": 391752, "end_ms": 398064, "paragraph_index": 33}, {"index": 38, "text": "This video can not be played", "start_ms": 398064, "end_ms": 401064, "paragraph_index": 34}, {"index": 39, "text": "Why is the UK against Israel's proposed West Bank E1 settlement?", "start_ms": 401064, "end_ms": 406704, "paragraph_index": 35}, {"index": 40, "text": "Miliband began his statement to the Commons by referring to his Jewish roots and childhood experiences of visiting Israel, as well as recent antisemitic attacks in the UK.", "start_ms": 406704, "end_ms": 418656, "paragraph_index": 36}, {"index": 41, "text": "He described himself as \"a proud British Jew\" and outlined his steadfast support for the state of Israel.", "start_ms": 418656, "end_ms": 426048, "paragraph_index": 37}, {"index": 42, "text": "He said: \"My personal story and that of thousands of British Jews is one of the many reasons why I say to anyone here or around the world who questions Israel's right to exist as a homeland for the Jewish people - you are wrong, and we will call you out whenever you engage in this attempt at the erasure of Israel.\"", "start_ms": 426048, "end_ms": 445440, "paragraph_index": 38}, {"index": 43, "text": "But the UK's Chief Rabbi Sir Ephraim Mirvis said it was a \"truly a dark day for British Jews\", saying the sanctions were \"little more than political flag bearing for mendacious anti-Israel rhetoric\" that would embolden people who \"use hatred as a weapon against Jews\".", "start_ms": 445440, "end_ms": 462408, "paragraph_index": 39}, {"index": 44, "text": "The Board of Deputies of British Jews expressed \"deep regret\" over Tuesday's announcement, and urged both the UK and Israeli governments to \"avoid pursuing what appear to be party interests over national interests\".", "start_ms": 462408, "end_ms": 476688, "paragraph_index": 40}, {"index": 45, "text": "Responding in the Commons, Conservative shadow foreign secretary Tom Tugendhat claimed ministers were \"enacting policies that the Foreign Office knows won't work\".", "start_ms": 476688, "end_ms": 487896, "paragraph_index": 41}, {"index": 46, "text": "He agreed that illegal settlements were wrong and \"some Israeli ministers have indulged in hateful propaganda and incitement\" but added \"this isn't about Israel alone and it certainly isn't about reducing the complexity of the region to a single sentence.", "start_ms": 487896, "end_ms": 503232, "paragraph_index": 42}, {"index": 47, "text": "Sadly, the government is in the process of doing just that\".", "start_ms": 503232, "end_ms": 508008, "paragraph_index": 42}, {"index": 48, "text": "Israel's foreign minister Saar said on Tuesday evening he had spoken with Tugendhat and Tory leader Kemi Badenoch, thanking them \"for their firm opposition to the hostile Labour government's announcement today and its series of anti-Israel policies since taking office\".", "start_ms": 508008, "end_ms": 525312, "paragraph_index": 43}, {"index": 49, "text": "He also said British representatives from the International Gaza Support Center in Kiryat Gat in southern Israel would be removed, and UK activities to train Palestinian Authority forces in Judea and Samaria - how the Israeli government refers to the West Bank - would be terminated.", "start_ms": 525312, "end_ms": 543816, "paragraph_index": 44}, {"index": 50, "text": "Speaking earlier on Tuesday, the country's President Isaac Herzog said the decision would \"fall on the wrong side of history\", adding: \"In the current context, it would be a gross interference in the democratic elections of a sovereign nation.\"", "start_ms": 543816, "end_ms": 559344, "paragraph_index": 45}, {"index": 51, "text": "Herzog said the move would directly harm Palestinians and urged foreign governments to turn towards \"constructive dialogue\" and cooperation, adding \"sanctions are not a solution\".", "start_ms": 559344, "end_ms": 571560, "paragraph_index": 46}, {"index": 52, "text": "US Secretary of State Marco Rubio told reporters the White House had no comment on the joint action, adding that \"obviously we're not going to do what the UK did\".", "start_ms": 571560, "end_ms": 582792, "paragraph_index": 47}, {"index": 53, "text": "Earlier, Donald Trump's ambassador to Israel Mike Huckabee earlier told the BBC that the US - Israel's most powerful ally - would \"without a doubt\" respond to the expected sanctions, warning of a \"huge economic impact on British businesses\".", "start_ms": 582792, "end_ms": 599568, "paragraph_index": 48}, {"index": 54, "text": "He suggested action could be taken by individual US states as well as at a central, federal level.", "start_ms": 599568, "end_ms": 607104, "paragraph_index": 49}, {"index": 55, "text": "The Palestinian presidency welcomed the UK's decision, saying it was \"an important step towards confronting Israel's colonial system and its violations against the Palestinian people\".", "start_ms": 607104, "end_ms": 619776, "paragraph_index": 50}, {"index": 56, "text": "As part of the UK announcement, Miliband also announced sanctions on the financing wing of Lebanon's Hezbollah, the Iran-backed armed group.", "start_ms": 619776, "end_ms": 630000, "paragraph_index": 51}, {"index": 57, "text": "New sanctions in line with the US and European Union were also announced on Iran.", "start_ms": 630000, "end_ms": 636336, "paragraph_index": 52}, {"index": 58, "text": "The intervention comes almost a year after Sir Keir Starmer's government recognised a state of Palestine, and said the UK had a moral responsibility to support a peaceful future for Israelis and Palestinians.", "start_ms": 636336, "end_ms": 650904, "paragraph_index": 53}, {"index": 59, "text": "Israel rejects a two-state solution.", "start_ms": 650904, "end_ms": 654456, "paragraph_index": 54}, {"index": 60, "text": "It says any final settlement must be the result of negotiations with the Palestinians, and statehood should not be a precondition.", "start_ms": 654456, "end_ms": 663600, "paragraph_index": 54}, {"index": 61, "text": "The Palestinian Authority backs a two-state solution but Palestinian armed group Hamas does not because it is opposed to the existence of Israel.", "start_ms": 663600, "end_ms": 673224, "paragraph_index": 55}, {"index": 62, "text": "Hamas says that it could accept an interim Palestinian state based on 1967 de facto borders, without officially recognising Israel, if refugees were given the right to return.", "start_ms": 673224, "end_ms": 686496, "paragraph_index": 56}, {"index": 63, "text": "Israel has built about 160 settlements housing 700,000 Jews since it occupied the West Bank and East Jerusalem during the 1967 Middle East war.", "start_ms": 686496, "end_ms": 698592, "paragraph_index": 57}, {"index": 64, "text": "An estimated 3.3 million Palestinians live alongside them.", "start_ms": 698592, "end_ms": 704160, "paragraph_index": 57}, {"index": 65, "text": "There has been a surge in attacks by settlers on Palestinians and their property in the West Bank since the start of the Gaza war, which was triggered by the Hamas-led attack on Israel on 7 October 2023.", "start_ms": 704160, "end_ms": 718440, "paragraph_index": 58}, {"index": 66, "text": "'Israeli settlers laid siege to our home': Inside a Palestinian village under weekly attack", "start_ms": 718440, "end_ms": 725472, "paragraph_index": 59}, {"index": 67, "text": "Palestinian parents fear for children's lives at school as settler attacks grow", "start_ms": 725472, "end_ms": 731472, "paragraph_index": 60}], "total_duration_ms": 731472};
+  const WORD_GLOSS = {"the": "这个", "of": "的", "and": "和", "to": "到", "in": "在", "israel": "以色列", "on": "在", "said": "说", "uk": "英国", "west": "西部", "bank": "银行", "that": "那个", "he": "他", "by": "被", "for": "为了", "it": "它", "be": "是", "sanctions": "制裁", "as": "作为", "israeli": "以色列的", "have": "有", "would": "将", "not": "不", "is": "是", "miliband": "米利班德", "has": "有", "israel's": "以色列的", "government": "政府", "foreign": "外交", "with": "与", "international": "国际", "was": "是", "this": "这个", "its": "它的", "palestinian": "巴勒斯坦的", "but": "但是", "were": "是", "solution": "解决方案", "british": "英国的", "support": "支持", "ethnic": "种族的", "announced": "宣布", "illegal": "非法的", "which": "哪个", "also": "也", "against": "反对", "people": "人们", "gaza": "加沙", "war": "战争", "secretary": "秘书", "including": "包括", "uk's": "英国的", "group": "团体", "added": "补充", "at": "在", "we": "我们", "state": "国家", "us": "我们", "had": "有", "jews": "犹太人", "there": "那里", "new": "新的", "minister": "部长", "an": "一个", "east": "东部", "will": "将", "statement": "声明", "law": "法律", "been": "已经", "or": "或者", "from": "来自", "tuesday": "星期二", "announcement": "公告", "what": "什么", "crimes": "罪行", "areas": "区域", "says": "表示", "occupied": "被占领的", "accusing": "指责", "approach": "方法", "joint": "联合的", "action": "行动", "are": "是", "under": "在...之下", "towards": "对待", "mps": "议员", "actions": "行动", "because": "因为", "over": "超过", "measures": "措施", "hostile": "敌对的", "them": "他们", "committed": "承诺的", "area": "区域", "plans": "计划", "told": "告诉", "commons": "下议院", "attack": "袭击", "jewish": "犹太人的", "right": "正确", "avoid": "避免", "if": "如果", "forces": "力量", "his": "他的", "attacks": "袭击", "you": "你", "wrong": "错误的", "about": "关于", "since": "自从", "earlier": "较早", "adding": "补充说", "video": "视频", "can": "可以", "played": "比赛", "turning": "转向", "blind": "盲目的", "eye": "目光", "ed": "编辑", "move": "行动", "out": "出来", "ban": "禁止", "goods": "商品", "impact": "影响", "how": "如何", "alongside": "与...一起", "france": "法国", "canada": "加拿大", "our": "我们的", "recent": "最近", "months": "月", "all": "所有", "taken": "采取", "un": "联合国", "one": "一个", "religious": "宗教的", "line": "界限", "should": "应该", "economic": "经济的", "result": "结果", "introduce": "引入", "regime": "政权", "many": "许多", "labour": "工党", "consistently": "一贯地", "no": "没有", "respond": "回应", "party": "政党", "antisemitic": "反犹太的", "national": "国家", "european": "欧洲的", "comes": "到来", "after": "之后", "up": "向上", "some": "一些", "important": "重要", "hamas-led": "哈马斯领导的", "southern": "南部的", "october": "十月", "triggered": "引发", "states": "国家", "civilians": "平民", "violations": "违反行为", "appear": "出现", "determine": "确定", "why": "为何", "well": "好", "who": "谁", "sir": "爵士", "saying": "说", "urged": "敦促", "governments": "政府", "interests": "利益", "tugendhat": "图根哈特", "ministers": "部长", "policies": "政策", "office": "办公室", "isn't": "不是", "their": "他们的", "authority": "权威", "decision": "决定", "without": "没有", "could": "可能", "armed": "武装的", "hamas": "哈马斯", "watch": "观看", "marked": "显著的", "beginning": "开始", "conflict": "冲突", "only": "只有", "calls": "呼吁", "suffering": "苦难", "acts": "行为", "responded": "回应", "him": "他", "spreading": "传播", "lie": "在于", "act": "行为", "companies": "公司", "individuals": "个人", "providing": "提供", "services": "服务", "date": "日期", "farmers": "农民", "expanding": "膨胀", "drive": "推动力", "launched": "发起", "marks": "标志", "further": "进一步的", "point": "点", "protecting": "保护", "rise": "上升", "violence": "暴力", "agrees": "同意", "perpetrated": "实施", "terrorists": "恐怖分子", "too": "太", "often": "经常", "turned": "转向", "worse": "更糟", "members": "成员", "made": "做出", "statements": "声明", "forced": "被迫", "policy": "政策", "designed": "设计的", "remove": "移除", "violent": "暴力的", "means": "意味着", "another": "另一个", "certain": "某些", "official": "官方", "view": "看法", "control": "控制", "intention": "意图", "extend": "延长", "permanent": "永久的", "agenda": "议程", "via": "通过", "position": "立场", "opinion": "意见", "court": "法庭", "justice": "正义", "reflected": "反映", "relationship": "关系", "next": "下一个", "six": "六", "nine": "九", "comprehensive": "全面的", "advertising": "广告", "target": "目标", "later": "后来", "prime": "首相", "andy": "安迪", "burnham": "伯纳姆", "targeted": "针对", "aimed": "旨在", "announcing": "宣布", "closure": "关闭", "represents": "代表", "press": "新闻", "conference": "会议", "know": "知道", "friends": "朋友", "britain": "英国", "unfortunately": "不幸的是", "operating": "操作", "left": "离开", "choice": "选择", "jeremy": "杰里米", "corbyn": "科尔宾", "five": "五", "sitting": "现任的", "green": "绿色", "banned": "被禁的", "entering": "进入", "activity": "活动", "issued": "发布", "other": "其他", "countries": "国家", "denmark": "丹麦", "spain": "西班牙", "finland": "芬兰", "ireland": "爱尔兰", "iceland": "冰岛", "poland": "波兰", "portugal": "葡萄牙", "unequivocally": "明确地", "restrictions": "限制", "trading": "交易", "opened": "开火", "construction": "建设", "homes": "家", "so-called": "所谓的", "drawn": "划定", "widespread": "广泛的", "condemnation": "谴责", "held": "举行", "off": "离开", "build": "建立", "decades": "数十年", "global": "全球", "pressure": "压力", "necessary": "必要的", "development": "发展", "cutting": "削减", "through": "通过", "heart": "核心", "elsewhere": "其他地方", "carried": "进行", "terrible": "糟糕的", "echoes": "呼应", "centuries": "几个世纪", "stressed": "强调", "protect": "保护", "defend": "辩护", "territory": "领土", "however": "然而", "cannot": "不能", "justify": "证明合理", "happened": "发生", "humanitarian": "人道主义的", "clear": "明确", "rules": "规则", "fighting": "战斗", "wars": "战争", "ensure": "确保", "access": "进入", "food": "食物", "medical": "医疗", "supplies": "补给", "mass": "大规模的", "targeting": "针对", "serious": "严重的", "amount": "数量", "occurred": "发生", "idf": "以色列国防军", "defense": "国防", "examined": "检查", "depth": "深度", "number": "数量", "organisations": "组织", "independent": "独立的", "commission": "委员会", "inquiry": "调查", "conclusions": "结论", "these": "这些", "reports": "报道", "represent": "代表", "increasing": "增加", "evidence": "证据", "legal": "法律的", "processes": "过程", "courts": "法院", "leaders": "领导人", "rejected": "拒绝", "allegations": "指控", "humanity": "人类", "they": "它们", "insisted": "坚持", "operated": "运营", "accordance": "按照", "proposed": "提议的", "began": "开始", "referring": "提及", "experiences": "经历", "visiting": "访问", "described": "描述", "himself": "他自己", "proud": "自豪的", "jew": "犹太人", "outlined": "概述", "steadfast": "坚定的", "my": "我的", "personal": "个人", "story": "故事", "thousands": "数千", "reasons": "原因", "say": "说", "anyone": "任何人", "here": "这里", "around": "在...周围", "world": "世界", "questions": "问题", "exist": "存在", "homeland": "国土", "call": "呼吁", "whenever": "每当", "attempt": "企图", "chief": "首席", "rabbi": "拉比", "ephraim": "以法莲", "mirvis": "米尔维斯", "truly": "真正地", "dark": "黑暗的", "day": "天", "little": "很少", "more": "更多", "than": "比", "political": "政治的", "rhetoric": "言论", "use": "使用", "hatred": "仇恨", "weapon": "武器", "board": "董事会", "expressed": "表达", "deep": "深切", "regret": "遗憾", "tuesday's": "周二的", "both": "两者", "pursuing": "追求", "responding": "回应", "conservative": "保守党", "shadow": "阴影", "tom": "汤姆", "claimed": "声称", "knows": "知道", "won't": "不会", "work": "工作", "agreed": "同意", "propaganda": "宣传", "alone": "独自", "certainly": "当然", "reducing": "减少", "complexity": "复杂性", "region": "地区", "single": "单一的", "sentence": "判决", "sadly": "可悲地", "process": "过程", "doing": "做", "just": "只是", "evening": "晚上", "spoken": "发言", "tory": "保守党", "leader": "领导人", "kemi": "凯米", "badenoch": "巴德诺赫", "firm": "坚定", "opposition": "反对党", "government's": "政府的", "today": "今天", "series": "系列", "taking": "采取", "representatives": "代表", "center": "中心", "removed": "移除", "activities": "活动", "train": "火车", "refers": "指的是", "terminated": "终止", "speaking": "发言", "country's": "国家的", "president": "总统", "fall": "属于", "side": "方面", "history": "历史", "current": "当前的", "gross": "总的", "interference": "干涉", "democratic": "民主的", "elections": "选举", "sovereign": "君主", "nation": "国家", "directly": "直接地", "harm": "伤害", "turn": "转变", "dialogue": "对话", "cooperation": "合作", "marco": "马可", "rubio": "鲁比奥", "reporters": "记者们", "white": "白色的", "house": "议院", "comment": "评论", "obviously": "显然", "we're": "我们是", "going": "将要", "do": "做", "did": "做了", "donald": "唐纳德", "trump's": "特朗普的", "ambassador": "大使", "mike": "麦克风", "bbc": "英国广播公司", "most": "最", "powerful": "强大的", "ally": "盟友", "doubt": "怀疑", "expected": "预期", "warning": "警告", "huge": "巨大的", "businesses": "企业", "suggested": "建议", "individual": "个人", "central": "中央的", "federal": "联邦", "level": "水平", "presidency": "主席职位", "welcomed": "受到欢迎", "step": "步骤", "system": "制度", "part": "部分", "wing": "派系", "lebanon's": "黎巴嫩的", "hezbollah": "真主党", "iran-backed": "伊朗支持的", "union": "工会", "iran": "伊朗", "intervention": "干预", "almost": "几乎", "year": "年", "keir": "基尔", "starmer's": "斯塔默的", "recognised": "认出", "moral": "道德", "responsibility": "责任", "peaceful": "和平的", "future": "未来", "rejects": "拒绝", "any": "任何", "final": "最终", "must": "必须", "negotiations": "谈判", "does": "做", "opposed": "反对的", "accept": "接受", "interim": "临时的", "based": "基于", "de": "实际上", "facto": "实际上", "borders": "边境", "officially": "正式地", "recognising": "识别", "given": "给定", "return": "返回", "built": "建造", "housing": "住房", "during": "在期间", "middle": "中间", "estimated": "估计的", "million": "百万", "live": "生活", "surge": "飙升", "property": "财产", "start": "开始", "laid": "布设", "home": "家", "inside": "内部", "village": "村庄", "weekly": "每周的", "parents": "家长", "fear": "恐惧", "children's": "儿童的", "lives": "生命", "school": "学校", "grow": "增长", "settlements": "定居点", "palestinians": "巴勒斯坦人", "two-state": "两国方案", "settlers": "定居者", "cleansing": "清洗", "jerusalem": "耶路撒冷", "saar": "萨尔", "anti-israel": "反以色列", "consulate": "领事馆", "settler": "定居者", "palestine": "巴勒斯坦", "herzog": "赫尔佐格", "israeli-palestinian": "以巴", "injustice": "不公正", "gideon": "吉迪恩", "outrageous": "令人愤慨", "counter-measures": "反制措施", "shutting": "关闭", "weigh": "权衡", "reshape": "重塑", "defined": "明确的", "purposeful": "有目的的", "entrenchment": "巩固", "sovereignty": "主权", "expansionist": "扩张主义", "advisory": "咨询", "diane": "黛安", "abbott": "阿博特", "norway": "挪威", "sweden": "瑞典", "tenders": "招标", "strategically": "战略上", "render": "使成为", "unviable": "不可行", "persecution": "迫害", "imposes": "强加", "proven": "已证明", "roots": "根源", "childhood": "童年", "engage": "参与", "erasure": "抹除", "flag": "旗帜", "bearing": "带有", "mendacious": "虚假的", "embolden": "壮胆", "deputies": "代表", "enacting": "制定", "indulged": "纵容", "hateful": "可恨的", "incitement": "煽动", "thanking": "感谢", "kiryat": "基里亚特", "gat": "加特", "judea": "犹地亚", "samaria": "撒马利亚", "isaac": "艾萨克", "context": "背景", "constructive": "建设性的", "huckabee": "赫卡比", "confronting": "面对", "colonial": "殖民", "financing": "资助", "israelis": "以色列人", "statehood": "国家地位", "precondition": "前提", "backs": "支持", "existence": "存在", "refugees": "难民", "siege": "围困"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
